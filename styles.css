@@ -724,60 +724,271 @@ h4 {
   color: var(--text-cream);
 }
 
-.bio-text {
-  font-family: var(--font-display);
-  font-size: clamp(2.2rem, 4.5vw, 3.8rem);
-  line-height: 1.15;
+.about-grid-new {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 5.5rem;
+  align-items: flex-start;
+}
+
+@media (max-width: 992px) {
+  .about-grid-new {
+    grid-template-columns: 1fr;
+    gap: 4.5rem;
+  }
+}
+
+/* Registry Spec Table */
+.registry-spec-table {
+  border: 1px solid rgba(244, 236, 200, 0.12);
+  background-color: var(--bg-surface);
+  padding: 1.8rem;
+  margin: 2rem 0 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.spec-table-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px dashed rgba(244, 236, 200, 0.1);
+  padding-bottom: 0.6rem;
+}
+
+.spec-table-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.spec-table-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent-gold);
+  font-weight: 700;
+}
+
+.spec-table-value {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
   color: var(--text-cream);
-  margin-bottom: 2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: right;
+  max-width: 60%;
 }
 
-.bio-subtext {
-  font-size: 1.1rem;
-  max-width: 560px;
+/* Technical Modules */
+.tech-modules-heading {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  color: var(--accent-gold);
+  text-transform: uppercase;
+  margin-bottom: 1.8rem;
+  border-bottom: 2px solid var(--accent-gold);
+  padding-bottom: 0.4rem;
+  display: inline-block;
 }
 
-/* Frame around about image */
-.photo-poster-frame {
+.skills-module-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+
+@media (max-width: 600px) {
+  .skills-module-block {
+    grid-template-columns: 1fr;
+    gap: 2.2rem;
+  }
+}
+
+.skills-category {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.skills-category-title {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  border-bottom: 1px solid rgba(244, 236, 200, 0.15);
+  padding-bottom: 0.4rem;
+  text-transform: uppercase;
+}
+
+.skills-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.skill-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.skill-name {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-cream);
+  font-weight: 500;
+}
+
+.skill-meter {
+  width: 100%;
+  height: 5px;
+  background-color: rgba(244, 236, 200, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-meter-fill {
+  height: 100%;
+  background-color: var(--accent-gold);
+  transition: width 1s var(--ease-cinematic);
+}
+
+/* Polaroid Viewfinder Photo Frame */
+.about-headshot-frame {
   position: relative;
   width: 100%;
-  aspect-ratio: 4/5;
+  aspect-ratio: 1/1;
   background-color: var(--bg-surface);
-  overflow: hidden;
-  border: 1px solid rgba(244, 236, 200, 0.15);
+  border: 1px dashed rgba(244, 236, 200, 0.15);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
 }
 
-.photo-sepia-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: grayscale(1) contrast(1.15);
-  display: block;
-}
-
-.photo-poster-frame::after {
-  content: "";
+.viewfinder-crosshairs {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--bg-terracotta);
-  mix-blend-mode: multiply;
-  opacity: 0.35;
+  pointer-events: none;
+  z-index: 2;
 }
 
-.frame-tag-label {
+.crosshair {
   position: absolute;
-  bottom: 1rem;
-  right: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--accent-gold);
+  line-height: 1;
+  opacity: 0.6;
+}
+
+.crosshair.top-left { top: 0.6rem; left: 0.6rem; }
+.crosshair.top-right { top: 0.6rem; right: 0.6rem; }
+.crosshair.bottom-left { bottom: 0.6rem; left: 0.6rem; }
+.crosshair.bottom-right { bottom: 0.6rem; right: 0.6rem; }
+
+.headshot-photo {
+  width: 100%;
+  height: calc(100% - 1.5rem);
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.1);
+  border: 1px solid rgba(244, 236, 200, 0.08);
+  display: block;
+}
+
+.frame-metadata {
+  display: flex;
+  justify-content: space-between;
   font-family: var(--font-mono);
   font-size: 0.65rem;
-  font-weight: 700;
+  color: var(--text-muted);
+  padding-top: 0.4rem;
+  letter-spacing: 0.05em;
+}
+
+/* Executive Bio */
+.bio-executive-block {
+  margin-bottom: 2.5rem;
+}
+
+.bio-executive-heading {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  color: var(--accent-gold);
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+}
+
+.bio-executive-text {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.2vw, 2.1rem);
+  line-height: 1.35;
   color: var(--text-cream);
-  background-color: var(--bg-black);
-  padding: 0.3rem 0.6rem;
+  margin-bottom: 1.5rem;
+  font-weight: 400;
+}
+
+.bio-executive-subtext {
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+}
+
+/* Status Report Diagnostic terminal block */
+.system-status-box {
+  border: 1px solid var(--accent-gold);
+  padding: 1.5rem;
+  background-color: rgba(126, 37, 25, 0.04);
+  font-family: var(--font-mono);
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  box-shadow: 6px 6px 0 var(--bg-black), 6px 6px 0 1px var(--accent-gold);
+}
+
+.status-header {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+  border-bottom: 1px solid rgba(208, 161, 100, 0.25);
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.2rem;
   letter-spacing: 0.08em;
+}
+
+.status-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+}
+
+.status-label {
+  color: var(--text-muted);
+}
+
+.status-val {
+  color: var(--text-cream);
+  font-weight: 700;
+}
+
+.status-val.text-green {
+  color: #55c259;
+}
+
+.blink {
+  animation: statusBlink 2.2s infinite;
+}
+
+@keyframes statusBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
 }
 
 .section-separator {

@@ -16,7 +16,7 @@
     rel="stylesheet">
 
   <!-- CSS Stylesheet with Cache Buster to force reload -->
-  <link rel="stylesheet" href="styles.css?v=49">
+  <link rel="stylesheet" href="styles.css?v=51">
 </head>
 
 <body>
@@ -189,44 +189,63 @@
 
     </section>
 
-    <!-- Section 2: ABOUT (Solid Black Panel with Terracotta Frame) -->
+    <!-- Section 2: ABOUT (Technical Profile & Candidate Intro) -->
     <section id="about" class="about-section panel-split bg-black reveal-on-scroll">
-      <div class="about-grid">
-        <div class="about-bio">
+      <div class="about-grid-new">
+        
+        <!-- Left Column: Full Name and Professional Intro Paragraphs -->
+        <div class="about-specs-col">
           <div class="title-badge-header">
             <h2 class="section-title-label">01 // the profile</h2>
-
-            <!-- Circular rotating text stamp -->
+            
+            <!-- Circular rotating text stamp (Maintained for vibe) -->
             <div class="stamp-badge" aria-hidden="true">
               <svg viewBox="0 0 100 100">
                 <path id="stampPath" d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="none" />
                 <text font-family="Space Mono" font-size="7.8" fill="currentColor">
-                  <textPath href="#stampPath" letter-spacing="1">APPROVED SYSTEM DESIGN · VERIFIED ENGINE · </textPath>
+                  <textPath href="#stampPath" letter-spacing="1">APPROVED SYSTEM DESIGN &middot; VERIFIED ENGINE &middot; </textPath>
                 </text>
               </svg>
               <div class="stamp-center">RM</div>
             </div>
           </div>
 
-          <h3 class="poster-heading-chunky">about system</h3>
-          <p class="bio-text">
-            I build software that doesn't announce itself. Clean systems, thoughtful interfaces, and the occasional
-            rabbit hole.
-          </p>
-          <p class="bio-subtext">
-            Based in Calicut, my work sits at the intersection of robust backend pipelines and tactile, high-end web
-            interactions. I believe every digital interaction should feel intentional, textured, and alive.
-          </p>
-        </div>
-
-        <div class="about-visual">
-          <div class="photo-poster-frame">
-            <img class="photo-sepia-img" src="assets/photo.png" alt="Rose Maria Portrait" loading="lazy">
-            <div class="frame-tag-label">MODEL RM-2026</div>
+          <h3 class="poster-heading-chunky" style="margin-bottom: 2.5rem; margin-top: 1rem;">rose maria</h3>
+          
+          <div class="bio-executive-block" style="margin-bottom: 0;">
+            <p class="bio-executive-text">
+              I build software that operates with high precision and silent efficiency. Specializing in performant backend frameworks, optimized databases, and rich interactive web experiences, I engineer digital platforms that are both visually premium and technically sound.
+            </p>
+            <p class="bio-executive-subtext" style="font-size: 1.1rem; max-width: 650px;">
+              Based in Calicut, my work sits at the intersection of robust backend pipelines and tactile, high-end web interactions. I believe every digital interaction should feel intentional, textured, and alive &mdash; whether it's writing an elegant API or crafting smooth, low-latency animations.
+            </p>
           </div>
         </div>
+
+        <!-- Right Column: Framed Headshot Only -->
+        <div class="about-bio-col" style="margin-top: 2rem;">
+          
+          <!-- Polaroid-style crop camera viewfinder frame -->
+          <div class="about-headshot-frame" style="margin-bottom: 0;">
+            <div class="viewfinder-crosshairs">
+              <div class="crosshair top-left">+</div>
+              <div class="crosshair top-right">+</div>
+              <div class="crosshair bottom-left">+</div>
+              <div class="crosshair bottom-right">+</div>
+            </div>
+            
+            <img class="headshot-photo" src="assets/headshot.png" onerror="this.onerror=null; this.src='assets/photo.png';" alt="Rose Maria Headshot" loading="lazy">
+            
+            <div class="frame-metadata">
+              <span class="meta-label">REF: RM-2026-NITC</span>
+              <span class="meta-scale">SCALE: 1:1</span>
+            </div>
+          </div>
+
+        </div>
+
       </div>
-      <div class="section-separator">· · · · ·</div>
+      <div class="section-separator">&middot; &middot; &middot; &middot; &middot;</div>
     </section>
 
     <!-- Section 3: EDUCATION (Solid Terracotta Red Panel with Black Specs Sheet) -->
