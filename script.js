@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
   let cursorY = 0;
 
   if (customCursor && !prefersReducedMotion) {
-    // Track cursor coordinates
     window.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
@@ -22,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const updateCursor = () => {
       const dx = mouseX - cursorX;
       const dy = mouseY - cursorY;
-      
+
       cursorX += dx * 0.15;
       cursorY += dy * 0.15;
 
@@ -31,11 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
       requestAnimationFrame(updateCursor);
     };
-    
+
     requestAnimationFrame(updateCursor);
 
     // Dynamic hover listeners for cursor scale expansions
-    const interactiveSelectors = 'a, button, .project-media-wrapper, .accordion-trigger, [role="button"]';
+    const interactiveSelectors = 'a, button, .project-media-wrapper, .sleeve-wrapper, [role="button"], .poster-main-title, .scrapbook-sticker';
     const addHoverListeners = () => {
       document.querySelectorAll(interactiveSelectors).forEach(element => {
         if (element.dataset.cursorBound) return;
@@ -52,9 +51,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
     addHoverListeners();
 
-    // Observe body elements to bind cursor states on dynamic updates
+    // Observe body mutations to bind cursor triggers on dynamic shifts
     const observer = new MutationObserver(addHoverListeners);
     observer.observe(document.body, { childList: true, subtree: true });
+
+    /* ==========================================================================
+       HERO PORTRAIT HOVER LENS MASK (Distance-based trigger)
+       ========================================================================== */
+    const portraitImg = document.querySelector('.poster-portrait-img-color');
+    if (portraitImg) {
+      window.addEventListener('mousemove', (e) => {
+        const rect = portraitImg.getBoundingClientRect();
+
+        // Calculate the horizontal center of the portrait container
+        const imgCenterX = rect.left + rect.width / 2;
+        const distanceX = Math.abs(e.clientX - imgCenterX);
+
+        // Active threshold width (e.g. 350px on desktop, proportional on mobile)
+        const thresholdX = Math.min(300, window.innerWidth * 0.4);
+
+        // Check if cursor is horizontally near and vertically within the portrait bounds
+        const isNear = distanceX < thresholdX && e.clientY >= rect.top && e.clientY <= rect.bottom;
+
+        if (isNear) {
+          customCursor.classList.add('cursor-hover-image');
+
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+
+          const maskSize = 90; // Half of cursor diameter (180px)
+          const maskStr = `radial-gradient(circle ${maskSize}px at ${x}px ${y}px, transparent 99%, black 100%)`;
+
+          portraitImg.style.webkitMaskImage = maskStr;
+          portraitImg.style.maskImage = maskStr;
+        } else {
+          customCursor.classList.remove('cursor-hover-image');
+          portraitImg.style.webkitMaskImage = 'none';
+          portraitImg.style.maskImage = 'none';
+        }
+      });
+
+      document.addEventListener('mouseleave', () => {
+        customCursor.classList.remove('cursor-hover-image');
+        portraitImg.style.webkitMaskImage = 'none';
+        portraitImg.style.maskImage = 'none';
+      });
+    }
   }
 
   /* ==========================================================================
@@ -64,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const checkScroll = () => {
     const scrollY = window.scrollY;
-    
+
     if (scrollY > 55) {
       navContainer.classList.add('scrolled');
     } else {
@@ -79,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
      POSTER PARALLAX DEPTH SHIFTS (Cinematic Scroll)
      ========================================================================== */
   const posterGlow = document.querySelector('.portrait-radial-glow');
-  const posterImg = document.querySelector('.poster-portrait-img');
+  const posterContainer = document.querySelector('.poster-portrait-container');
   const posterTitle = document.querySelector('.poster-main-title');
   const posterSubtitle = document.querySelector('.poster-subtitle');
   const posterHeader = document.querySelector('.poster-header-meta');
@@ -87,17 +129,15 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!prefersReducedMotion) {
     window.addEventListener('scroll', () => {
       const scrollY = window.scrollY;
-      
-      // Depth translations for different elements
+
       if (posterGlow) {
         posterGlow.style.transform = `translateX(-50%) translateY(${scrollY * 0.35}px) scale(${1 + scrollY * 0.0005})`;
       }
-      if (posterImg) {
-        posterImg.style.transform = `translateY(${scrollY * 0.18}px)`;
+      if (posterContainer) {
+        posterContainer.style.transform = `translateX(-50%) translateY(${scrollY * 0.18}px)`;
       }
       if (posterTitle) {
         posterTitle.style.transform = `translateY(${scrollY * 0.28}px)`;
-        posterTitle.style.opacity = Math.max(0, 1 - scrollY / 600);
       }
       if (posterSubtitle) {
         posterSubtitle.style.transform = `translateY(${scrollY * 0.25}px)`;
@@ -123,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }, {
-    threshold: 0.15,
+    threshold: 0.1,
     rootMargin: '0px 0px -50px 0px'
   });
 
@@ -149,46 +189,48 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }, {
-    threshold: 0.2,
-    rootMargin: '-20% 0px -50% 0px'
+    threshold: 0.15,
+    rootMargin: '-20% 0px -40% 0px'
   });
 
   sections.forEach(sec => activeObserver.observe(sec));
 
   /* ==========================================================================
-     ACCORDION LOGIC (Exclusive Expand)
+     VINYL DISCOGRAPHY INTERACTIONS (Cool work experience swap)
      ========================================================================== */
-  const accordionItems = document.querySelectorAll('.accordion-item');
+  const sleeveWrappers = document.querySelectorAll('.sleeve-wrapper');
+  const linerNotesSheets = document.querySelectorAll('.liner-notes-sheet');
 
-  accordionItems.forEach(item => {
-    const trigger = item.querySelector('.accordion-trigger');
-    const panel = item.querySelector('.accordion-panel');
-
-    trigger.addEventListener('click', () => {
-      const isOpen = item.classList.contains('open');
-
-      // Close all other elements
-      accordionItems.forEach(otherItem => {
-        if (otherItem !== item) {
-          otherItem.classList.remove('open');
-          otherItem.querySelector('.accordion-trigger').setAttribute('aria-expanded', 'false');
-          const otherPanel = otherItem.querySelector('.accordion-panel');
-          otherPanel.style.maxHeight = '0px';
-          otherPanel.setAttribute('aria-hidden', 'true');
-        }
+  sleeveWrappers.forEach(sleeve => {
+    sleeve.addEventListener('click', () => {
+      // 1. Remove active state from all sleeves and toggle status labels
+      sleeveWrappers.forEach(sw => {
+        sw.classList.remove('active');
+        sw.setAttribute('aria-selected', 'false');
+        const status = sw.querySelector('.sleeve-status');
+        if (status) status.textContent = 'CUE';
       });
 
-      // Toggle click target
-      if (isOpen) {
-        item.classList.remove('open');
-        trigger.setAttribute('aria-expanded', 'false');
-        panel.style.maxHeight = '0px';
-        panel.setAttribute('aria-hidden', 'true');
-      } else {
-        item.classList.add('open');
-        trigger.setAttribute('aria-expanded', 'true');
-        panel.style.maxHeight = `${panel.scrollHeight}px`;
-        panel.setAttribute('aria-hidden', 'false');
+      // 2. Set active state on clicked sleeve
+      sleeve.classList.add('active');
+      sleeve.setAttribute('aria-selected', 'true');
+      const status = sleeve.querySelector('.sleeve-status');
+      if (status) status.textContent = 'PLAYING';
+
+      // 3. Hide all liner notes inserts
+      linerNotesSheets.forEach(sheet => {
+        sheet.classList.remove('active');
+        sheet.style.display = 'none';
+      });
+
+      // 4. Slide up corresponding details sheet
+      const trackId = sleeve.getAttribute('data-track');
+      const targetSheet = document.getElementById(`notes-panel-${trackId}`);
+      if (targetSheet) {
+        targetSheet.style.display = 'flex';
+        // trigger reflow
+        void targetSheet.offsetWidth;
+        targetSheet.classList.add('active');
       }
     });
   });
@@ -220,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     lightboxClose.addEventListener('click', closeLightbox);
-    
+
     lightbox.addEventListener('click', (e) => {
       if (e.target === lightbox) {
         closeLightbox();
@@ -244,14 +286,14 @@ document.addEventListener('DOMContentLoaded', () => {
   if (emailBtn && copyTooltip) {
     emailBtn.addEventListener('click', () => {
       const email = emailBtn.textContent.trim();
-      
+
       navigator.clipboard.writeText(email)
         .then(() => {
           copyTooltip.textContent = "Copied ✓";
           copyTooltip.classList.add('show');
-          
+
           clearTimeout(tooltipTimeout);
-          
+
           tooltipTimeout = setTimeout(() => {
             copyTooltip.classList.remove('show');
             setTimeout(() => {
@@ -270,7 +312,7 @@ document.addEventListener('DOMContentLoaded', () => {
         copyTooltip.textContent = "Copy to clipboard";
       }
     });
-    
+
     emailBtn.addEventListener('mouseenter', () => {
       if (!copyTooltip.classList.contains('show')) {
         copyTooltip.classList.add('show');
