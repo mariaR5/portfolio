@@ -16,7 +16,7 @@
     rel="stylesheet">
 
   <!-- CSS Stylesheet with Cache Buster to force reload -->
-  <link rel="stylesheet" href="styles.css?v=51">
+  <link rel="stylesheet" href="styles.css?v=55">
 </head>
 
 <body>
@@ -30,7 +30,7 @@
   <!-- Navigation -->
   <header class="nav-container">
     <nav class="nav" aria-label="Main Navigation">
-      <div class="nav-logo" id="navLogo">rose maria</div>
+      <div class="nav-logo" id="navLogo">Rose Maria</div>
       <div class="nav-links">
         <a href="#about" class="nav-link" data-section="about">About</a>
         <a href="#education" class="nav-link" data-section="education">Education</a>
@@ -189,127 +189,223 @@
 
     </section>
 
-    <!-- Section 2: ABOUT (Technical Profile & Candidate Intro) -->
+    <!-- Section 2: ABOUT (Poster Spec Profile) -->
     <section id="about" class="about-section panel-split bg-black reveal-on-scroll">
-      <div class="about-grid-new">
-        
-        <!-- Left Column: Full Name and Professional Intro Paragraphs -->
-        <div class="about-specs-col">
-          <div class="title-badge-header">
-            <h2 class="section-title-label">01 // the profile</h2>
-            
-            <!-- Circular rotating text stamp (Maintained for vibe) -->
-            <div class="stamp-badge" aria-hidden="true">
-              <svg viewBox="0 0 100 100">
-                <path id="stampPath" d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="none" />
-                <text font-family="Space Mono" font-size="7.8" fill="currentColor">
-                  <textPath href="#stampPath" letter-spacing="1">APPROVED SYSTEM DESIGN &middot; VERIFIED ENGINE &middot; </textPath>
-                </text>
-              </svg>
-              <div class="stamp-center">RM</div>
-            </div>
-          </div>
+      <div class="about-inner">
 
-          <h3 class="poster-heading-chunky" style="margin-bottom: 2.5rem; margin-top: 1rem;">rose maria</h3>
-          
-          <div class="bio-executive-block" style="margin-bottom: 0;">
-            <p class="bio-executive-text">
-              I build software that operates with high precision and silent efficiency. Specializing in performant backend frameworks, optimized databases, and rich interactive web experiences, I engineer digital platforms that are both visually premium and technically sound.
-            </p>
-            <p class="bio-executive-subtext" style="font-size: 1.1rem; max-width: 650px;">
-              Based in Calicut, my work sits at the intersection of robust backend pipelines and tactile, high-end web interactions. I believe every digital interaction should feel intentional, textured, and alive &mdash; whether it's writing an elegant API or crafting smooth, low-latency animations.
-            </p>
-          </div>
+        <!-- ── Top: mono label + divider strip (mirrors hero credits bar) ── -->
+        <div class="about-header-strip">
+          <span class="section-title-label">01 // the profile</span>
+          <div class="about-divider-line"></div>
+          <span class="about-header-coords">[ 11.2588° N · 75.7804° E ]</span>
         </div>
 
-        <!-- Right Column: Framed Headshot Only -->
-        <div class="about-bio-col" style="margin-top: 2rem;">
-          
-          <!-- Polaroid-style crop camera viewfinder frame -->
-          <div class="about-headshot-frame" style="margin-bottom: 0;">
-            <div class="viewfinder-crosshairs">
-              <div class="crosshair top-left">+</div>
-              <div class="crosshair top-right">+</div>
-              <div class="crosshair bottom-left">+</div>
-              <div class="crosshair bottom-right">+</div>
+        <!-- ── Main grid: name block left, headshot right ── -->
+        <div class="about-poster-grid">
+
+          <!-- Left: Big name + bio text + credential rows -->
+          <div class="about-left-col">
+
+            <!-- Giant name — echoes the hero "maria" treatment -->
+            <div class="about-name-block">
+              <h2 class="about-name-display">rose<br>maria</h2>
+              <div class="about-name-sub">
+                <span class="about-name-role">Software Engineer · Creative Technologist</span>
+                <div class="stamp-badge about-stamp" aria-hidden="true">
+                  <svg viewBox="0 0 100 100">
+                    <path id="aboutStampPath" d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="none" />
+                    <text font-family="Space Mono" font-size="7.8" fill="currentColor">
+                      <textPath href="#aboutStampPath" letter-spacing="1">APPROVED SYSTEM DESIGN · VERIFIED ENGINE · </textPath>
+                    </text>
+                  </svg>
+                  <div class="stamp-center">RM</div>
+                </div>
+              </div>
             </div>
-            
-            <img class="headshot-photo" src="assets/headshot.png" onerror="this.onerror=null; this.src='assets/photo.png';" alt="Rose Maria Headshot" loading="lazy">
-            
-            <div class="frame-metadata">
-              <span class="meta-label">REF: RM-2026-NITC</span>
-              <span class="meta-scale">SCALE: 1:1</span>
+
+            <!-- Professional bio paragraphs -->
+            <div class="about-bio-prose">
+              <p class="about-bio-lead">
+                I build software that operates with precision and quiet elegance — performant backends, clean system architecture, and rich, tactile web frontends.
+              </p>
+              <p class="about-bio-body">
+                Based in Calicut, my work spans the full stack: from optimising database pipelines and writing robust APIs, to engineering interactive canvas animations and digital audio systems. I treat every interface as a product — intentional, textured, and alive.
+              </p>
             </div>
+
+            <!-- Credential rows — styled like hero credits grid -->
+            <div class="about-credential-grid">
+              <div class="about-cred-col">
+                <span class="cred-label">INSTITUTION</span>
+                <span class="cred-value">NIT Calicut</span>
+                <span class="cred-value">B.Tech · CSE · 2026</span>
+              </div>
+              <div class="about-cred-col">
+                <span class="cred-label">SPECIALISATION</span>
+                <span class="cred-value">Systems Engineering</span>
+                <span class="cred-value">Audio &amp; Interactive UI</span>
+              </div>
+              <div class="about-cred-col">
+                <span class="cred-label">AVAILABILITY</span>
+                <span class="cred-value cred-available">Open to Roles</span>
+                <span class="cred-value">Calicut / Remote</span>
+              </div>
+            </div>
+
+            <!-- Skill tags — horizontal, monospaced pills -->
+            <div class="about-skills-row">
+              <span class="about-skill-tag">JavaScript</span>
+              <span class="about-skill-tag">TypeScript</span>
+              <span class="about-skill-tag">Python</span>
+              <span class="about-skill-tag">C++</span>
+              <span class="about-skill-tag">SQL</span>
+              <span class="about-skill-tag">Web Audio API</span>
+              <span class="about-skill-tag">WebGL</span>
+              <span class="about-skill-tag">React</span>
+              <span class="about-skill-tag">Node.js</span>
+              <span class="about-skill-tag">Docker</span>
+            </div>
+
           </div>
 
+          <!-- Right: Viewfinder headshot + restricted-style status box -->
+          <div class="about-right-col">
+
+            <!-- Camera viewfinder frame (same crosshair system as hero) -->
+            <div class="about-headshot-frame">
+              <div class="viewfinder-crosshairs">
+                <div class="crosshair top-left">+</div>
+                <div class="crosshair top-right">+</div>
+                <div class="crosshair bottom-left">+</div>
+                <div class="crosshair bottom-right">+</div>
+              </div>
+              <div class="headshot-scanline"></div>
+              <img class="headshot-photo" src="assets/image.png" alt="Rose Maria — Professional Headshot" loading="lazy">
+              <div class="frame-metadata">
+                <span class="meta-label">REF: RM-2026-NITC</span>
+                <span class="meta-scale">SCALE: 1:1</span>
+              </div>
+            </div>
+
+            <!-- Availability block — mirrors hero restricted box -->
+            <div class="about-restricted-block">
+              <div class="restricted-header">CANDIDATE STATUS</div>
+              <div class="restricted-body">
+                <div class="restricted-letter">RM</div>
+                <div class="restricted-text-rules">
+                  AVAILABLE FOR FULL-TIME ROLES · SOFTWARE ENGINEERING · INTERACTIVE SYSTEMS · CALICUT, INDIA
+                </div>
+              </div>
+            </div>
+
+            <!-- Barcode decoration (same as hero/education) -->
+            <div class="about-barcode-row">
+              <div class="barcode-visual-black about-barcode">
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+              </div>
+              <span class="about-barcode-id">RM-CS-2026-NITC</span>
+            </div>
+
+          </div>
         </div>
 
       </div>
-      <div class="section-separator">&middot; &middot; &middot; &middot; &middot;</div>
+      <div class="section-separator">· · · · ·</div>
     </section>
 
-    <!-- Section 3: EDUCATION (Solid Terracotta Red Panel with Black Specs Sheet) -->
+    <!-- Section 3: EDUCATION (Solid Terracotta Red Panel — Academic Spec Sheet) -->
     <section id="education" class="education-section panel-split bg-red reveal-on-scroll">
-      <div class="section-header-poster">
-        <h2 class="section-title-label-black">02 // study & theory</h2>
-        <h3 class="poster-heading-chunky-black">academic specifications</h3>
-      </div>
 
-      <div class="education-poster-layout">
+      <div class="edu-inner">
 
-        <!-- Timeline items -->
-        <div class="education-timeline">
-          <div class="timeline-track-black"></div>
-
-          <div class="education-item-black">
-            <div class="timeline-marker-black"></div>
-            <div class="education-details">
-              <div class="edu-header">
-                <h4 class="institution-name-black">National Institute of Technology Calicut</h4>
-                <span class="edu-duration-black">2022 — 2026</span>
-              </div>
-              <p class="degree-info-black">Bachelor of Technology in Computer Science & Engineering</p>
-            </div>
-          </div>
-
-          <div class="education-item-black">
-            <div class="timeline-marker-black"></div>
-            <div class="education-details">
-              <div class="edu-header">
-                <h4 class="institution-name-black">St. Joseph's Higher Secondary School</h4>
-                <span class="edu-duration-black">2020 — 2022</span>
-              </div>
-              <p class="degree-info-black">Higher Secondary Education — Science Stream</p>
-            </div>
-          </div>
+        <!-- Header strip: mirrors about page style but inverted (black on red) -->
+        <div class="edu-header-strip">
+          <span class="section-title-label-black">02 // study &amp; theory</span>
+          <div class="edu-divider-line"></div>
+          <span class="edu-header-code">[ ACADEMIC LOG ]</span>
         </div>
 
-        <!-- Technical Specification print sheet -->
-        <div class="spec-sheet-container">
-          <div class="spec-sheet">
-            <div class="spec-header">TECHNICAL SYSTEM DIAGRAM</div>
-            <div class="spec-row">
-              <span class="spec-label">REGISTRY NO:</span>
-              <span class="spec-value">RM-CS-2026</span>
+        <!-- Big section title -->
+        <h2 class="edu-main-title">academic<br>specifications</h2>
+
+        <!-- Main layout: timeline left, spec sheet right -->
+        <div class="education-poster-layout">
+
+          <!-- Timeline column -->
+          <div class="education-timeline">
+            <div class="timeline-track-black"></div>
+
+            <!-- Entry 1: NITC -->
+            <div class="education-item-black">
+              <div class="timeline-marker-black"></div>
+              <div class="education-details">
+                <div class="edu-header">
+                  <h3 class="institution-name-black">National Institute of Technology Calicut</h3>
+                  <span class="edu-duration-black">2022 — 2026</span>
+                </div>
+                <p class="degree-info-black">Bachelor of Technology — Computer Science &amp; Engineering</p>
+                <!-- Course focus tags -->
+                <div class="edu-focus-tags">
+                  <span class="edu-tag">Algorithms</span>
+                  <span class="edu-tag">Systems Programming</span>
+                  <span class="edu-tag">Interactive UI</span>
+                  <span class="edu-tag">DSP / Audio</span>
+                </div>
+              </div>
             </div>
-            <div class="spec-row">
-              <span class="spec-label">HOST SYSTEM:</span>
-              <span class="spec-value">NIT CALICUT (NITC)</span>
-            </div>
-            <div class="spec-row">
-              <span class="spec-label">SPECIALIZATION:</span>
-              <span class="spec-value">ALGORITHMS / INTERACTIVES</span>
-            </div>
-            <div class="spec-row">
-              <span class="spec-label">CREDITS RATING:</span>
-              <span class="spec-value">HONORS DIVISION</span>
-            </div>
-            <div class="spec-footer">
-              <div class="barcode-visual">
-                <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+
+            <!-- Entry 2: School -->
+            <div class="education-item-black">
+              <div class="timeline-marker-black"></div>
+              <div class="education-details">
+                <div class="edu-header">
+                  <h3 class="institution-name-black">St. Joseph's Higher Secondary School</h3>
+                  <span class="edu-duration-black">2020 — 2022</span>
+                </div>
+                <p class="degree-info-black">Higher Secondary Education — Science Stream</p>
+                <div class="edu-focus-tags">
+                  <span class="edu-tag">Mathematics</span>
+                  <span class="edu-tag">Physics</span>
+                  <span class="edu-tag">Computer Science</span>
+                </div>
               </div>
             </div>
           </div>
+
+          <!-- Spec sheet column -->
+          <div class="spec-sheet-container">
+            <div class="spec-sheet">
+              <div class="spec-header">TECHNICAL SYSTEM DIAGRAM</div>
+              <div class="spec-row">
+                <span class="spec-label">REGISTRY NO:</span>
+                <span class="spec-value">RM-CS-2026</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-label">HOST SYSTEM:</span>
+                <span class="spec-value">NIT CALICUT (NITC)</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-label">SPECIALIZATION:</span>
+                <span class="spec-value">ALGORITHMS / INTERACTIVES</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-label">CREDITS RATING:</span>
+                <span class="spec-value">HONORS DIVISION</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-label">BATCH:</span>
+                <span class="spec-value">2022 — 2026</span>
+              </div>
+              <div class="spec-footer">
+                <div class="barcode-visual">
+                  <span></span><span></span><span></span><span></span><span></span>
+                  <span></span><span></span><span></span><span></span><span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
 
       </div>
@@ -318,172 +414,207 @@
 
     <!-- Section 4: EXPERIENCE (Vinyl Discography Sleeve Rack Layout) -->
     <section id="experience" class="experience-section panel-split bg-black reveal-on-scroll">
-      <div class="section-header-poster">
-        <h2 class="section-title-label">03 // career tracks</h2>
-        <h3 class="poster-heading-chunky">discography log</h3>
-      </div>
+      <div class="exp-inner">
 
-      <div class="discography-container">
-
-        <!-- Left Column: Cardboard record sleeves rack -->
-        <div class="sleeves-rack" role="tablist" aria-label="Professional Experience Tracks">
-
-          <!-- Sleeve Cover 1 (CLL) -->
-          <button class="sleeve-wrapper active" data-track="1" role="tab" aria-selected="true"
-            aria-controls="notes-panel-1">
-            <div class="sleeve-cover">
-              <div class="sleeve-header">
-                <span class="track-number">TRACK // 01</span>
-                <span class="release-code">CLL-2025</span>
-              </div>
-              <div class="sleeve-body">
-                <h4 class="sleeve-role">Software Engineering</h4>
-                <span class="sleeve-company">Creative Logic Lab</span>
-              </div>
-              <div class="sleeve-footer">
-                <span class="sleeve-duration">2025 — Present</span>
-                <span class="sleeve-status">PLAYING</span>
-              </div>
-            </div>
-            <!-- Concentric Groove vinyl disc -->
-            <div class="vinyl-disc">
-              <div class="vinyl-grooves"></div>
-              <div class="vinyl-label">
-                <div class="label-center">RM // 01</div>
-              </div>
-            </div>
-          </button>
-
-          <!-- Sleeve Cover 2 (Helix) -->
-          <button class="sleeve-wrapper" data-track="2" role="tab" aria-selected="false" aria-controls="notes-panel-2">
-            <div class="sleeve-cover">
-              <div class="sleeve-header">
-                <span class="track-number">TRACK // 02</span>
-                <span class="release-code">HXS-2024</span>
-              </div>
-              <div class="sleeve-body">
-                <h4 class="sleeve-role">Web Developer</h4>
-                <span class="sleeve-company">Helix Systems</span>
-              </div>
-              <div class="sleeve-footer">
-                <span class="sleeve-duration">2024</span>
-                <span class="sleeve-status">CUE</span>
-              </div>
-            </div>
-            <div class="vinyl-disc">
-              <div class="vinyl-grooves"></div>
-              <div class="vinyl-label">
-                <div class="label-center">RM // 02</div>
-              </div>
-            </div>
-          </button>
-
-          <!-- Sleeve Cover 3 (MTOI) -->
-          <button class="sleeve-wrapper" data-track="3" role="tab" aria-selected="false" aria-controls="notes-panel-3">
-            <div class="sleeve-cover">
-              <div class="sleeve-header">
-                <span class="track-number">TRACK // 03</span>
-                <span class="release-code">MTOI-2023</span>
-              </div>
-              <div class="sleeve-body">
-                <h4 class="sleeve-role">Open Source Contrib.</h4>
-                <span class="sleeve-company">Music Tech Open</span>
-              </div>
-              <div class="sleeve-footer">
-                <span class="sleeve-duration">2023 — 2024</span>
-                <span class="sleeve-status">CUE</span>
-              </div>
-            </div>
-            <div class="vinyl-disc">
-              <div class="vinyl-grooves"></div>
-              <div class="vinyl-label">
-                <div class="label-center">RM // 03</div>
-              </div>
-            </div>
-          </button>
-
+        <!-- Header strip matches About page -->
+        <div class="exp-header-strip">
+          <span class="section-title-label">03 // career tracks</span>
+          <div class="exp-divider-line"></div>
+          <span class="exp-header-code">[ DISCOGRAPHY LOG ]</span>
         </div>
 
-        <!-- Right Column: Printed Liner notes insert panel -->
-        <div class="liner-notes-container">
+        <!-- Giant outlined section title -->
+        <h2 class="exp-main-title">discography<br>log</h2>
 
-          <!-- Sheet Panel 1 (CLL details) -->
-          <div class="liner-notes-sheet active" id="notes-panel-1" role="tabpanel"
-            aria-label="Creative Logic Lab Experience">
-            <div class="notes-header">
-              <span class="notes-catalogue">CATALOGUE: CLL-CS-01</span>
-              <h4 class="notes-title">Creative Logic Lab</h4>
-            </div>
-            <div class="notes-content">
-              <p class="notes-intro">Internship research summary and systems validation deliverables:</p>
-              <ul class="notes-bullets">
-                <li>Developed high-performance interactive web interfaces, achieving sub-100ms response times for rich
-                  graphics.</li>
-                <li>Created smooth animations and UI systems designed for tactile audio visualizers using the Web Audio
-                  API.</li>
-                <li>Collaborated with design teams to enforce design systems across client interfaces, maintaining
-                  strict hex color guidelines and typeface setups.</li>
-              </ul>
-            </div>
-            <div class="notes-footer-barcode">
-              <div class="barcode-visual-black">
-                <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        <!-- Quick stat row — mirrors hero credits grid -->
+        <div class="exp-stat-row">
+          <div class="exp-stat-col">
+            <span class="exp-stat-num">03</span>
+            <span class="exp-stat-label">Positions</span>
+          </div>
+          <div class="exp-stat-divider"></div>
+          <div class="exp-stat-col">
+            <span class="exp-stat-num">2+</span>
+            <span class="exp-stat-label">Years Active</span>
+          </div>
+          <div class="exp-stat-divider"></div>
+          <div class="exp-stat-col">
+            <span class="exp-stat-num">∞</span>
+            <span class="exp-stat-label">Lines Shipped</span>
+          </div>
+        </div>
+
+        <div class="discography-container">
+
+          <!-- Left Column: Cardboard record sleeves rack -->
+          <div class="sleeves-rack" role="tablist" aria-label="Professional Experience Tracks">
+
+            <!-- Sleeve Cover 1 (CLL) -->
+            <button class="sleeve-wrapper active" data-track="1" role="tab" aria-selected="true"
+              aria-controls="notes-panel-1">
+              <div class="sleeve-cover">
+                <div class="sleeve-header">
+                  <span class="track-number">TRACK // 01</span>
+                  <span class="release-code">CLL-2025</span>
+                </div>
+                <div class="sleeve-body">
+                  <h4 class="sleeve-role">Software Engineering</h4>
+                  <span class="sleeve-company">Creative Logic Lab</span>
+                </div>
+                <div class="sleeve-footer">
+                  <span class="sleeve-duration">2025 — Present</span>
+                  <span class="sleeve-status playing-status">● PLAYING</span>
+                </div>
               </div>
-              <span class="barcode-id">CLL-2025-RM</span>
-            </div>
+              <!-- Concentric Groove vinyl disc -->
+              <div class="vinyl-disc">
+                <div class="vinyl-grooves"></div>
+                <div class="vinyl-label">
+                  <div class="label-center">RM // 01</div>
+                </div>
+              </div>
+            </button>
+
+            <!-- Sleeve Cover 2 (Helix) -->
+            <button class="sleeve-wrapper" data-track="2" role="tab" aria-selected="false" aria-controls="notes-panel-2">
+              <div class="sleeve-cover">
+                <div class="sleeve-header">
+                  <span class="track-number">TRACK // 02</span>
+                  <span class="release-code">HXS-2024</span>
+                </div>
+                <div class="sleeve-body">
+                  <h4 class="sleeve-role">Web Developer</h4>
+                  <span class="sleeve-company">Helix Systems</span>
+                </div>
+                <div class="sleeve-footer">
+                  <span class="sleeve-duration">2024</span>
+                  <span class="sleeve-status">CUE</span>
+                </div>
+              </div>
+              <div class="vinyl-disc">
+                <div class="vinyl-grooves"></div>
+                <div class="vinyl-label">
+                  <div class="label-center">RM // 02</div>
+                </div>
+              </div>
+            </button>
+
+            <!-- Sleeve Cover 3 (MTOI) -->
+            <button class="sleeve-wrapper" data-track="3" role="tab" aria-selected="false" aria-controls="notes-panel-3">
+              <div class="sleeve-cover">
+                <div class="sleeve-header">
+                  <span class="track-number">TRACK // 03</span>
+                  <span class="release-code">MTOI-2023</span>
+                </div>
+                <div class="sleeve-body">
+                  <h4 class="sleeve-role">Open Source Contrib.</h4>
+                  <span class="sleeve-company">Music Tech Open</span>
+                </div>
+                <div class="sleeve-footer">
+                  <span class="sleeve-duration">2023 — 2024</span>
+                  <span class="sleeve-status">CUE</span>
+                </div>
+              </div>
+              <div class="vinyl-disc">
+                <div class="vinyl-grooves"></div>
+                <div class="vinyl-label">
+                  <div class="label-center">RM // 03</div>
+                </div>
+              </div>
+            </button>
+
           </div>
 
-          <!-- Sheet Panel 2 (Helix details) -->
-          <div class="liner-notes-sheet" id="notes-panel-2" role="tabpanel" aria-label="Helix Systems Experience"
-            style="display: none;">
-            <div class="notes-header">
-              <span class="notes-catalogue">CATALOGUE: HXS-CS-02</span>
-              <h4 class="notes-title">Helix Systems</h4>
-            </div>
-            <div class="notes-content">
-              <p class="notes-intro">Database performance logs and architecture optimizations:</p>
-              <ul class="notes-bullets">
-                <li>Refactored legacy database models and web frameworks, accelerating load times by 20%.</li>
-                <li>Constructed clean internal dashboards for metrics logging and performance metrics tracking.</li>
-                <li>Authored automated test suites for security validation and data integrity, ensuring 95% API
-                  coverage.</li>
-              </ul>
-            </div>
-            <div class="notes-footer-barcode">
-              <div class="barcode-visual-black">
-                <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-              </div>
-              <span class="barcode-id">HXS-2024-RM</span>
-            </div>
-          </div>
+          <!-- Right Column: Printed Liner notes insert panel -->
+          <div class="liner-notes-container">
 
-          <!-- Sheet Panel 3 (MTOI details) -->
-          <div class="liner-notes-sheet" id="notes-panel-3" role="tabpanel"
-            aria-label="Music Tech Open Initiative Experience" style="display: none;">
-            <div class="notes-header">
-              <span class="notes-catalogue">CATALOGUE: MTOI-DSP-03</span>
-              <h4 class="notes-title">Music Tech Open Initiative</h4>
-            </div>
-            <div class="notes-content">
-              <p class="notes-intro">Digital Signal Processing contributions and package configurations:</p>
-              <ul class="notes-bullets">
-                <li>Contributed core components to open-source DSP frameworks utilized by hundreds of online artists.
-                </li>
-                <li>Refined accessibility features, updating markup and screen-reader flow for digital audio workspaces.
-                </li>
-                <li>Maintained build tasks and optimized package loading pipelines, reducing payload size by 15%.</li>
-              </ul>
-            </div>
-            <div class="notes-footer-barcode">
-              <div class="barcode-visual-black">
-                <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            <!-- Sheet Panel 1 (CLL details) -->
+            <div class="liner-notes-sheet active" id="notes-panel-1" role="tabpanel"
+              aria-label="Creative Logic Lab Experience">
+              <div class="notes-header">
+                <span class="notes-catalogue">CATALOGUE: CLL-CS-01</span>
+                <h4 class="notes-title">Creative Logic Lab</h4>
+                <div class="notes-meta-row">
+                  <span class="notes-meta-chip">Software Engineering</span>
+                  <span class="notes-meta-chip">2025 — Present</span>
+                </div>
               </div>
-              <span class="barcode-id">MTOI-2023-RM</span>
+              <div class="notes-content">
+                <p class="notes-intro">Internship research summary and systems validation deliverables:</p>
+                <ul class="notes-bullets">
+                  <li>Developed high-performance interactive web interfaces, achieving sub-100ms response times for rich graphics.</li>
+                  <li>Created smooth animations and UI systems designed for tactile audio visualizers using the Web Audio API.</li>
+                  <li>Collaborated with design teams to enforce design systems across client interfaces, maintaining strict hex color guidelines and typeface setups.</li>
+                </ul>
+              </div>
+              <div class="notes-footer-barcode">
+                <div class="barcode-visual-black">
+                  <span></span><span></span><span></span><span></span><span></span>
+                  <span></span><span></span><span></span><span></span><span></span>
+                </div>
+                <span class="barcode-id">CLL-2025-RM</span>
+              </div>
             </div>
+
+            <!-- Sheet Panel 2 (Helix details) -->
+            <div class="liner-notes-sheet" id="notes-panel-2" role="tabpanel" aria-label="Helix Systems Experience"
+              style="display: none;">
+              <div class="notes-header">
+                <span class="notes-catalogue">CATALOGUE: HXS-CS-02</span>
+                <h4 class="notes-title">Helix Systems</h4>
+                <div class="notes-meta-row">
+                  <span class="notes-meta-chip">Web Developer</span>
+                  <span class="notes-meta-chip">2024</span>
+                </div>
+              </div>
+              <div class="notes-content">
+                <p class="notes-intro">Database performance logs and architecture optimizations:</p>
+                <ul class="notes-bullets">
+                  <li>Refactored legacy database models and web frameworks, accelerating load times by 20%.</li>
+                  <li>Constructed clean internal dashboards for metrics logging and performance metrics tracking.</li>
+                  <li>Authored automated test suites for security validation and data integrity, ensuring 95% API coverage.</li>
+                </ul>
+              </div>
+              <div class="notes-footer-barcode">
+                <div class="barcode-visual-black">
+                  <span></span><span></span><span></span><span></span><span></span>
+                  <span></span><span></span><span></span><span></span><span></span>
+                </div>
+                <span class="barcode-id">HXS-2024-RM</span>
+              </div>
+            </div>
+
+            <!-- Sheet Panel 3 (MTOI details) -->
+            <div class="liner-notes-sheet" id="notes-panel-3" role="tabpanel"
+              aria-label="Music Tech Open Initiative Experience" style="display: none;">
+              <div class="notes-header">
+                <span class="notes-catalogue">CATALOGUE: MTOI-DSP-03</span>
+                <h4 class="notes-title">Music Tech Open Initiative</h4>
+                <div class="notes-meta-row">
+                  <span class="notes-meta-chip">Open Source</span>
+                  <span class="notes-meta-chip">2023 — 2024</span>
+                </div>
+              </div>
+              <div class="notes-content">
+                <p class="notes-intro">Digital Signal Processing contributions and package configurations:</p>
+                <ul class="notes-bullets">
+                  <li>Contributed core components to open-source DSP frameworks utilized by hundreds of online artists.</li>
+                  <li>Refined accessibility features, updating markup and screen-reader flow for digital audio workspaces.</li>
+                  <li>Maintained build tasks and optimized package loading pipelines, reducing payload size by 15%.</li>
+                </ul>
+              </div>
+              <div class="notes-footer-barcode">
+                <div class="barcode-visual-black">
+                  <span></span><span></span><span></span><span></span><span></span>
+                  <span></span><span></span><span></span><span></span><span></span>
+                </div>
+                <span class="barcode-id">MTOI-2023-RM</span>
+              </div>
+            </div>
+
           </div>
 
         </div>
-
       </div>
     </section>
 
