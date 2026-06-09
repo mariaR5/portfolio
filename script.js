@@ -1,296 +1,286 @@
-/**
- * Elena Thorne — Portfolio Interactivity Script
- */
-
 document.addEventListener('DOMContentLoaded', () => {
+  // Accessibility check for reduced motion
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // ==========================================================================
-  // 1. Custom Lerp Cursor
-  // ==========================================================================
-  const cursor = document.getElementById('custom-cursor');
-  let mouseX = window.innerWidth / 2;
-  let mouseY = window.innerHeight / 2;
-  let cursorX = mouseX;
-  let cursorY = mouseY;
-  let hasMoved = false;
-  const speed = 0.16; // Lerp lag factor (lower = more lag)
+  /* ==========================================================================
+     CUSTOM CURSOR PHYSICS LOOP
+     ========================================================================== */
+  const customCursor = document.getElementById('customCursor');
+  let mouseX = 0;
+  let mouseY = 0;
+  let cursorX = 0;
+  let cursorY = 0;
 
-  // Track mouse coordinates
-  window.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    if (!hasMoved) {
-      cursorX = mouseX;
-      cursorY = mouseY;
-      hasMoved = true;
-    }
-  });
+  if (customCursor && !prefersReducedMotion) {
+    // Track cursor coordinates
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
 
-  // RequestAnimationFrame lerping loop
-  function updateCursor() {
-    if (hasMoved) {
-      cursorX += (mouseX - cursorX) * speed;
-      cursorY += (mouseY - cursorY) * speed;
-      cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
-    }
-    requestAnimationFrame(updateCursor);
-  }
-  requestAnimationFrame(updateCursor);
+    // Lerp loop (~80ms lag factor)
+    const updateCursor = () => {
+      const dx = mouseX - cursorX;
+      const dy = mouseY - cursorY;
+      
+      cursorX += dx * 0.15;
+      cursorY += dy * 0.15;
 
-  // Dynamic hover class scaling on interactive nodes
-  document.addEventListener('mouseover', (e) => {
-    const interactive = e.target.closest('a, button, select, input, textarea, [role="button"], .project-card, .accordion-header, .project-thumbnail-wrapper');
-    if (interactive) {
-      cursor.classList.add('hovered');
-    }
-  });
+      customCursor.style.left = `${cursorX}px`;
+      customCursor.style.top = `${cursorY}px`;
 
-  document.addEventListener('mouseout', (e) => {
-    const interactive = e.target.closest('a, button, select, input, textarea, [role="button"], .project-card, .accordion-header, .project-thumbnail-wrapper');
-    if (interactive) {
-      // Prevent flicker when crossing borders within the same interactive block
-      if (e.relatedTarget && e.relatedTarget.closest('a, button, select, input, textarea, [role="button"], .project-card, .accordion-header, .project-thumbnail-wrapper') === interactive) {
-        return;
-      }
-      cursor.classList.remove('hovered');
-    }
-  });
-
-  // Hide cursor on scroll to avoid alignment artifacts
-  window.addEventListener('scroll', () => {
-    cursor.classList.remove('hovered');
-  });
-
-
-  // ==========================================================================
-  // 2. Hero Name Splitter & Staggered Load
-  // ==========================================================================
-  const heroLines = document.querySelectorAll('.hero-name-line');
-  const hero = document.getElementById('hero');
-  let totalCharCount = 0;
-
-  heroLines.forEach((line) => {
-    const text = line.textContent.trim();
-    line.innerHTML = '';
+      requestAnimationFrame(updateCursor);
+    };
     
-    for (let char of text) {
-      const span = document.createElement('span');
-      span.className = 'char';
-      
-      if (char === ' ') {
-        span.innerHTML = '&nbsp;';
-      } else {
-        span.textContent = char;
-      }
-      
-      // Compute delay (30ms stagger)
-      span.style.transitionDelay = `${totalCharCount * 30}ms`;
-      line.appendChild(span);
-      totalCharCount++;
-    }
-  });
+    requestAnimationFrame(updateCursor);
 
-  // Set delayed start coordinates for other hero content blocks
-  const startDelay = totalCharCount * 30;
-  
-  const tagline = document.getElementById('hero-tagline');
-  tagline.style.transitionDelay = `${startDelay + 150}ms`;
+    // Dynamic hover listeners for cursor scale expansions
+    const interactiveSelectors = 'a, button, .project-media-wrapper, .accordion-trigger, [role="button"]';
+    const addHoverListeners = () => {
+      document.querySelectorAll(interactiveSelectors).forEach(element => {
+        if (element.dataset.cursorBound) return;
+        element.dataset.cursorBound = "true";
 
-  const portrait = document.getElementById('hero-portrait');
-  if (portrait) {
-    portrait.style.transitionDelay = `${startDelay + 300}ms`;
+        element.addEventListener('mouseenter', () => {
+          customCursor.classList.add('cursor-expand');
+        });
+        element.addEventListener('mouseleave', () => {
+          customCursor.classList.remove('cursor-expand');
+        });
+      });
+    };
+
+    addHoverListeners();
+
+    // Observe body elements to bind cursor states on dynamic updates
+    const observer = new MutationObserver(addHoverListeners);
+    observer.observe(document.body, { childList: true, subtree: true });
   }
 
-  const meta = document.getElementById('hero-meta');
-  meta.style.transitionDelay = `${startDelay + 450}ms`;
+  /* ==========================================================================
+     STICKY HEADER & NAV SCROLL ACTIONS
+     ========================================================================== */
+  const navContainer = document.querySelector('.nav-container');
 
-  const scrollIndicator = document.getElementById('hero-scroll');
-  scrollIndicator.style.transitionDelay = `${startDelay + 550}ms`;
-
-  // Trigger load animation on next tick
-  setTimeout(() => {
-    hero.classList.add('animate-active');
-  }, 100);
-
-
-  // ==========================================================================
-  // 3. Scroll Reveals & Navigation Active Dot Handler
-  // ==========================================================================
-  const navbar = document.getElementById('navbar');
-  const revealElements = document.querySelectorAll('.reveal');
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-links li');
-
-  // Sticky Navbar class on Scroll
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 40) {
-      navbar.classList.add('scrolled');
+  const checkScroll = () => {
+    const scrollY = window.scrollY;
+    
+    if (scrollY > 55) {
+      navContainer.classList.add('scrolled');
     } else {
-      navbar.classList.remove('scrolled');
+      navContainer.classList.remove('scrolled');
     }
-  });
+  };
 
-  // IntersectionObserver for element reveals
+  window.addEventListener('scroll', checkScroll);
+  checkScroll();
+
+  /* ==========================================================================
+     POSTER PARALLAX DEPTH SHIFTS (Cinematic Scroll)
+     ========================================================================== */
+  const posterGlow = document.querySelector('.portrait-radial-glow');
+  const posterImg = document.querySelector('.poster-portrait-img');
+  const posterTitle = document.querySelector('.poster-main-title');
+  const posterSubtitle = document.querySelector('.poster-subtitle');
+  const posterHeader = document.querySelector('.poster-header-meta');
+
+  if (!prefersReducedMotion) {
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      
+      // Depth translations for different elements
+      if (posterGlow) {
+        posterGlow.style.transform = `translateX(-50%) translateY(${scrollY * 0.35}px) scale(${1 + scrollY * 0.0005})`;
+      }
+      if (posterImg) {
+        posterImg.style.transform = `translateY(${scrollY * 0.18}px)`;
+      }
+      if (posterTitle) {
+        posterTitle.style.transform = `translateY(${scrollY * 0.28}px)`;
+        posterTitle.style.opacity = Math.max(0, 1 - scrollY / 600);
+      }
+      if (posterSubtitle) {
+        posterSubtitle.style.transform = `translateY(${scrollY * 0.25}px)`;
+        posterSubtitle.style.opacity = Math.max(0, 1 - scrollY / 500);
+      }
+      if (posterHeader) {
+        posterHeader.style.transform = `translateY(${scrollY * 0.12}px)`;
+        posterHeader.style.opacity = Math.max(0, 1 - scrollY / 300);
+      }
+    });
+  }
+
+  /* ==========================================================================
+     INTERSECTION OBSERVER - SCROLL REVEALS
+     ========================================================================== */
+  const revealElements = document.querySelectorAll('.reveal-on-scroll');
+
   const revealObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach((entry) => {
+    entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('revealed');
-        observer.unobserve(entry.target); // Reveal once
+        observer.unobserve(entry.target);
       }
     });
   }, {
-    root: null,
-    threshold: 0.15
+    threshold: 0.15,
+    rootMargin: '0px 0px -50px 0px'
   });
 
-  revealElements.forEach((el) => {
-    revealObserver.observe(el);
-  });
+  revealElements.forEach(el => revealObserver.observe(el));
 
-  // IntersectionObserver for tracking active sections in Nav
-  const navObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
+  /* ==========================================================================
+     INTERSECTION OBSERVER - ACTIVE NAVIGATION HIGHLIGHTS
+     ========================================================================== */
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const activeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
       if (entry.isIntersecting) {
-        const activeId = entry.target.getAttribute('id');
-        navLinks.forEach((li) => {
-          const anchor = li.querySelector('a');
-          if (anchor && anchor.getAttribute('href') === `#${activeId}`) {
-            li.classList.add('active');
+        const id = entry.target.getAttribute('id');
+        navLinks.forEach(link => {
+          if (link.getAttribute('data-section') === id) {
+            link.classList.add('active');
           } else {
-            li.classList.remove('active');
+            link.classList.remove('active');
           }
         });
       }
     });
   }, {
-    root: null,
     threshold: 0.2,
-    rootMargin: '-25% 0px -45% 0px' // offset centered viewport
+    rootMargin: '-20% 0px -50% 0px'
   });
 
-  sections.forEach((sec) => {
-    if (['about', 'experience', 'projects', 'contact'].includes(sec.id)) {
-      navObserver.observe(sec);
-    }
-  });
+  sections.forEach(sec => activeObserver.observe(sec));
 
+  /* ==========================================================================
+     ACCORDION LOGIC (Exclusive Expand)
+     ========================================================================== */
+  const accordionItems = document.querySelectorAll('.accordion-item');
 
-  // ==========================================================================
-  // 4. Parallax Hero Portrait
-  // ==========================================================================
-  let lastScrollY = window.scrollY;
-  let scrollTicking = false;
+  accordionItems.forEach(item => {
+    const trigger = item.querySelector('.accordion-trigger');
+    const panel = item.querySelector('.accordion-panel');
 
-  window.addEventListener('scroll', () => {
-    lastScrollY = window.scrollY;
-    if (!scrollTicking) {
-      window.requestAnimationFrame(() => {
-        const portraitImg = document.querySelector('.hero-portrait-image');
-        if (portraitImg && lastScrollY < window.innerHeight) {
-          // Slide image slowly downward at 0.15 ratio
-          portraitImg.style.transform = `translate3d(0, ${lastScrollY * 0.15}px, 0) scale(1.15)`;
+    trigger.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+
+      // Close all other elements
+      accordionItems.forEach(otherItem => {
+        if (otherItem !== item) {
+          otherItem.classList.remove('open');
+          otherItem.querySelector('.accordion-trigger').setAttribute('aria-expanded', 'false');
+          const otherPanel = otherItem.querySelector('.accordion-panel');
+          otherPanel.style.maxHeight = '0px';
+          otherPanel.setAttribute('aria-hidden', 'true');
         }
-        scrollTicking = false;
-      });
-      scrollTicking = true;
-    }
-  });
-
-
-  // ==========================================================================
-  // 5. Work Accordion Expandable Cards
-  // ==========================================================================
-  const accordionCards = document.querySelectorAll('.accordion-card');
-
-  accordionCards.forEach((card) => {
-    const header = card.querySelector('.accordion-header');
-    const content = card.querySelector('.accordion-content');
-
-    header.addEventListener('click', () => {
-      const isExpanded = card.classList.contains('expanded');
-
-      // Close all accordion cards
-      accordionCards.forEach((c) => {
-        c.classList.remove('expanded');
-        c.querySelector('.accordion-content').style.maxHeight = null;
       });
 
-      // Expand clicked card if it was collapsed
-      if (!isExpanded) {
-        card.classList.add('expanded');
-        content.style.maxHeight = `${content.scrollHeight}px`;
+      // Toggle click target
+      if (isOpen) {
+        item.classList.remove('open');
+        trigger.setAttribute('aria-expanded', 'false');
+        panel.style.maxHeight = '0px';
+        panel.setAttribute('aria-hidden', 'true');
+      } else {
+        item.classList.add('open');
+        trigger.setAttribute('aria-expanded', 'true');
+        panel.style.maxHeight = `${panel.scrollHeight}px`;
+        panel.setAttribute('aria-hidden', 'false');
       }
     });
   });
 
+  /* ==========================================================================
+     PROJECTS LIGHTBOX MODAL
+     ========================================================================== */
+  const lightbox = document.getElementById('videoLightbox');
+  const lightboxClose = document.getElementById('lightboxClose');
+  const projectMediaWrappers = document.querySelectorAll('.project-media-wrapper');
 
-  // ==========================================================================
-  // 6. Contact Email Clipboard Copy
-  // ==========================================================================
-  const emailBtn = document.getElementById('email-button');
-  const tooltip = document.getElementById('copy-tooltip');
+  if (lightbox && lightboxClose) {
+    projectMediaWrappers.forEach(wrapper => {
+      wrapper.addEventListener('click', (e) => {
+        if (e.target.closest('.project-actions') || e.target.closest('.project-link-btn')) {
+          return;
+        }
 
-  if (emailBtn && tooltip) {
+        lightbox.classList.add('active');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    const closeLightbox = () => {
+      lightbox.classList.remove('active');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = 'auto';
+    };
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+        closeLightbox();
+      }
+    });
+  }
+
+  /* ==========================================================================
+     CLICK-TO-COPY EMAIL INTERACTION
+     ========================================================================== */
+  const emailBtn = document.getElementById('emailBtn');
+  const copyTooltip = document.getElementById('copyTooltip');
+  let tooltipTimeout;
+
+  if (emailBtn && copyTooltip) {
     emailBtn.addEventListener('click', () => {
-      const email = emailBtn.getAttribute('data-email') || emailBtn.textContent.trim();
-      navigator.clipboard.writeText(email).then(() => {
-        tooltip.classList.add('show');
-        setTimeout(() => {
-          tooltip.classList.remove('show');
-        }, 1800);
-      }).catch((err) => {
-        console.error('Clipboard copy failed: ', err);
-      });
+      const email = emailBtn.textContent.trim();
+      
+      navigator.clipboard.writeText(email)
+        .then(() => {
+          copyTooltip.textContent = "Copied ✓";
+          copyTooltip.classList.add('show');
+          
+          clearTimeout(tooltipTimeout);
+          
+          tooltipTimeout = setTimeout(() => {
+            copyTooltip.classList.remove('show');
+            setTimeout(() => {
+              copyTooltip.textContent = "Copy to clipboard";
+            }, 300);
+          }, 2000);
+        })
+        .catch(err => {
+          console.error('Failed to copy: ', err);
+          copyTooltip.textContent = "Click to copy";
+        });
     });
-  }
 
-
-  // ==========================================================================
-  // 7. Projects Lightbox Modal Video Player
-  // ==========================================================================
-  const lightboxModal = document.getElementById('lightbox-modal');
-  const lightboxVideo = document.getElementById('lightbox-video');
-  const lightboxClose = document.getElementById('lightbox-close');
-  const videoTriggers = document.querySelectorAll('[data-video-url]');
-
-  videoTriggers.forEach((trigger) => {
-    trigger.addEventListener('click', (e) => {
-      e.preventDefault();
-      const videoSrc = trigger.getAttribute('data-video-url');
-      if (videoSrc && lightboxModal && lightboxVideo) {
-        lightboxVideo.src = videoSrc;
-        lightboxModal.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Lock background scroll
+    emailBtn.addEventListener('mouseleave', () => {
+      if (!copyTooltip.classList.contains('show')) {
+        copyTooltip.textContent = "Copy to clipboard";
       }
     });
-  });
+    
+    emailBtn.addEventListener('mouseenter', () => {
+      if (!copyTooltip.classList.contains('show')) {
+        copyTooltip.classList.add('show');
+      }
+    });
 
-  function closeVideoModal() {
-    if (lightboxModal && lightboxVideo) {
-      lightboxModal.classList.remove('active');
-      lightboxVideo.pause();
-      lightboxVideo.src = '';
-      document.body.style.overflow = ''; // Unlock scroll
-    }
-  }
-
-  if (lightboxClose) {
-    lightboxClose.addEventListener('click', closeVideoModal);
-  }
-
-  if (lightboxModal) {
-    lightboxModal.addEventListener('click', (e) => {
-      if (e.target === lightboxModal) {
-        closeVideoModal();
+    emailBtn.addEventListener('mouseleave', () => {
+      if (copyTooltip.classList.contains('show') && copyTooltip.textContent !== "Copied ✓") {
+        copyTooltip.classList.remove('show');
       }
     });
   }
-
-  // Handle ESC key press for closing modal
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && lightboxModal && lightboxModal.classList.contains('active')) {
-      closeVideoModal();
-    }
-  });
-
 });
