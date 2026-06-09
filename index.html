@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Elena Thorne — Systems Engineer & Creative Technologist. Building high-performance software and tactile digital artifacts.">
+  <meta name="keywords" content="Software Engineer, Creative Technologist, Systems Programming, WebGL, Rust, LLVM, Portfolio">
+  <title>Elena Thorne — Software Engineer & Creative Technologist</title>
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Custom Lerping Cursor -->
+  <div class="custom-cursor" id="custom-cursor"></div>
+
+  <!-- Ambient Light Pools -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
+
+  <!-- Organic SVG Clip Path Definition for Hero Image -->
+  <svg width="0" height="0" style="position: absolute;">
+    <defs>
+      <clipPath id="organic-clip" clipPathUnits="objectBoundingBox">
+        <path d="M0.15,0.28 C0.05,0.48 0.08,0.72 0.28,0.85 C0.48,0.98 0.75,0.92 0.88,0.75 C1.01,0.58 0.95,0.32 0.82,0.16 C0.68,0.01 0.42,-0.05 0.25,0.06 C0.12,0.14 0.18,0.18 0.15,0.28 Z" />
+      </clipPath>
+    </defs>
+  </svg>
+
+  <!-- 0. Sticky Navigation -->
+  <header class="navbar" id="navbar">
+    <a href="#" class="nav-brand label-mono">ELENA THORNE</a>
+    <nav>
+      <ul class="nav-links">
+        <li class="nav-link-item"><a href="#about" class="nav-link">About</a></li>
+        <li class="nav-link-item"><a href="#experience" class="nav-link">Work</a></li>
+        <li class="nav-link-item"><a href="#projects" class="nav-link">Projects</a></li>
+        <li class="nav-link-item"><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- 1. HERO — The Showstopper -->
+    <section class="hero" id="hero">
+      <div class="hero-content">
+        <h1 class="display-title hero-name" id="hero-name">
+          <span class="hero-name-line">ELENA</span>
+          <span class="hero-name-line">THORNE</span>
+        </h1>
+        <p class="hero-tagline" id="hero-tagline">
+          Systems Engineer & Creative Technologist — building deliberate, high-fidelity software.
+        </p>
+      </div>
+
+      <!-- Organic Clipped Portrait Photo -->
+      <div class="hero-portrait-wrapper" id="hero-portrait">
+        <div class="hero-portrait-shape">
+          <img src="assets/portrait.png" alt="Elena Thorne Portrait" class="hero-portrait-image">
+        </div>
+      </div>
+
+      <!-- Hero Footer (Metadata & Scroll indicator) -->
+      <div class="hero-footer">
+        <div class="hero-meta label-mono" id="hero-meta">
+          <div>LONDON, UK</div>
+          <div>EST. 2026<span class="blinking-cursor">_</span></div>
+        </div>
+        <a href="#about" class="hero-scroll" id="hero-scroll">
+          <span class="scroll-text">Scroll</span>
+          <div class="scroll-line-container">
+            <div class="scroll-line"></div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- 2. ABOUT -->
+    <section id="about" class="reveal">
+      <div class="about-grid">
+        <div class="about-left">
+          <h2 class="section-title">The Philosophy</h2>
+          <p class="about-bio">
+            I engineer software that doesn't announce itself. My focus lies at the intersection of <span>high-performance systems</span> and <span>deliberate interactive design</span>. I build compiler toolchains, rendering pipelines, and detailed web interfaces that feel tactile and responsive.
+          </p>
+          <p class="about-bio" style="margin-top: 1.5rem; font-size: 1.15rem; color: var(--color-text-muted);">
+            Currently exploring memory safety paradigms, low-latency processing, and math-driven WebGL graphics. Based in London, crafting digital workspaces with rigor and intent.
+          </p>
+        </div>
+        <div class="about-right">
+          <div class="about-portrait-container">
+            <img src="assets/portrait.png" alt="Elena Thorne Bio Portrait" class="about-portrait" loading="lazy">
+          </div>
+        </div>
+      </div>
+      <div class="dots-divider">· · · · ·</div>
+    </section>
+
+    <!-- 3. EDUCATION -->
+    <section id="education" class="reveal">
+      <h2 class="section-title">Formative Ground</h2>
+      <div class="education-container">
+        <div class="education-timeline-line"></div>
+        
+        <!-- Oxford -->
+        <div class="education-entry">
+          <div class="education-dot"></div>
+          <div class="education-header">
+            <h3 class="education-institution">University of Oxford</h3>
+            <span class="label-mono">2020 – 2023</span>
+          </div>
+          <p class="education-degree">B.A. in Computer Science — First Class Honours</p>
+        </div>
+
+        <!-- Imperial -->
+        <div class="education-entry">
+          <div class="education-dot"></div>
+          <div class="education-header">
+            <h3 class="education-institution">Imperial College London</h3>
+            <span class="label-mono">2023 – 2024</span>
+          </div>
+          <p class="education-degree">M.Sc. in Advanced Computing — Distinction</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. EXPERIENCE -->
+    <section id="experience" class="reveal">
+      <h2 class="section-title">The Ledger</h2>
+      <div class="experience-list">
+        
+        <!-- Experience 1 -->
+        <article class="accordion-card">
+          <div class="accordion-header">
+            <div class="accordion-title-block">
+              <div class="company-logo">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+              </div>
+              <div class="role-info">
+                <h3 class="role-title">Principal Creative Technologist</h3>
+                <span class="company-name">Spatial Logic Studio</span>
+              </div>
+            </div>
+            <div class="label-mono" style="margin-right: 1.5rem;">2024 – Present</div>
+            <svg class="accordion-arrow" viewBox="0 0 24 24">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-inner-content">
+              <ul>
+                <li>Led architecture of a WebGL2 rendering core, reducing frame drops by 45% on low-spec hardware.</li>
+                <li>Engineered bespoke micro-libraries for physics simulations and vector interpolations, optimizing runtime logic.</li>
+                <li>Mentored four junior engineers in reactive patterns, clean memory management, and compiler target optimization.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <!-- Experience 2 -->
+        <article class="accordion-card">
+          <div class="accordion-header">
+            <div class="accordion-title-block">
+              <div class="company-logo">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                  <line x1="8" y1="21" x2="16" y2="21"/>
+                  <line x1="12" y1="17" x2="12" y2="21"/>
+                </svg>
+              </div>
+              <div class="role-info">
+                <h3 class="role-title">Systems Engineer</h3>
+                <span class="company-name">Continuum Systems</span>
+              </div>
+            </div>
+            <div class="label-mono" style="margin-right: 1.5rem;">2023 – 2024</div>
+            <svg class="accordion-arrow" viewBox="0 0 24 24">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-inner-content">
+              <ul>
+                <li>Re-architected real-time streaming sockets in Rust, decreasing CPU thread starvation under peak loads.</li>
+                <li>Created automated benchmarks for packet serialization, reducing network overhead by 22% and system latency.</li>
+                <li>Built a containerized pipeline for hot-swapping static assets with zero down-time.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <!-- Experience 3 -->
+        <article class="accordion-card">
+          <div class="accordion-header">
+            <div class="accordion-title-block">
+              <div class="company-logo">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
+                </svg>
+              </div>
+              <div class="role-info">
+                <h3 class="role-title">Software Engineer Intern</h3>
+                <span class="company-name">Kernel Research</span>
+              </div>
+            </div>
+            <div class="label-mono" style="margin-right: 1.5rem;">2022 – 2022</div>
+            <svg class="accordion-arrow" viewBox="0 0 24 24">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-inner-content">
+              <ul>
+                <li>Designed parsing logic for an experimental static analysis scanner using LLVM APIs.</li>
+                <li>Discovered and documented critical race conditions in legacy thread pools during load simulation.</li>
+                <li>Contributed documentation and automation scripts, decreasing local developer environment spin-up times.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- 5. PROJECTS -->
+    <section id="projects" class="reveal">
+      <h2 class="section-title">Selected Artifacts</h2>
+      <div class="projects-grid">
+        
+        <!-- Project 1 (Demo video modal support) -->
+        <article class="project-card">
+          <div class="project-pills">
+            <span class="tech-pill">Rust</span>
+            <span class="tech-pill">LLVM</span>
+            <span class="tech-pill">WebAssembly</span>
+          </div>
+          <div class="project-actions">
+            <a href="https://example.com/vesper" target="_blank" rel="noopener" class="btn-icon" title="Live Site">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </a>
+            <a href="https://github.com/example/vesper" target="_blank" rel="noopener" class="btn-icon" title="GitHub Code">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
+              </svg>
+            </a>
+          </div>
+          <!-- Clickable thumbnail for lightbox (uses a sample placeholder video) -->
+          <div class="project-thumbnail-wrapper" style="cursor: pointer;" data-video-url="https://www.w3schools.com/html/mov_bbb.mp4">
+            <img src="assets/portrait.png" alt="Vesper Compiler Graphic" class="project-thumbnail" loading="lazy">
+          </div>
+          <div class="project-meta-info">
+            <h3 class="project-name">Vesper Compiler</h3>
+            <p class="project-desc">A custom LLVM-backed compiler targeting WebAssembly, optimized specifically for reactive vector graphics and instant visual compilation.</p>
+          </div>
+          <div class="project-summary-overlay">
+            <div class="project-summary-text">Click thumbnail to view project demonstration reel</div>
+          </div>
+        </article>
+
+        <!-- Project 2 -->
+        <article class="project-card">
+          <div class="project-pills">
+            <span class="tech-pill">GLSL</span>
+            <span class="tech-pill">TypeScript</span>
+            <span class="tech-pill">WebAudio</span>
+          </div>
+          <div class="project-actions">
+            <a href="https://example.com/aura" target="_blank" rel="noopener" class="btn-icon" title="Live Site">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </a>
+            <a href="https://github.com/example/aura" target="_blank" rel="noopener" class="btn-icon" title="GitHub Code">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
+              </svg>
+            </a>
+          </div>
+          <div class="project-thumbnail-wrapper">
+            <img src="assets/portrait.png" alt="Aura WebGL Graphic" class="project-thumbnail" loading="lazy">
+          </div>
+          <div class="project-meta-info">
+            <h3 class="project-name">Aura WebGL</h3>
+            <p class="project-desc">Interactive audio-reactive shader canvas driving complex mathematical simulations using custom Web Audio API analyzers and custom shaders.</p>
+          </div>
+          <div class="project-summary-overlay">
+            <div class="project-summary-text">Mathematical particle physics engineered in GLSL</div>
+          </div>
+        </article>
+
+        <!-- Project 3 -->
+        <article class="project-card">
+          <div class="project-pills">
+            <span class="tech-pill">C++</span>
+            <span class="tech-pill">LSM-Trees</span>
+            <span class="tech-pill">POSIX</span>
+          </div>
+          <div class="project-actions">
+            <a href="https://example.com/nidus" target="_blank" rel="noopener" class="btn-icon" title="Live Site">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </a>
+            <a href="https://github.com/example/nidus" target="_blank" rel="noopener" class="btn-icon" title="GitHub Code">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
+              </svg>
+            </a>
+          </div>
+          <div class="project-thumbnail-wrapper">
+            <img src="assets/portrait.png" alt="Nidus DB Graphic" class="project-thumbnail" loading="lazy">
+          </div>
+          <div class="project-meta-info">
+            <h3 class="project-name">Nidus DB</h3>
+            <p class="project-desc">A localized key-value transaction store. Implements Log-Structured Merge-trees, sparse indexes, memory tables, and concurrent read compaction locks.</p>
+          </div>
+          <div class="project-summary-overlay">
+            <div class="project-summary-text">High-write localized transactional DB module</div>
+          </div>
+        </article>
+
+        <!-- Project 4 -->
+        <article class="project-card">
+          <div class="project-pills">
+            <span class="tech-pill">CSS</span>
+            <span class="tech-pill">Vanilla JS</span>
+            <span class="tech-pill">Spring Physics</span>
+          </div>
+          <div class="project-actions">
+            <a href="https://example.com/aetherial" target="_blank" rel="noopener" class="btn-icon" title="Live Site">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </a>
+            <a href="https://github.com/example/aetherial" target="_blank" rel="noopener" class="btn-icon" title="GitHub Code">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
+              </svg>
+            </a>
+          </div>
+          <div class="project-thumbnail-wrapper">
+            <img src="assets/portrait.png" alt="Aetherial UI Graphic" class="project-thumbnail" loading="lazy">
+          </div>
+          <div class="project-meta-info">
+            <h3 class="project-name">Aetherial UI</h3>
+            <p class="project-desc">A micro-framework for layout typography and custom physics-based scroll animation modules, emphasizing micro-interactions and matte styling.</p>
+          </div>
+          <div class="project-summary-overlay">
+            <div class="project-summary-text">Lightweight design core utilizing spring mechanics</div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- 6. HOBBIES -->
+    <section id="hobbies" class="hobbies-section reveal">
+      <div class="hobbies-title-container">
+        <h2 class="section-title">Incidental Trails</h2>
+      </div>
+      
+      <!-- Infinite Ticker Marquee -->
+      <div class="marquee-container" id="marquee-container">
+        <!-- Track A -->
+        <div class="marquee-track">
+          <!-- Card 1 -->
+          <div class="hobby-card">
+            <span class="hobby-icon">📷</span>
+            <span class="hobby-label">Photography</span>
+          </div>
+          <!-- Card 2 -->
+          <div class="hobby-card">
+            <span class="hobby-icon">🎵</span>
+            <span class="hobby-label">Music</span>
+          </div>
+          <!-- Card 3 -->
+          <div class="hobby-card">
+            <span class="hobby-icon">📖</span>
+            <span class="hobby-label">Reading</span>
+          </div>
+          <!-- Card 4 -->
+          <div class="hobby-card">
+            <span class="hobby-icon">🧭</span>
+            <span class="hobby-label">Travel</span>
+          </div>
+          <!-- Card 5 -->
+          <div class="hobby-card">
+            <span class="hobby-icon">☕</span>
+            <span class="hobby-label">Coffee</span>
+          </div>
+          <!-- Card 6 -->
+          <div class="hobby-card">
+            <span class="hobby-icon">🐙</span>
+            <span class="hobby-label">Open Source</span>
+          </div>
+          <!-- Duplicate set for seamless looping -->
+          <div class="hobby-card">
+            <span class="hobby-icon">📷</span>
+            <span class="hobby-label">Photography</span>
+          </div>
+          <div class="hobby-card">
+            <span class="hobby-icon">🎵</span>
+            <span class="hobby-label">Music</span>
+          </div>
+          <div class="hobby-card">
+            <span class="hobby-icon">📖</span>
+            <span class="hobby-label">Reading</span>
+          </div>
+          <div class="hobby-card">
+            <span class="hobby-icon">🧭</span>
+            <span class="hobby-label">Travel</span>
+          </div>
+          <div class="hobby-card">
+            <span class="hobby-icon">☕</span>
+            <span class="hobby-label">Coffee</span>
+          </div>
+          <div class="hobby-card">
+            <span class="hobby-icon">🐙</span>
+            <span class="hobby-label">Open Source</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. CONTACT -->
+    <section id="contact" class="reveal">
+      <div class="contact-container">
+        <h2 class="contact-heading display-title">Let's build<br>something.</h2>
+        
+        <!-- Interactive Email copy container -->
+        <div class="contact-email-wrapper">
+          <button class="contact-email" id="email-button" data-email="elena@thorne.dev">elena@thorne.dev</button>
+          <div class="copy-tooltip" id="copy-tooltip">Copied ✓</div>
+        </div>
+
+        <ul class="social-links">
+          <li>
+            <a href="https://github.com" target="_blank" rel="noopener" class="social-link" title="GitHub">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="social-link" title="LinkedIn">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://twitter.com" target="_blank" rel="noopener" class="social-link" title="Twitter/X">
+              <!-- Custom Twitter/X SVG -->
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <!-- 8. FOOTER -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div>ELENA THORNE &copy; 2026</div>
+      <div>Designed &amp; built with intention.</div>
+    </div>
+  </footer>
+
+  <!-- Lightbox Modal Container for Demo Reels -->
+  <div class="lightbox-modal" id="lightbox-modal">
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="lightbox-close" title="Close Modal">
+        Close 
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <video class="lightbox-video" id="lightbox-video" controls autoplay muted loop playsinline></video>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
