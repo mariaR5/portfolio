@@ -6,10 +6,7 @@
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-}
-
-.about-inner {
-  width: 100%;
+  background-color: var(--bg-black);
 }
 
 /* ── Header strip: mirrors hero bottom credits bar ── */
@@ -29,8 +26,8 @@
 .about-divider-line {
   flex: 1;
   height: 1px;
-  background: linear-gradient(to right, var(--accent-gold), transparent);
-  opacity: 0.4;
+  background: linear-gradient(to right, #C03A2B, transparent); /* Red accent line */
+  opacity: 0.55;
 }
 
 .about-header-coords {
@@ -40,6 +37,209 @@
   letter-spacing: 0.08em;
   white-space: nowrap;
   flex-shrink: 0;
+}
+
+/* Massive display heading matching hero page 'maria' font */
+.about-title-massive {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 8vw, 7.5rem);
+  /* Adjusted for Cormorant Garamond serif styling */
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+  color: var(--text-cream);
+  margin-bottom: 0;
+  /* Removed bottom margin to tighten spacing */
+  margin-top: 0;
+}
+
+.about-title-massive span {
+  color: #C03A2B; /* Vibrant retro terracotta red */
+}
+
+/* Photo inside vintage Camera Viewfinder container */
+.about-photo-viewfinder-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2.5rem;
+}
+
+.about-viewfinder-frame {
+  width: clamp(340px, 42vw, 440px); /* Enlarged camera viewfinder screen */
+  aspect-ratio: 4 / 5; /* Cinema vertical viewport */
+  background-color: var(--bg-black);
+  border-radius: 8px; /* Slightly rounded bezel corners */
+  border: 4px solid #1E1D1C; /* Dark monitor bezel */
+  outline: 1px solid rgba(244, 236, 200, 0.12); /* Metallic rim line */
+  box-shadow: 
+    0 20px 45px rgba(0, 0, 0, 0.65), 
+    0 5px 15px rgba(0, 0, 0, 0.35);
+  transform: rotate(-1.5deg); /* Vintage hand-placed rotation */
+  transition: transform 0.4s var(--ease-cinematic), box-shadow 0.4s var(--ease-cinematic);
+  position: relative;
+  overflow: hidden;
+}
+
+.about-viewfinder-frame:hover {
+  transform: scale(1.03) rotate(0.8deg);
+  box-shadow: 
+    0 28px 55px rgba(0, 0, 0, 0.75), 
+    0 10px 22px rgba(0, 0, 0, 0.4);
+}
+
+.viewfinder-photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center -70%; /* Preserve user Y crop coordinate! */
+  transform: scale(1.4);
+  transform-origin: center center;
+  filter: sepia(0.06) contrast(1.05) brightness(0.96); /* Warm cinematic exposure */
+  transition: transform 0.4s var(--ease-cinematic);
+}
+
+.about-viewfinder-frame:hover .viewfinder-photo-img {
+  transform: scale(1.45);
+}
+
+/* CRT Scanline Overlay inside frame */
+.viewfinder-crt-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    rgba(11, 6, 5, 0) 50%,
+    rgba(11, 6, 5, 0.28) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Vignette & Warm Lens Glare */
+.viewfinder-lens-glare {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(244, 236, 200, 0.04) 0%,
+    rgba(126, 37, 25, 0.12) 60%,
+    rgba(11, 6, 5, 0.38) 100%
+  );
+  pointer-events: none;
+  z-index: 3;
+  mix-blend-mode: screen;
+}
+
+/* Flashing REC dot keyframe */
+@keyframes blinkRec {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Viewfinder Camera HUD overlay */
+.viewfinder-hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 4;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.8rem 1.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-cream);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.85;
+  text-shadow: 0 1px 4px rgba(11, 6, 5, 0.9);
+}
+
+.hud-top {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.hud-rec {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 700;
+}
+
+.hud-red-dot {
+  width: 7px;
+  height: 7px;
+  background-color: var(--glow-orange);
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 8px var(--glow-orange);
+  animation: blinkRec 1.2s infinite;
+}
+
+.hud-battery {
+  letter-spacing: 0.02em;
+}
+
+/* Center focus bracket */
+.hud-center-crosshair {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+}
+
+.hud-center-crosshair::before,
+.hud-center-crosshair::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: var(--accent-gold);
+  border-style: solid;
+}
+
+.hud-center-crosshair::before {
+  top: 0;
+  left: 0;
+  border-width: 1.5px 0 0 1.5px;
+}
+
+.hud-center-crosshair::after {
+  bottom: 0;
+  right: 0;
+  border-width: 0 1.5px 1.5px 0;
+}
+
+.hud-bottom {
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+  width: 100%;
+  font-size: 0.58rem;
+  opacity: 0.8;
+}
+
+.about-inner {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 /* ── Main two-column poster grid ── */
@@ -61,27 +261,8 @@
 .about-left-col {
   display: flex;
   flex-direction: column;
-  gap: 3.5rem;
-}
-
-/* Giant name — echoes hero "maria" outline style */
-.about-name-block {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-}
-
-.about-name-display {
-  font-family: var(--font-display);
-  font-size: clamp(7rem, 14vw, 14rem);
-  font-weight: 700;
-  text-transform: lowercase;
-  letter-spacing: -0.04em;
-  line-height: 0.85;
-  color: transparent;
-  -webkit-text-stroke: 2px var(--text-cream);
-  text-stroke: 2px var(--text-cream);
-  margin: 0;
+  gap: 2.2rem;
+  /* Reduced gap from 3.5rem to tighten spacing between sections */
 }
 
 .about-name-sub {
@@ -195,8 +376,8 @@
 }
 
 .about-skill-tag:hover {
-  color: var(--accent-gold);
-  border-color: var(--accent-gold);
+  color: #C03A2B; /* Red hover accent */
+  border-color: #C03A2B;
 }
 
 /* ── Right column ── */
@@ -208,25 +389,14 @@
   top: 8rem;
 }
 
-/* Viewfinder headshot frame */
-.about-headshot-frame {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 3/4;
-  background-color: var(--bg-surface);
-  border: 1px dashed rgba(244, 236, 200, 0.2);
-  padding: 0.8rem 0.8rem 2.5rem;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
+
 
 /* Rotating Stamp Badge */
 .stamp-badge {
   position: relative;
   width: 90px;
   height: 90px;
-  color: var(--accent-gold);
+  color: #C03A2B; /* Red approved stamp badge */
   flex-shrink: 0;
   animation: rotateStamp 22s linear infinite;
 }
@@ -253,74 +423,7 @@
   gap: 2rem;
 }
 
-/* Viewfinder crosshairs */
-.viewfinder-crosshairs {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 2;
-}
 
-.crosshair {
-  position: absolute;
-  font-family: var(--font-mono);
-  font-size: 0.95rem;
-  color: var(--accent-gold);
-  line-height: 1;
-  opacity: 0.55;
-}
-
-.crosshair.top-left    { top: 0.5rem; left: 0.5rem; }
-.crosshair.top-right   { top: 0.5rem; right: 0.5rem; }
-.crosshair.bottom-left { bottom: 2.2rem; left: 0.5rem; }
-.crosshair.bottom-right{ bottom: 2.2rem; right: 0.5rem; }
-
-/* Subtle animated scanline on headshot */
-.headshot-scanline {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: linear-gradient(to right, transparent, rgba(208,161,100,0.35), transparent);
-  z-index: 3;
-  animation: scanMove 4s ease-in-out infinite;
-  pointer-events: none;
-}
-
-@keyframes scanMove {
-  0%   { top: 0; opacity: 0; }
-  10%  { opacity: 1; }
-  90%  { opacity: 1; }
-  100% { top: calc(100% - 3px); opacity: 0; }
-}
-
-.headshot-photo {
-  width: 100%;
-  height: calc(100% - 1.6rem);
-  object-fit: cover;
-  object-position: top center;
-  display: block;
-  position: relative;
-  z-index: 1;
-}
-
-.frame-metadata {
-  position: absolute;
-  bottom: 0.5rem;
-  left: 0.8rem;
-  right: 0.8rem;
-  display: flex;
-  justify-content: space-between;
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  color: var(--text-muted);
-  letter-spacing: 0.05em;
-  z-index: 3;
-}
 
 /* Restricted-style availability block */
 .about-restricted-block {
@@ -399,4 +502,37 @@
   letter-spacing: 0.5em;
   margin-top: 8rem;
   opacity: 0.45;
+}
+
+/* Movie details metadata strip */
+.about-movie-meta-strip {
+  display: flex;
+  gap: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--accent-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 1rem;
+  opacity: 0.85;
+}
+
+.about-movie-meta-strip span {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.about-movie-meta-strip span::before {
+  content: '■';
+  font-size: 0.5rem;
+  color: var(--bg-terracotta);
+}
+
+/* Mobile responsive settings */
+@media (max-width: 768px) {
+  .about-movie-meta-strip {
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
 }

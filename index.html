@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,700;1,9..40,400&family=Space+Mono:wght@400;700&display=block"
+    href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Anton&family=League+Gothic&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,700;1,9..40,400&family=Space+Mono:wght@400;700&family=Reenie+Beanie&display=block"
     rel="stylesheet">
 
   <!-- Modular Stylesheets from styles/ folder -->
@@ -40,9 +40,9 @@
       <a href="index.html" class="nav-logo" id="navLogo">Rose Maria</a>
       <div class="nav-links">
         <a href="#about" class="nav-link" data-section="about">About</a>
-        <a href="#education" class="nav-link" data-section="education">Education</a>
         <a href="#experience" class="nav-link" data-section="experience">Work</a>
         <a href="#projects" class="nav-link" data-section="projects">Projects</a>
+        <a href="#education" class="nav-link" data-section="education">Education</a>
         <a href="#contact" class="nav-link" data-section="contact">Contact</a>
       </div>
     </nav>
@@ -207,40 +207,43 @@
           <span class="about-header-coords">[ 11.2588° N · 75.7804° E ]</span>
         </div>
 
-        <!-- ── Main grid: name block left, headshot right ── -->
+        <!-- ── Main grid: name block left, circle photo right ── -->
         <div class="about-poster-grid">
 
-          <!-- Left: Big name + bio text + credential rows -->
+          <!-- Left: HI IM ROSE MARIA + bio text + credential rows + skills -->
           <div class="about-left-col">
 
-            <!-- Giant name -->
-            <div class="about-name-block">
-              <h2 class="about-name-display">rose<br>maria</h2>
-              <div class="about-name-sub">
-                <span class="about-name-role">Software Engineer · Creative Technologist</span>
-                <div class="stamp-badge about-stamp" aria-hidden="true">
-                  <svg viewBox="0 0 100 100">
-                    <path id="aboutStampPath" d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="none" />
-                    <text font-family="Space Mono" font-size="7.8" fill="currentColor">
-                      <textPath href="#aboutStampPath" letter-spacing="1">APPROVED SYSTEM DESIGN · VERIFIED ENGINE · </textPath>
-                    </text>
-                  </svg>
-                  <div class="stamp-center">RM</div>
-                </div>
+            <!-- Movie-themed meta strip -->
+            <div class="about-movie-meta-strip">
+              <span>GENRE: SYSTEMS &amp; INTERACTIVE UI</span>
+              <span>SCENE: 01</span>
+              <span>TAKE: 2026</span>
+            </div>
+
+            <!-- Massive display heading -->
+            <h2 class="about-title-massive">HI IM<br><span>ROSE MARIA</span></h2>
+
+            <div class="about-name-sub">
+              <span class="about-name-role">Software Engineer · Creative Technologist</span>
+              <div class="stamp-badge about-stamp" aria-hidden="true">
+                <svg viewBox="0 0 100 100">
+                  <path id="aboutStampPath" d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="none" />
+                  <text font-family="Space Mono" font-size="7.8" fill="currentColor">
+                    <textPath href="#aboutStampPath" letter-spacing="1">APPROVED SYSTEM DESIGN · VERIFIED ENGINE · </textPath>
+                  </text>
+                </svg>
+                <div class="stamp-center">RM</div>
               </div>
             </div>
 
-            <!-- Professional bio paragraphs -->
+            <!-- Professional bio paragraph -->
             <div class="about-bio-prose">
-              <p class="about-bio-lead">
-                I build software that operates with precision and quiet elegance — performant backends, clean system architecture, and rich, tactile web frontends.
-              </p>
-              <p class="about-bio-body">
-                Based in Calicut, my work spans the full stack: from optimising database pipelines and writing robust APIs, to engineering interactive canvas animations and digital audio systems. I treat every interface as a product — intentional, textured, and alive.
+              <p class="about-bio-body" style="font-size: 1.15rem; line-height: 1.7; max-width: 650px;">
+                I build software that operates with precision and quiet elegance — performant backends, clean system architecture, and rich, tactile web frontends. Based in Calicut, my work spans the full stack: from optimising database pipelines and writing robust APIs, to engineering interactive canvas animations and digital audio systems.
               </p>
             </div>
 
-            <!-- Credential rows -->
+            <!-- Credential rows (NIT Calicut / Spec / Availability) -->
             <div class="about-credential-grid">
               <div class="about-cred-col">
                 <span class="cred-label">INSTITUTION</span>
@@ -275,22 +278,31 @@
 
           </div>
 
-          <!-- Right: Viewfinder headshot + restricted-style status box -->
+          <!-- Right: Camera viewfinder container + restricted-style status box -->
           <div class="about-right-col">
 
-            <!-- Camera viewfinder frame -->
-            <div class="about-headshot-frame">
-              <div class="viewfinder-crosshairs">
-                <div class="crosshair top-left">+</div>
-                <div class="crosshair top-right">+</div>
-                <div class="crosshair bottom-left">+</div>
-                <div class="crosshair bottom-right">+</div>
-              </div>
-              <div class="headshot-scanline"></div>
-              <img class="headshot-photo" src="assets/image.png" alt="Rose Maria — Professional Headshot" loading="lazy">
-              <div class="frame-metadata">
-                <span class="meta-label">REF: RM-2026-NITC</span>
-                <span class="meta-scale">SCALE: 1:1</span>
+            <!-- Photo inside vintage Camera Viewfinder container -->
+            <div class="about-photo-viewfinder-container">
+              <div class="about-viewfinder-frame">
+                <img class="viewfinder-photo-img" src="assets/image copy.png" alt="Rose Maria — Viewfinder Photo" loading="lazy">
+                
+                <!-- CRT Viewfinder Overlay and Glare -->
+                <div class="viewfinder-crt-overlay"></div>
+                <div class="viewfinder-lens-glare"></div>
+
+                <!-- Camera HUD Decals -->
+                <div class="viewfinder-hud">
+                  <div class="hud-top">
+                    <span class="hud-rec"><span class="hud-red-dot"></span>REC</span>
+                    <span class="hud-battery">[▰▰▰▱] 80%</span>
+                  </div>
+                  <div class="hud-center-crosshair"></div>
+                  <div class="hud-bottom">
+                    <span class="hud-setting">ISO 400</span>
+                    <span class="hud-setting">1/60s</span>
+                    <span class="hud-setting">f/2.8</span>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -300,7 +312,7 @@
               <div class="restricted-body">
                 <div class="restricted-letter">RM</div>
                 <div class="restricted-text-rules">
-                  AVAILABLE FOR FULL-TIME ROLES · SOFTWARE ENGINEERING · INTERACTIVE SYSTEMS · CALICUT, INDIA
+                  AVAILABLE FOR FULL-TIME ROLES · SOFTWARE ENGINEERING · INTERACTIVE SYSTEMS · NIT CALICUT
                 </div>
               </div>
             </div>
@@ -321,111 +333,13 @@
       <div class="section-separator">· · · · ·</div>
     </section>
 
-    <!-- Section 3: EDUCATION (Solid Terracotta Red Panel — Academic Spec Sheet) -->
-    <section id="education" class="education-section panel-split bg-red reveal-on-scroll">
-
-      <div class="edu-inner">
-
-        <!-- Header strip -->
-        <div class="edu-header-strip">
-          <span class="section-title-label-black">02 // study &amp; theory</span>
-          <div class="edu-divider-line"></div>
-          <span class="edu-header-code">[ ACADEMIC LOG ]</span>
-        </div>
-
-        <!-- Big section title -->
-        <h2 class="edu-main-title">academic<br>specifications</h2>
-
-        <!-- Main layout: timeline left, spec sheet right -->
-        <div class="education-poster-layout">
-
-          <!-- Timeline column -->
-          <div class="education-timeline">
-            <div class="timeline-track-black"></div>
-
-            <!-- Entry 1: NITC -->
-            <div class="education-item-black">
-              <div class="timeline-marker-black"></div>
-              <div class="education-details">
-                <div class="edu-header">
-                  <h3 class="institution-name-black">National Institute of Technology Calicut</h3>
-                  <span class="edu-duration-black">2022 — 2026</span>
-                </div>
-                <p class="degree-info-black">Bachelor of Technology — Computer Science &amp; Engineering</p>
-                <!-- Course focus tags -->
-                <div class="edu-focus-tags">
-                  <span class="edu-tag">Algorithms</span>
-                  <span class="edu-tag">Systems Programming</span>
-                  <span class="edu-tag">Interactive UI</span>
-                  <span class="edu-tag">DSP / Audio</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Entry 2: School -->
-            <div class="education-item-black">
-              <div class="timeline-marker-black"></div>
-              <div class="education-details">
-                <div class="edu-header">
-                  <h3 class="institution-name-black">St. Joseph's Higher Secondary School</h3>
-                  <span class="edu-duration-black">2020 — 2022</span>
-                </div>
-                <p class="degree-info-black">Higher Secondary Education — Science Stream</p>
-                <div class="edu-focus-tags">
-                  <span class="edu-tag">Mathematics</span>
-                  <span class="edu-tag">Physics</span>
-                  <span class="edu-tag">Computer Science</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Spec sheet column -->
-          <div class="spec-sheet-container">
-            <div class="spec-sheet">
-              <div class="spec-header">TECHNICAL SYSTEM DIAGRAM</div>
-              <div class="spec-row">
-                <span class="spec-label">REGISTRY NO:</span>
-                <span class="spec-value">RM-CS-2026</span>
-              </div>
-              <div class="spec-row">
-                <span class="spec-label">HOST SYSTEM:</span>
-                <span class="spec-value">NIT CALICUT (NITC)</span>
-              </div>
-              <div class="spec-row">
-                <span class="spec-label">SPECIALIZATION:</span>
-                <span class="spec-value">ALGORITHMS / INTERACTIVES</span>
-              </div>
-              <div class="spec-row">
-                <span class="spec-label">CREDITS RATING:</span>
-                <span class="spec-value">HONORS DIVISION</span>
-              </div>
-              <div class="spec-row">
-                <span class="spec-label">BATCH:</span>
-                <span class="spec-value">2022 — 2026</span>
-              </div>
-              <div class="spec-footer">
-                <div class="barcode-visual">
-                  <span></span><span></span><span></span><span></span><span></span>
-                  <span></span><span></span><span></span><span></span><span></span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-      <div class="section-separator-black">· · · · ·</div>
-    </section>
-
     <!-- Section 4: EXPERIENCE (Vinyl Discography Sleeve Rack Layout) -->
     <section id="experience" class="experience-section panel-split bg-black reveal-on-scroll">
       <div class="exp-inner">
 
         <!-- Header strip matches About page -->
         <div class="exp-header-strip">
-          <span class="section-title-label">03 // career tracks</span>
+          <span class="section-title-label">02 // career tracks</span>
           <div class="exp-divider-line"></div>
           <span class="exp-header-code">[ DISCOGRAPHY LOG ]</span>
         </div>
@@ -628,7 +542,7 @@
     <!-- Section 5: PROJECTS (Selected Reels - Album Sleeves Grid) -->
     <section id="projects" class="projects-section panel-split bg-black reveal-on-scroll">
       <div class="section-header-poster">
-        <h2 class="section-title-label">04 // system modules</h2>
+        <h2 class="section-title-label">03 // system modules</h2>
         <h3 class="poster-heading-chunky">selected reels</h3>
       </div>
 
@@ -795,6 +709,104 @@
           </div>
         </article>
       </div>
+    </section>
+
+    <!-- Section 3: EDUCATION (Solid Terracotta Red Panel — Academic Spec Sheet) -->
+    <section id="education" class="education-section panel-split bg-red reveal-on-scroll">
+
+      <div class="edu-inner">
+
+        <!-- Header strip -->
+        <div class="edu-header-strip">
+          <span class="section-title-label-black">04 // study &amp; theory</span>
+          <div class="edu-divider-line"></div>
+          <span class="edu-header-code">[ ACADEMIC LOG ]</span>
+        </div>
+
+        <!-- Big section title -->
+        <h2 class="edu-main-title">academic<br>specifications</h2>
+
+        <!-- Main layout: timeline left, spec sheet right -->
+        <div class="education-poster-layout">
+
+          <!-- Timeline column -->
+          <div class="education-timeline">
+            <div class="timeline-track-black"></div>
+
+            <!-- Entry 1: NITC -->
+            <div class="education-item-black">
+              <div class="timeline-marker-black"></div>
+              <div class="education-details">
+                <div class="edu-header">
+                  <h3 class="institution-name-black">National Institute of Technology Calicut</h3>
+                  <span class="edu-duration-black">2022 — 2026</span>
+                </div>
+                <p class="degree-info-black">Bachelor of Technology — Computer Science &amp; Engineering</p>
+                <!-- Course focus tags -->
+                <div class="edu-focus-tags">
+                  <span class="edu-tag">Algorithms</span>
+                  <span class="edu-tag">Systems Programming</span>
+                  <span class="edu-tag">Interactive UI</span>
+                  <span class="edu-tag">DSP / Audio</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Entry 2: School -->
+            <div class="education-item-black">
+              <div class="timeline-marker-black"></div>
+              <div class="education-details">
+                <div class="edu-header">
+                  <h3 class="institution-name-black">St. Joseph's Higher Secondary School</h3>
+                  <span class="edu-duration-black">2020 — 2022</span>
+                </div>
+                <p class="degree-info-black">Higher Secondary Education — Science Stream</p>
+                <div class="edu-focus-tags">
+                  <span class="edu-tag">Mathematics</span>
+                  <span class="edu-tag">Physics</span>
+                  <span class="edu-tag">Computer Science</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Spec sheet column -->
+          <div class="spec-sheet-container">
+            <div class="spec-sheet">
+              <div class="spec-header">TECHNICAL SYSTEM DIAGRAM</div>
+              <div class="spec-row">
+                <span class="spec-label">REGISTRY NO:</span>
+                <span class="spec-value">RM-CS-2026</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-label">HOST SYSTEM:</span>
+                <span class="spec-value">NIT CALICUT (NITC)</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-label">SPECIALIZATION:</span>
+                <span class="spec-value">ALGORITHMS / INTERACTIVES</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-label">CREDITS RATING:</span>
+                <span class="spec-value">HONORS DIVISION</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-label">BATCH:</span>
+                <span class="spec-value">2022 — 2026</span>
+              </div>
+              <div class="spec-footer">
+                <div class="barcode-visual">
+                  <span></span><span></span><span></span><span></span><span></span>
+                  <span></span><span></span><span></span><span></span><span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="section-separator-black">· · · · ·</div>
     </section>
 
     <!-- Section 6: HOBBIES -->
