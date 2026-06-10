@@ -333,213 +333,272 @@
       <div class="section-separator">· · · · ·</div>
     </section>
 
-    <!-- Section 4: EXPERIENCE (Vinyl Discography Sleeve Rack Layout) -->
-    <section id="experience" class="experience-section panel-split bg-black reveal-on-scroll">
-      <div class="exp-inner">
-
-        <!-- Header strip matches About page -->
-        <div class="exp-header-strip">
-          <span class="section-title-label">02 // career tracks</span>
-          <div class="exp-divider-line"></div>
-          <span class="exp-header-code">[ DISCOGRAPHY LOG ]</span>
+    <!-- Section 4: EXPERIENCE (Split Layout: 1/4 Black, 3/4 Red with film strip details) -->
+    <section id="experience" class="experience-section reveal-on-scroll">
+      
+      <!-- Top 1/4: Black background panel with headings -->
+      <div class="exp-top-panel">
+        <div class="exp-inner">
+          <!-- Header strip matches About page -->
+          <div class="exp-header-strip">
+            <span class="section-title-label">02 // experience</span>
+            <div class="exp-divider-line"></div>
+            <span class="exp-header-code">[ EXPERIENCE ]</span>
+          </div>
+          <!-- Giant outlined section title -->
+          <h2 class="exp-main-title">experience</h2>
         </div>
+      </div>
 
-        <!-- Giant outlined section title -->
-        <h2 class="exp-main-title">discography<br>log</h2>
+      <!-- Bottom 3/4: Red background panel with interactive film strips -->
+      <div class="exp-bottom-panel bg-red">
+        <div class="exp-bottom-inner">
+          
+          <!-- Left side: Experience tabs list -->
+          <div class="exp-left-col">
+            <div class="exp-tabs-list" role="tablist" aria-label="Work Experience Tracks">
+              
+              <!-- Tab 1: CLL -->
+              <button class="exp-tab-item active" data-track="1" role="tab" aria-selected="true" aria-controls="film-strip-1">
+                <div class="tab-item-logo">
+                  <!-- Custom SVG Logo for CLL: waveform/grid -->
+                  <svg viewBox="0 0 40 40" class="logo-svg">
+                    <rect x="2" y="2" width="36" height="36" rx="4" fill="none" stroke="currentColor" stroke-width="2" />
+                    <line x1="8" y1="20" x2="32" y2="20" stroke="currentColor" stroke-width="2" />
+                    <line x1="16" y1="10" x2="16" y2="30" stroke="currentColor" stroke-width="2" />
+                    <line x1="24" y1="10" x2="24" y2="30" stroke="currentColor" stroke-width="2" />
+                    <circle cx="20" cy="20" r="4" fill="currentColor" />
+                  </svg>
+                </div>
+                <div class="tab-item-content">
+                  <span class="tab-track-no">TRACK // 01</span>
+                  <h4 class="tab-role">Software Engineering</h4>
+                  <span class="tab-company">Creative Logic Lab</span>
+                  <span class="tab-duration">2025 — Present</span>
+                </div>
+              </button>
 
-        <!-- Quick stat row -->
-        <div class="exp-stat-row">
-          <div class="exp-stat-col">
-            <span class="exp-stat-num">03</span>
-            <span class="exp-stat-label">Positions</span>
-          </div>
-          <div class="exp-stat-divider"></div>
-          <div class="exp-stat-col">
-            <span class="exp-stat-num">2+</span>
-            <span class="exp-stat-label">Years Active</span>
-          </div>
-          <div class="exp-stat-divider"></div>
-          <div class="exp-stat-col">
-            <span class="exp-stat-num">∞</span>
-            <span class="exp-stat-label">Lines Shipped</span>
-          </div>
-        </div>
+              <!-- Tab 2: Helix -->
+              <button class="exp-tab-item" data-track="2" role="tab" aria-selected="false" aria-controls="film-strip-2">
+                <div class="tab-item-logo">
+                  <!-- Custom SVG Logo for Helix: double helix -->
+                  <svg viewBox="0 0 40 40" class="logo-svg">
+                    <rect x="2" y="2" width="36" height="36" rx="4" fill="none" stroke="currentColor" stroke-width="2" />
+                    <path d="M10,12 Q20,20 30,12 Q20,20 10,28 Q20,20 30,28" fill="none" stroke="currentColor" stroke-width="2" />
+                    <circle cx="10" cy="12" r="3" fill="currentColor" />
+                    <circle cx="30" cy="12" r="3" fill="currentColor" />
+                    <circle cx="10" cy="28" r="3" fill="currentColor" />
+                    <circle cx="30" cy="28" r="3" fill="currentColor" />
+                  </svg>
+                </div>
+                <div class="tab-item-content">
+                  <span class="tab-track-no">TRACK // 02</span>
+                  <h4 class="tab-role">Web Developer</h4>
+                  <span class="tab-company">Helix Systems</span>
+                  <span class="tab-duration">2024</span>
+                </div>
+              </button>
 
-        <div class="discography-container">
+              <!-- Tab 3: MTOI -->
+              <button class="exp-tab-item" data-track="3" role="tab" aria-selected="false" aria-controls="film-strip-3">
+                <div class="tab-item-logo">
+                  <!-- Custom SVG Logo for MTOI: cassette / soundwave -->
+                  <svg viewBox="0 0 40 40" class="logo-svg">
+                    <rect x="2" y="2" width="36" height="36" rx="4" fill="none" stroke="currentColor" stroke-width="2" />
+                    <rect x="8" y="12" width="24" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2" />
+                    <circle cx="15" cy="20" r="2.5" fill="currentColor" />
+                    <circle cx="25" cy="20" r="2.5" fill="currentColor" />
+                    <line x1="12" y1="24" x2="28" y2="24" stroke="currentColor" stroke-width="1.5" />
+                  </svg>
+                </div>
+                <div class="tab-item-content">
+                  <span class="tab-track-no">TRACK // 03</span>
+                  <h4 class="tab-role">Open Source Contrib.</h4>
+                  <span class="tab-company">Music Tech Open</span>
+                  <span class="tab-duration">2023 — 2024</span>
+                </div>
+              </button>
 
-          <!-- Left Column: Cardboard record sleeves rack -->
-          <div class="sleeves-rack" role="tablist" aria-label="Professional Experience Tracks">
-
-            <!-- Sleeve Cover 1 (CLL) -->
-            <button class="sleeve-wrapper active" data-track="1" role="tab" aria-selected="true"
-              aria-controls="notes-panel-1">
-              <div class="sleeve-cover">
-                <div class="sleeve-header">
-                  <span class="track-number">TRACK // 01</span>
-                  <span class="release-code">CLL-2025</span>
-                </div>
-                <div class="sleeve-body">
-                  <h4 class="sleeve-role">Software Engineering</h4>
-                  <span class="sleeve-company">Creative Logic Lab</span>
-                </div>
-                <div class="sleeve-footer">
-                  <span class="sleeve-duration">2025 — Present</span>
-                  <span class="sleeve-status playing-status">● PLAYING</span>
-                </div>
-              </div>
-              <!-- Concentric Groove vinyl disc -->
-              <div class="vinyl-disc">
-                <div class="vinyl-grooves"></div>
-                <div class="vinyl-label">
-                  <div class="label-center">RM // 01</div>
-                </div>
-              </div>
-            </button>
-
-            <!-- Sleeve Cover 2 (Helix) -->
-            <button class="sleeve-wrapper" data-track="2" role="tab" aria-selected="false" aria-controls="notes-panel-2">
-              <div class="sleeve-cover">
-                <div class="sleeve-header">
-                  <span class="track-number">TRACK // 02</span>
-                  <span class="release-code">HXS-2024</span>
-                </div>
-                <div class="sleeve-body">
-                  <h4 class="sleeve-role">Web Developer</h4>
-                  <span class="sleeve-company">Helix Systems</span>
-                </div>
-                <div class="sleeve-footer">
-                  <span class="sleeve-duration">2024</span>
-                  <span class="sleeve-status">CUE</span>
-                </div>
-              </div>
-              <div class="vinyl-disc">
-                <div class="vinyl-grooves"></div>
-                <div class="vinyl-label">
-                  <div class="label-center">RM // 02</div>
-                </div>
-              </div>
-            </button>
-
-            <!-- Sleeve Cover 3 (MTOI) -->
-            <button class="sleeve-wrapper" data-track="3" role="tab" aria-selected="false" aria-controls="notes-panel-3">
-              <div class="sleeve-cover">
-                <div class="sleeve-header">
-                  <span class="track-number">TRACK // 03</span>
-                  <span class="release-code">MTOI-2023</span>
-                </div>
-                <div class="sleeve-body">
-                  <h4 class="sleeve-role">Open Source Contrib.</h4>
-                  <span class="sleeve-company">Music Tech Open</span>
-                </div>
-                <div class="sleeve-footer">
-                  <span class="sleeve-duration">2023 — 2024</span>
-                  <span class="sleeve-status">CUE</span>
-                </div>
-              </div>
-              <div class="vinyl-disc">
-                <div class="vinyl-grooves"></div>
-                <div class="vinyl-label">
-                  <div class="label-center">RM // 03</div>
-                </div>
-              </div>
-            </button>
-
-          </div>
-
-          <!-- Right Column: Printed Liner notes insert panel -->
-          <div class="liner-notes-container">
-
-            <!-- Sheet Panel 1 (CLL details) -->
-            <div class="liner-notes-sheet active" id="notes-panel-1" role="tabpanel"
-              aria-label="Creative Logic Lab Experience">
-              <div class="notes-header">
-                <span class="notes-catalogue">CATALOGUE: CLL-CS-01</span>
-                <h4 class="notes-title">Creative Logic Lab</h4>
-                <div class="notes-meta-row">
-                  <span class="notes-meta-chip">Software Engineering</span>
-                  <span class="notes-meta-chip">2025 — Present</span>
-                </div>
-              </div>
-              <div class="notes-content">
-                <p class="notes-intro">Internship research summary and systems validation deliverables:</p>
-                <ul class="notes-bullets">
-                  <li>Developed high-performance interactive web interfaces, achieving sub-100ms response times for rich graphics.</li>
-                  <li>Created smooth animations and UI systems designed for tactile audio visualizers using the Web Audio API.</li>
-                  <li>Collaborated with design teams to enforce design systems across client interfaces, maintaining strict hex color guidelines and typeface setups.</li>
-                </ul>
-              </div>
-              <div class="notes-footer-barcode">
-                <div class="barcode-visual-black">
-                  <span></span><span></span><span></span><span></span><span></span>
-                  <span></span><span></span><span></span><span></span><span></span>
-                </div>
-                <span class="barcode-id">CLL-2025-RM</span>
-              </div>
             </div>
+          </div>
+          
+          <!-- Right side: Film Strip container -->
+          <div class="exp-right-col">
+            <div class="film-strip-viewer">
+              
+              <!-- Camera Shutter Flash screen overlay -->
+              <div class="shutter-flash" id="shutterFlash"></div>
+              
+              <!-- Film Strip 1 (CLL) -->
+              <div class="film-strip active" id="film-strip-1" role="tabpanel" aria-label="Creative Logic Lab Details">
+                <div class="film-strip-track">
+                  
+                  <!-- Frame 1: Details -->
+                  <div class="film-frame frame-details">
+                    <div class="frame-edge-top"></div>
+                    <div class="frame-content">
+                      <div class="frame-header">
+                        <span class="frame-cat">CATALOGUE // CLL-CS-01</span>
+                        <h4 class="frame-title">Creative Logic Lab</h4>
+                        <div class="frame-meta-row">
+                          <span class="frame-meta-chip">Software Engineering</span>
+                          <span class="frame-meta-chip">2025 — Present</span>
+                        </div>
+                      </div>
+                      <div class="frame-body">
+                        <p class="frame-intro">Systems development & graphics optimization:</p>
+                        <ul class="frame-bullets">
+                          <li>Developed high-performance interactive web interfaces, achieving sub-100ms response times for rich graphics.</li>
+                          <li>Created smooth animations and UI systems designed for tactile audio visualizers using the Web Audio API.</li>
+                          <li>Collaborated with design teams to enforce design systems across client interfaces, maintaining strict hex color guidelines.</li>
+                        </ul>
+                      </div>
+                      <div class="frame-footer">
+                        <span class="frame-stamp">DEVELOPED // 2025</span>
+                        <span class="frame-action-prompt">Click to view certificate ➔</span>
+                      </div>
+                    </div>
+                    <div class="frame-edge-bottom"></div>
+                  </div>
 
-            <!-- Sheet Panel 2 (Helix details) -->
-            <div class="liner-notes-sheet" id="notes-panel-2" role="tabpanel" aria-label="Helix Systems Experience"
-              style="display: none;">
-              <div class="notes-header">
-                <span class="notes-catalogue">CATALOGUE: HXS-CS-02</span>
-                <h4 class="notes-title">Helix Systems</h4>
-                <div class="notes-meta-row">
-                  <span class="notes-meta-chip">Web Developer</span>
-                  <span class="notes-meta-chip">2024</span>
+                  <!-- Frame 2: Certificate -->
+                  <div class="film-frame frame-certificate">
+                    <div class="frame-edge-top"></div>
+                    <div class="frame-content">
+                      <div class="frame-header">
+                        <span class="frame-cat">PHOTO RETRIEVAL // CELL-01</span>
+                        <h4 class="frame-title">internship certificate</h4>
+                      </div>
+                      <div class="frame-cert-body">
+                        <img class="frame-cert-img" src="assets/certificate_cll.png" alt="Creative Logic Lab Certificate">
+                      </div>
+                      <div class="frame-footer">
+                        <span class="frame-stamp">VERIFIED // RM-CLL-2025</span>
+                        <span class="frame-action-prompt">Click to view details ↵</span>
+                      </div>
+                    </div>
+                    <div class="frame-edge-bottom"></div>
+                  </div>
+
                 </div>
               </div>
-              <div class="notes-content">
-                <p class="notes-intro">Database performance logs and architecture optimizations:</p>
-                <ul class="notes-bullets">
-                  <li>Refactored legacy database models and web frameworks, accelerating load times by 20%.</li>
-                  <li>Constructed clean internal dashboards for metrics logging and performance metrics tracking.</li>
-                  <li>Authored automated test suites for security validation and data integrity, ensuring 95% API coverage.</li>
-                </ul>
-              </div>
-              <div class="notes-footer-barcode">
-                <div class="barcode-visual-black">
-                  <span></span><span></span><span></span><span></span><span></span>
-                  <span></span><span></span><span></span><span></span><span></span>
+
+              <!-- Film Strip 2 (Helix) -->
+              <div class="film-strip" id="film-strip-2" role="tabpanel" aria-label="Helix Systems Details" style="display: none;">
+                <div class="film-strip-track">
+                  
+                  <!-- Frame 1: Details -->
+                  <div class="film-frame frame-details">
+                    <div class="frame-edge-top"></div>
+                    <div class="frame-content">
+                      <div class="frame-header">
+                        <span class="frame-cat">CATALOGUE // HXS-CS-02</span>
+                        <h4 class="frame-title">Helix Systems</h4>
+                        <div class="frame-meta-row">
+                          <span class="frame-meta-chip">Web Developer</span>
+                          <span class="frame-meta-chip">2024</span>
+                        </div>
+                      </div>
+                      <div class="frame-body">
+                        <p class="frame-intro">Database performance logs and architecture optimizations:</p>
+                        <ul class="frame-bullets">
+                          <li>Refactored legacy database models and web frameworks, accelerating load times by 20%.</li>
+                          <li>Constructed clean internal dashboards for metrics logging and performance metrics tracking.</li>
+                          <li>Authored automated test suites for security validation and data integrity, ensuring 95% API coverage.</li>
+                        </ul>
+                      </div>
+                      <div class="frame-footer">
+                        <span class="frame-stamp">DEVELOPED // 2024</span>
+                        <span class="frame-action-prompt">Click to view certificate ➔</span>
+                      </div>
+                    </div>
+                    <div class="frame-edge-bottom"></div>
+                  </div>
+
+                  <!-- Frame 2: Certificate -->
+                  <div class="film-frame frame-certificate">
+                    <div class="frame-edge-top"></div>
+                    <div class="frame-content">
+                      <div class="frame-header">
+                        <span class="frame-cat">PHOTO RETRIEVAL // CELL-02</span>
+                        <h4 class="frame-title">internship certificate</h4>
+                      </div>
+                      <div class="frame-cert-body">
+                        <img class="frame-cert-img" src="assets/certificate_helix.png" alt="Helix Systems Certificate">
+                      </div>
+                      <div class="frame-footer">
+                        <span class="frame-stamp">VERIFIED // RM-HXS-2024</span>
+                        <span class="frame-action-prompt">Click to view details ↵</span>
+                      </div>
+                    </div>
+                    <div class="frame-edge-bottom"></div>
+                  </div>
+
                 </div>
-                <span class="barcode-id">HXS-2024-RM</span>
               </div>
+
+              <!-- Film Strip 3 (MTOI) -->
+              <div class="film-strip" id="film-strip-3" role="tabpanel" aria-label="Music Tech Open Initiative Details" style="display: none;">
+                <div class="film-strip-track">
+                  
+                  <!-- Frame 1: Details -->
+                  <div class="film-frame frame-details">
+                    <div class="frame-edge-top"></div>
+                    <div class="frame-content">
+                      <div class="frame-header">
+                        <span class="frame-cat">CATALOGUE // MTOI-DSP-03</span>
+                        <h4 class="frame-title">Music Tech Open</h4>
+                        <div class="frame-meta-row">
+                          <span class="frame-meta-chip">Open Source</span>
+                          <span class="frame-meta-chip">2023 — 2024</span>
+                        </div>
+                      </div>
+                      <div class="frame-body">
+                        <p class="frame-intro">Digital Signal Processing contributions and package configurations:</p>
+                        <ul class="frame-bullets">
+                          <li>Contributed core components to open-source DSP frameworks utilized by hundreds of online artists.</li>
+                          <li>Refined accessibility features, updating markup and screen-reader flow for digital audio workspaces.</li>
+                          <li>Maintained build tasks and optimized package loading pipelines, reducing payload size by 15%.</li>
+                        </ul>
+                      </div>
+                      <div class="frame-footer">
+                        <span class="frame-stamp">DEVELOPED // 2024</span>
+                        <span class="frame-action-prompt">Click to view certificate ➔</span>
+                      </div>
+                    </div>
+                    <div class="frame-edge-bottom"></div>
+                  </div>
+
+                  <!-- Frame 2: Certificate -->
+                  <div class="film-frame frame-certificate">
+                    <div class="frame-edge-top"></div>
+                    <div class="frame-content">
+                      <div class="frame-header">
+                        <span class="frame-cat">PHOTO RETRIEVAL // CELL-03</span>
+                        <h4 class="frame-title">contribution certificate</h4>
+                      </div>
+                      <div class="frame-cert-body">
+                        <img class="frame-cert-img" src="assets/certificate_mtoi.png" alt="Music Tech Open Initiative Certificate">
+                      </div>
+                      <div class="frame-footer">
+                        <span class="frame-stamp">VERIFIED // RM-MTOI-2024</span>
+                        <span class="frame-action-prompt">Click to view details ↵</span>
+                      </div>
+                    </div>
+                    <div class="frame-edge-bottom"></div>
+                  </div>
+
+                </div>
+              </div>
+
             </div>
-
-            <!-- Sheet Panel 3 (MTOI details) -->
-            <div class="liner-notes-sheet" id="notes-panel-3" role="tabpanel"
-              aria-label="Music Tech Open Initiative Experience" style="display: none;">
-              <div class="notes-header">
-                <span class="notes-catalogue">CATALOGUE: MTOI-DSP-03</span>
-                <h4 class="notes-title">Music Tech Open Initiative</h4>
-                <div class="notes-meta-row">
-                  <span class="notes-meta-chip">Open Source</span>
-                  <span class="notes-meta-chip">2023 — 2024</span>
-                </div>
-              </div>
-              <div class="notes-content">
-                <p class="notes-intro">Digital Signal Processing contributions and package configurations:</p>
-                <ul class="notes-bullets">
-                  <li>Contributed core components to open-source DSP frameworks utilized by hundreds of online artists.</li>
-                  <li>Refined accessibility features, updating markup and screen-reader flow for digital audio workspaces.</li>
-                  <li>Maintained build tasks and optimized package loading pipelines, reducing payload size by 15%.</li>
-                </ul>
-              </div>
-              <div class="notes-footer-barcode">
-                <div class="barcode-visual-black">
-                  <span></span><span></span><span></span><span></span><span></span>
-                  <span></span><span></span><span></span><span></span><span></span>
-                </div>
-                <span class="barcode-id">MTOI-2023-RM</span>
-              </div>
-            </div>
-
           </div>
 
         </div>
       </div>
     </section>
 
-    <!-- Section 5: PROJECTS (Selected Reels - Album Sleeves Grid) -->
+    <!-- Section 5: PROJECTS (Selected Reels - Cinematic Movie Poster Grid) -->
     <section id="projects" class="projects-section panel-split bg-black reveal-on-scroll">
       <div class="section-header-poster">
         <h2 class="section-title-label">03 // system modules</h2>
@@ -547,269 +606,280 @@
       </div>
 
       <div class="projects-grid">
-        <!-- Project 1: Asymmetric Left -->
-        <article class="project-card reveal-on-scroll card-large">
-          <div class="project-media-wrapper">
-            <img class="project-image" src="assets/project1.png" alt="VibeScribe music playlist curator" loading="lazy">
-
-            <!-- Sleeve top specifications -->
-            <div class="sleeve-spec-label">MODULE_01 // VECTOR MATCH</div>
-
+        <!-- Project 1: VibeScribe Poster -->
+        <article class="project-card reveal-on-scroll">
+          <div class="project-poster-frame">
+            <img class="project-image" src="assets/project1.png" alt="VibeScribe movie poster" loading="lazy">
+            <div class="poster-spec-label">MODULE_01 // VECTOR MATCH</div>
+            <div class="poster-rating">RM-PG13</div>
+            
             <div class="project-overlay">
               <div class="overlay-header-specs">
-                <span>FORMAT: WEB PIPELINE</span>
-                <span>CODE: RM-VBS-01</span>
+                <span>FORMAT // WEB PIPELINE</span>
+                <span>CODE // RM-VBS-01</span>
               </div>
-              <p class="project-summary-long">An AI-driven audio playlist manager utilizing machine learning vectors to
-                recommend songs based on emotional profiles and text-prompt mood descriptions. Integrated directly with
-                online music APIs.</p>
+              <p class="project-summary-long">An AI-driven audio playlist manager utilizing machine learning vectors to recommend songs based on emotional profiles and text-prompt mood descriptions. Integrated directly with online music APIs.</p>
               <div class="play-indicator">
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
                   <path d="M8 5v14l11-7z" />
                 </svg>
-                <span>PLAY MODULE REEL</span>
+                <span>LOAD SIGNAL</span>
               </div>
             </div>
           </div>
+          
           <div class="project-details">
             <h4 class="project-title">VibeScribe</h4>
-            <p class="project-desc">AI-driven playlist curator built to map audio features to user moods.</p>
-            <div class="project-meta-row">
-              <div class="project-tags">
-                <span class="tech-pill">Python</span>
-                <span class="tech-pill">TypeScript</span>
-                <span class="tech-pill">Web Audio</span>
-              </div>
-              <div class="project-actions">
-                <a href="https://github.com/mariaR5" target="_blank" rel="noopener noreferrer" class="project-link-btn"
-                  aria-label="GitHub repository">
-                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path
-                      d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
-                    </path>
-                  </svg>
-                </a>
-                <a href="#" class="project-link-btn" aria-label="Live Demo">
-                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                    <polyline points="15 3 21 3 21 9"></polyline>
-                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                  </svg>
-                </a>
-              </div>
+            
+            <!-- Retro Billing Credits block -->
+            <div class="project-billing">
+              <div class="billing-line"><span class="role">STARRING</span> <span class="names">Python · TypeScript · Web Audio</span></div>
+              <div class="billing-line"><span class="role">DIRECTED BY</span> <span class="names">Rose Maria</span></div>
+              <div class="billing-line"><span class="role">RATING</span> <span class="names">RM // CS-APPROVED</span></div>
+            </div>
+            
+            <div class="project-actions-row">
+              <a href="https://github.com/mariaR5" target="_blank" rel="noopener noreferrer" class="project-ticket-btn" aria-label="GitHub Repository">
+                <span>TICKET // CODE</span>
+              </a>
+              <a href="#" class="project-ticket-btn" aria-label="Live Demo">
+                <span>TICKET // REEL</span>
+              </a>
             </div>
           </div>
         </article>
 
-        <!-- Project 2: Asymmetric Right -->
-        <article class="project-card reveal-on-scroll card-small">
-          <div class="project-media-wrapper">
-            <img class="project-image" src="assets/project2.png" alt="Aura writing editor" loading="lazy">
-            <div class="sleeve-spec-label">MODULE_02 // AMBIENCE CORE</div>
+        <!-- Project 2: Aura Poster -->
+        <article class="project-card reveal-on-scroll">
+          <div class="project-poster-frame">
+            <img class="project-image" src="assets/project2.png" alt="Aura movie poster" loading="lazy">
+            <div class="poster-spec-label">MODULE_02 // AMBIENCE CORE</div>
+            <div class="poster-rating">RM-PG</div>
+            
             <div class="project-overlay">
               <div class="overlay-header-specs">
-                <span>FORMAT: INTERACTIVE CANVAS</span>
-                <span>CODE: RM-AUR-02</span>
+                <span>FORMAT // CANVAS INTERACTIVE</span>
+                <span>CODE // RM-AUR-02</span>
               </div>
-              <p class="project-summary-long">A distraction-free writing environment that syncs local prose to ambient
-                soundscapes. Includes low-latency offline synching, Markdown previewing, and dynamic typographic
-                settings.</p>
+              <p class="project-summary-long">A distraction-free writing environment that syncs local prose to ambient soundscapes. Includes low-latency offline synching, Markdown previewing, and dynamic typographic settings.</p>
               <div class="play-indicator">
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
                   <path d="M8 5v14l11-7z" />
                 </svg>
-                <span>PLAY MODULE REEL</span>
+                <span>LOAD SIGNAL</span>
               </div>
             </div>
           </div>
+          
           <div class="project-details">
             <h4 class="project-title">Aura</h4>
-            <p class="project-desc">Minimalist writing editor integrating custom relaxing sounds.</p>
-            <div class="project-meta-row">
-              <div class="project-tags">
-                <span class="tech-pill">Svelte</span>
-                <span class="tech-pill">IndexedDB</span>
-                <span class="tech-pill">CSS Canvas</span>
-              </div>
-              <div class="project-actions">
-                <a href="https://github.com/mariaR5" target="_blank" rel="noopener noreferrer" class="project-link-btn"
-                  aria-label="GitHub repository">
-                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path
-                      d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
-                    </path>
-                  </svg>
-                </a>
-                <a href="#" class="project-link-btn" aria-label="Live Demo">
-                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                    <polyline points="15 3 21 3 21 9"></polyline>
-                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                  </svg>
-                </a>
-              </div>
+            
+            <!-- Retro Billing Credits block -->
+            <div class="project-billing">
+              <div class="billing-line"><span class="role">STARRING</span> <span class="names">Svelte · IndexedDB · CSS Canvas</span></div>
+              <div class="billing-line"><span class="role">DIRECTED BY</span> <span class="names">Rose Maria</span></div>
+              <div class="billing-line"><span class="role">RATING</span> <span class="names">RM // UI-APPROVED</span></div>
+            </div>
+            
+            <div class="project-actions-row">
+              <a href="https://github.com/mariaR5" target="_blank" rel="noopener noreferrer" class="project-ticket-btn" aria-label="GitHub Repository">
+                <span>TICKET // CODE</span>
+              </a>
+              <a href="#" class="project-ticket-btn" aria-label="Live Demo">
+                <span>TICKET // REEL</span>
+              </a>
             </div>
           </div>
         </article>
 
-        <!-- Project 3: Asymmetric Center -->
-        <article class="project-card reveal-on-scroll card-wide">
-          <div class="project-media-wrapper">
-            <img class="project-image" src="assets/project3.png" alt="Chronos calendar" loading="lazy">
-            <div class="sleeve-spec-label">MODULE_03 // SPATIAL MATRIX</div>
+        <!-- Project 3: Chronos Poster -->
+        <article class="project-card reveal-on-scroll">
+          <div class="project-poster-frame">
+            <img class="project-image" src="assets/project3.png" alt="Chronos movie poster" loading="lazy">
+            <div class="poster-spec-label">MODULE_03 // SPATIAL MATRIX</div>
+            <div class="poster-rating">RM-G</div>
+            
             <div class="project-overlay">
               <div class="overlay-header-specs">
-                <span>FORMAT: 3D ENGINE</span>
-                <span>CODE: RM-CHNS-03</span>
+                <span>FORMAT // 3D ENGINE</span>
+                <span>CODE // RM-CHNS-03</span>
               </div>
-              <p class="project-summary-long">A multi-dimensional calendar mapping time coordinates to spatial node
-                points. Designed for tracking complex parallel team releases, deadlines, and dependencies in a 3D
-                interface.</p>
+              <p class="project-summary-long">A multi-dimensional calendar mapping time coordinates to spatial node points. Designed for tracking complex parallel team releases, deadlines, and dependencies in a 3D interface.</p>
               <div class="play-indicator">
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
                   <path d="M8 5v14l11-7z" />
                 </svg>
-                <span>PLAY MODULE REEL</span>
+                <span>LOAD SIGNAL</span>
               </div>
             </div>
           </div>
+          
           <div class="project-details">
             <h4 class="project-title">Chronos</h4>
-            <p class="project-desc">A spatial calendar mapping project timelines as visual dimensions.</p>
-            <div class="project-meta-row">
-              <div class="project-tags">
-                <span class="tech-pill">Three.js</span>
-                <span class="tech-pill">WebGL</span>
-                <span class="tech-pill">Tailwind</span>
-              </div>
-              <div class="project-actions">
-                <a href="https://github.com/mariaR5" target="_blank" rel="noopener noreferrer" class="project-link-btn"
-                  aria-label="GitHub repository">
-                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path
-                      d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
-                    </path>
-                  </svg>
-                </a>
-                <a href="#" class="project-link-btn" aria-label="Live Demo">
-                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                    <polyline points="15 3 21 3 21 9"></polyline>
-                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                  </svg>
-                </a>
-              </div>
+            
+            <!-- Retro Billing Credits block -->
+            <div class="project-billing">
+              <div class="billing-line"><span class="role">STARRING</span> <span class="names">Three.js · WebGL · CSS Grid</span></div>
+              <div class="billing-line"><span class="role">DIRECTED BY</span> <span class="names">Rose Maria</span></div>
+              <div class="billing-line"><span class="role">RATING</span> <span class="names">RM // 3D-APPROVED</span></div>
+            </div>
+            
+            <div class="project-actions-row">
+              <a href="https://github.com/mariaR5" target="_blank" rel="noopener noreferrer" class="project-ticket-btn" aria-label="GitHub Repository">
+                <span>TICKET // CODE</span>
+              </a>
+              <a href="#" class="project-ticket-btn" aria-label="Live Demo">
+                <span>TICKET // REEL</span>
+              </a>
             </div>
           </div>
         </article>
       </div>
     </section>
 
-    <!-- Section 3: EDUCATION (Solid Terracotta Red Panel — Academic Spec Sheet) -->
-    <section id="education" class="education-section panel-split bg-red reveal-on-scroll">
+    <!-- Section 3: EDUCATION (Film Reel / Cinema Strip) -->
+    <section id="education" class="education-section reveal-on-scroll">
 
-      <div class="edu-inner">
-
-        <!-- Header strip -->
-        <div class="edu-header-strip">
-          <span class="section-title-label-black">04 // study &amp; theory</span>
-          <div class="edu-divider-line"></div>
-          <span class="edu-header-code">[ ACADEMIC LOG ]</span>
-        </div>
-
-        <!-- Big section title -->
-        <h2 class="edu-main-title">academic<br>specifications</h2>
-
-        <!-- Main layout: timeline left, spec sheet right -->
-        <div class="education-poster-layout">
-
-          <!-- Timeline column -->
-          <div class="education-timeline">
-            <div class="timeline-track-black"></div>
-
-            <!-- Entry 1: NITC -->
-            <div class="education-item-black">
-              <div class="timeline-marker-black"></div>
-              <div class="education-details">
-                <div class="edu-header">
-                  <h3 class="institution-name-black">National Institute of Technology Calicut</h3>
-                  <span class="edu-duration-black">2022 — 2026</span>
-                </div>
-                <p class="degree-info-black">Bachelor of Technology — Computer Science &amp; Engineering</p>
-                <!-- Course focus tags -->
-                <div class="edu-focus-tags">
-                  <span class="edu-tag">Algorithms</span>
-                  <span class="edu-tag">Systems Programming</span>
-                  <span class="edu-tag">Interactive UI</span>
-                  <span class="edu-tag">DSP / Audio</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Entry 2: School -->
-            <div class="education-item-black">
-              <div class="timeline-marker-black"></div>
-              <div class="education-details">
-                <div class="edu-header">
-                  <h3 class="institution-name-black">St. Joseph's Higher Secondary School</h3>
-                  <span class="edu-duration-black">2020 — 2022</span>
-                </div>
-                <p class="degree-info-black">Higher Secondary Education — Science Stream</p>
-                <div class="edu-focus-tags">
-                  <span class="edu-tag">Mathematics</span>
-                  <span class="edu-tag">Physics</span>
-                  <span class="edu-tag">Computer Science</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Spec sheet column -->
-          <div class="spec-sheet-container">
-            <div class="spec-sheet">
-              <div class="spec-header">TECHNICAL SYSTEM DIAGRAM</div>
-              <div class="spec-row">
-                <span class="spec-label">REGISTRY NO:</span>
-                <span class="spec-value">RM-CS-2026</span>
-              </div>
-              <div class="spec-row">
-                <span class="spec-label">HOST SYSTEM:</span>
-                <span class="spec-value">NIT CALICUT (NITC)</span>
-              </div>
-              <div class="spec-row">
-                <span class="spec-label">SPECIALIZATION:</span>
-                <span class="spec-value">ALGORITHMS / INTERACTIVES</span>
-              </div>
-              <div class="spec-row">
-                <span class="spec-label">CREDITS RATING:</span>
-                <span class="spec-value">HONORS DIVISION</span>
-              </div>
-              <div class="spec-row">
-                <span class="spec-label">BATCH:</span>
-                <span class="spec-value">2022 — 2026</span>
-              </div>
-              <div class="spec-footer">
-                <div class="barcode-visual">
-                  <span></span><span></span><span></span><span></span><span></span>
-                  <span></span><span></span><span></span><span></span><span></span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
+      <!-- Top 1/4 black panel — heading -->
+      <div class="edu-top-panel">
+        <span class="edu-label-code">[ 04 // STUDY &amp; THEORY ]</span>
+        <h2 class="edu-headline">academic<br>specifications</h2>
       </div>
+
+      <!-- Bottom 3/4 terracotta red panel -->
+      <div class="edu-bottom-panel">
+
+        <!-- Film Reel + Film Strip layout -->
+        <div class="edu-reel-layout">
+
+          <!-- Left: Spinning Film Reel SVG -->
+          <div class="edu-reel-column">
+            <div class="reel-wrapper" id="eduReel">
+              <svg class="reel-svg" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <!-- Outer ring -->
+                <circle cx="110" cy="110" r="104" fill="none" stroke="#0B0605" stroke-width="4"/>
+                <!-- Perforation holes on outer ring -->
+                <circle cx="110" cy="10" r="6" fill="#0B0605"/>
+                <circle cx="183.8" cy="47" r="6" fill="#0B0605"/>
+                <circle cx="200" cy="130" r="6" fill="#0B0605"/>
+                <circle cx="148" cy="196" r="6" fill="#0B0605"/>
+                <circle cx="62" cy="196" r="6" fill="#0B0605"/>
+                <circle cx="17" cy="130" r="6" fill="#0B0605"/>
+                <circle cx="36" cy="47" r="6" fill="#0B0605"/>
+                <!-- Spokes -->
+                <line x1="110" y1="110" x2="110" y2="18" stroke="#0B0605" stroke-width="3.5" stroke-linecap="round"/>
+                <line x1="110" y1="110" x2="179" y2="55" stroke="#0B0605" stroke-width="3.5" stroke-linecap="round"/>
+                <line x1="110" y1="110" x2="195" y2="135" stroke="#0B0605" stroke-width="3.5" stroke-linecap="round"/>
+                <line x1="110" y1="110" x2="143" y2="193" stroke="#0B0605" stroke-width="3.5" stroke-linecap="round"/>
+                <line x1="110" y1="110" x2="68" y2="193" stroke="#0B0605" stroke-width="3.5" stroke-linecap="round"/>
+                <line x1="110" y1="110" x2="24" y2="135" stroke="#0B0605" stroke-width="3.5" stroke-linecap="round"/>
+                <line x1="110" y1="110" x2="41" y2="55" stroke="#0B0605" stroke-width="3.5" stroke-linecap="round"/>
+                <!-- Inner hub ring -->
+                <circle cx="110" cy="110" r="30" fill="#0B0605"/>
+                <circle cx="110" cy="110" r="18" fill="#7E2519" stroke="#0B0605" stroke-width="2"/>
+                <circle cx="110" cy="110" r="7" fill="#0B0605"/>
+                <!-- Mid ring -->
+                <circle cx="110" cy="110" r="58" fill="none" stroke="#0B0605" stroke-width="2" stroke-dasharray="6 6"/>
+              </svg>
+              <div class="reel-center-label">REEL 01</div>
+            </div>
+            <!-- Film strip peeling off the reel -->
+            <div class="reel-strip-vertical">
+              <div class="strip-hole"></div>
+              <div class="strip-frame-mini">NITC</div>
+              <div class="strip-hole"></div>
+              <div class="strip-frame-mini">SJHS</div>
+              <div class="strip-hole"></div>
+              <div class="strip-frame-mini">●</div>
+              <div class="strip-hole"></div>
+            </div>
+          </div>
+
+          <!-- Right: Film Frame Cards (Expandable) -->
+          <div class="edu-frames-column">
+
+            <!-- Ticker tape header -->
+            <div class="edu-ticker-tape">
+              <span>ACADEMIC LOG ·&nbsp;</span><span>ACADEMIC LOG ·&nbsp;</span><span>ACADEMIC LOG ·&nbsp;</span><span>ACADEMIC LOG ·&nbsp;</span>
+            </div>
+
+            <!-- Frame 1: NITC -->
+            <div class="edu-film-frame" id="eduFrame1" data-frame="1" role="button" tabindex="0" aria-expanded="false">
+              <!-- Frame perforation strip -->
+              <div class="frame-perfs">
+                <div class="perf"></div><div class="perf"></div><div class="perf"></div>
+                <div class="perf"></div><div class="perf"></div><div class="perf"></div>
+              </div>
+              <!-- Frame content -->
+              <div class="frame-body">
+                <div class="frame-number-badge">FRAME 01</div>
+                <div class="frame-collapsed">
+                  <h3 class="frame-inst">National Institute of Technology Calicut</h3>
+                  <span class="frame-year">2022 — 2026</span>
+                </div>
+                <div class="frame-expanded">
+                  <p class="frame-degree">B.Tech — Computer Science &amp; Engineering</p>
+                  <div class="frame-tags">
+                    <span class="frame-tag">Algorithms</span>
+                    <span class="frame-tag">Systems Programming</span>
+                    <span class="frame-tag">Interactive UI</span>
+                    <span class="frame-tag">DSP / Audio</span>
+                  </div>
+                  <div class="frame-spec-row"><span>REGISTRY</span><span>RM-CS-2026</span></div>
+                  <div class="frame-spec-row"><span>STREAM</span><span>ALGORITHMS / INTERACTIVES</span></div>
+                  <div class="frame-spec-row"><span>CLASS</span><span>HONORS DIVISION</span></div>
+                </div>
+              </div>
+              <!-- Frame perforation strip -->
+              <div class="frame-perfs">
+                <div class="perf"></div><div class="perf"></div><div class="perf"></div>
+                <div class="perf"></div><div class="perf"></div><div class="perf"></div>
+              </div>
+            </div>
+
+            <!-- Frame 2: School -->
+            <div class="edu-film-frame" id="eduFrame2" data-frame="2" role="button" tabindex="0" aria-expanded="false">
+              <div class="frame-perfs">
+                <div class="perf"></div><div class="perf"></div><div class="perf"></div>
+                <div class="perf"></div><div class="perf"></div><div class="perf"></div>
+              </div>
+              <div class="frame-body">
+                <div class="frame-number-badge">FRAME 02</div>
+                <div class="frame-collapsed">
+                  <h3 class="frame-inst">St. Joseph's Higher Secondary School</h3>
+                  <span class="frame-year">2020 — 2022</span>
+                </div>
+                <div class="frame-expanded">
+                  <p class="frame-degree">Higher Secondary — Science Stream</p>
+                  <div class="frame-tags">
+                    <span class="frame-tag">Mathematics</span>
+                    <span class="frame-tag">Physics</span>
+                    <span class="frame-tag">Computer Science</span>
+                  </div>
+                  <div class="frame-spec-row"><span>STREAM</span><span>SCIENCE (PCM + CS)</span></div>
+                  <div class="frame-spec-row"><span>BOARD</span><span>KERALA HSE</span></div>
+                </div>
+              </div>
+              <div class="frame-perfs">
+                <div class="perf"></div><div class="perf"></div><div class="perf"></div>
+                <div class="perf"></div><div class="perf"></div><div class="perf"></div>
+              </div>
+            </div>
+
+            <!-- Bottom mono label -->
+            <div class="edu-bottom-meta">
+              <span>35mm — EDUCATIONAL STRIP — CALICUT, INDIA</span>
+            </div>
+
+          </div><!-- /edu-frames-column -->
+        </div><!-- /edu-reel-layout -->
+      </div><!-- /edu-bottom-panel -->
+
       <div class="section-separator-black">· · · · ·</div>
     </section>
 
     <!-- Section 6: HOBBIES -->
+
     <section id="hobbies" class="hobbies-section">
       <div class="marquee-outer">
         <div class="marquee-track" id="marqueeTrack">

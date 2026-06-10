@@ -1,249 +1,425 @@
 /* ==========================================================================
-   EDUCATION SECTION (Reverse high-contrast — terracotta red panel)
+   EDUCATION SECTION — Retro Film Reel Cinema Strip
    ========================================================================== */
+
+/* ── Section shell: black/red split, no padding (panels manage spacing) ── */
 .education-section {
-  padding: 8rem 2.5rem 6rem;
   width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ──────────────────────────────────────────────
+   TOP PANEL — black, 28vh, heading lives here
+   ────────────────────────────────────────────── */
+.edu-top-panel {
+  background-color: var(--bg-black);
+  padding: 5rem 2.5rem 4.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
   max-width: 1400px;
+  width: 100%;
   margin: 0 auto;
 }
 
-.edu-inner {
-  width: 100%;
-}
-
-/* Header strip — inverted (black text on red) */
-.edu-header-strip {
-  display: flex;
-  align-items: center;
-  gap: 1.8rem;
-  margin-bottom: 3rem;
-}
-
-.edu-header-strip .section-title-label-black {
-  margin-bottom: 0;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.edu-divider-line {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(to right, var(--bg-black), transparent);
-  opacity: 0.35;
-}
-
-.edu-header-code {
+.edu-label-code {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
-  color: rgba(10, 9, 8, 0.5);
-  letter-spacing: 0.08em;
-  white-space: nowrap;
-  flex-shrink: 0;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  color: rgba(244, 236, 200, 0.4);
+  text-transform: uppercase;
 }
 
-/* Giant outlined title — echoes hero "maria" but in black stroke on red */
-.edu-main-title {
-  font-family: var(--font-display);
-  font-size: clamp(5.5rem, 12vw, 11rem);
+.edu-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(5rem, 11vw, 10rem);
   font-weight: 700;
   text-transform: lowercase;
   letter-spacing: -0.04em;
   line-height: 0.85;
   color: transparent;
-  -webkit-text-stroke: 2px var(--bg-black);
-  text-stroke: 2px var(--bg-black);
-  margin: 0 0 5rem;
+  -webkit-text-stroke: 2px var(--text-cream);
+  text-stroke: 2px var(--text-cream);
 }
 
-.section-header-poster {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 2.5rem;
-  width: 100%;
+/* ──────────────────────────────────────────────
+   BOTTOM PANEL — terracotta red, 3/4 height
+   ────────────────────────────────────────────── */
+.edu-bottom-panel {
+  background-color: var(--bg-terracotta);
+  padding: 5rem 2.5rem 6rem;
+  flex: 1;
 }
 
-.education-poster-layout {
+/* ──────────────────────────────────────────────
+   MAIN LAYOUT — reel left, film frames right
+   ────────────────────────────────────────────── */
+.edu-reel-layout {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 5.5rem;
+  grid-template-columns: 260px 1fr;
+  gap: 5rem;
+  max-width: 1200px;
+  margin: 0 auto;
   align-items: flex-start;
 }
 
-@media (max-width: 992px) {
-  .education-poster-layout {
+@media (max-width: 860px) {
+  .edu-reel-layout {
     grid-template-columns: 1fr;
-    gap: 4.5rem;
+    gap: 3.5rem;
+  }
+  .edu-reel-column {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+  .reel-wrapper {
+    flex-shrink: 0;
+    width: 140px !important;
+  }
+  .reel-strip-vertical {
+    flex-direction: row !important;
+    gap: 0.5rem !important;
+    width: auto !important;
+    height: auto !important;
+  }
+  .strip-hole { width: 14px !important; height: 14px !important; }
+  .strip-frame-mini {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 0.55rem !important;
   }
 }
 
-.education-timeline {
+/* ──────────────────────────────────────────────
+   REEL COLUMN — SVG + vertical film strip
+   ────────────────────────────────────────────── */
+.edu-reel-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+/* The whole reel wrapper for positioning the REEL 01 label */
+.reel-wrapper {
   position: relative;
-  padding-left: 2.5rem;
+  width: 220px;
 }
 
-.timeline-track-black {
+/* Spinning reel SVG */
+.reel-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  animation: reelSpin 12s linear infinite;
+  filter: drop-shadow(0 6px 24px rgba(0,0,0,0.5));
+  /* Start paused, JS or .is-spinning class will run it */
+  animation-play-state: paused;
+}
+
+.edu-bottom-panel:hover .reel-svg,
+.edu-film-frame.is-open ~ .edu-bottom-meta .reel-svg,
+.education-section.reel-spinning .reel-svg {
+  animation-play-state: running;
+}
+
+/* Always spin on hover of the reel itself */
+.reel-wrapper:hover .reel-svg {
+  animation-play-state: running;
+}
+
+@keyframes reelSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* REEL 01 label centred under SVG */
+.reel-center-label {
   position: absolute;
-  top: 0.5rem;
-  bottom: 0.5rem;
-  left: 0;
-  width: 2px;
-  background-color: var(--bg-black) !important;
-}
-
-.education-item-black {
-  position: relative;
-  margin-bottom: 4rem;
-  transition: transform 0.4s var(--ease-cinematic);
-}
-
-.education-item-black:last-child {
-  margin-bottom: 0;
-}
-
-.timeline-marker-black {
-  position: absolute;
-  top: 0.65rem;
-  left: -2.5rem;
+  bottom: -2rem;
+  left: 50%;
   transform: translateX(-50%);
-  width: 9px;
-  height: 9px;
-  background-color: var(--bg-black) !important;
-  border-radius: 50%;
-  transition: transform 0.4s var(--ease-cinematic),
-    background-color 0.4s var(--ease-cinematic);
-}
-
-.institution-name-black {
-  font-size: clamp(1.4rem, 2.5vw, 2.2rem);
-  font-weight: 700;
-  color: var(--bg-black) !important;
-}
-
-.edu-duration-black {
   font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: rgba(10, 9, 8, 0.55) !important;
-  font-weight: 700;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  color: rgba(10, 9, 8, 0.55);
   white-space: nowrap;
 }
 
-.degree-info-black {
-  font-size: 1.05rem;
-  color: var(--bg-black) !important;
-  font-weight: 500;
-  margin-top: 0.4rem;
-}
-
-/* Course focus tags */
-.edu-focus-tags {
+/* Vertical filmstrip strip below the reel */
+.reel-strip-vertical {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-
-.edu-tag {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  font-weight: 700;
-  color: var(--bg-black);
-  border: 1px solid rgba(10, 9, 8, 0.3);
-  padding: 0.3rem 0.65rem;
-  letter-spacing: 0.05em;
-  transition: background-color 0.25s ease, color 0.25s ease;
-}
-
-.edu-tag:hover {
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  width: 52px;
   background-color: var(--bg-black);
-  color: var(--text-cream);
+  border: 2px solid rgba(10,9,8,0.6);
+  padding: 0.5rem 0;
+  border-radius: 2px;
 }
 
-.education-item-black:hover {
-  transform: translateX(12px);
+.strip-hole {
+  width: 18px;
+  height: 18px;
+  background-color: var(--bg-terracotta);
+  border-radius: 50%;
+  border: 2px solid rgba(244,236,200,0.12);
+  margin: 0.35rem auto;
 }
 
-.education-item-black:hover .timeline-marker-black {
-  transform: translateX(-50%) scale(1.6);
-  background-color: var(--text-cream) !important;
-  box-shadow: 0 0 15px var(--bg-black);
-}
-
-/* Technical Specification Print Sheet */
-.spec-sheet-container {
-  display: flex;
-  justify-content: flex-end;
-}
-
-@media (max-width: 992px) {
-  .spec-sheet-container {
-    justify-content: flex-start;
-  }
-}
-
-.spec-sheet {
-  border: 2px solid var(--bg-black);
-  padding: 2.2rem;
+.strip-frame-mini {
   width: 100%;
-  max-width: 440px;
+  height: 50px;
+  background-color: #1a0c08;
+  border-top: 1px solid rgba(244,236,200,0.08);
+  border-bottom: 1px solid rgba(244,236,200,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: rgba(244,236,200,0.5);
+  letter-spacing: 0.04em;
+}
+
+/* ──────────────────────────────────────────────
+   TICKER TAPE
+   ────────────────────────────────────────────── */
+.edu-ticker-tape {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  color: rgba(10,9,8,0.45);
+  overflow: hidden;
+  white-space: nowrap;
+  display: flex;
+  margin-bottom: 2.5rem;
+  border-top: 1px solid rgba(10,9,8,0.25);
+  border-bottom: 1px solid rgba(10,9,8,0.25);
+  padding: 0.5rem 0;
+  animation: tickerScroll 14s linear infinite;
+}
+
+@keyframes tickerScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ──────────────────────────────────────────────
+   FILM FRAME CARDS
+   ────────────────────────────────────────────── */
+.edu-frames-column {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* The full film frame card — cream on black, exposed edges look */
+.edu-film-frame {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
   background-color: var(--bg-black);
-  color: var(--text-cream);
-  box-shadow: 8px 8px 0 rgba(10, 9, 8, 0.25);
+  cursor: pointer;
+  position: relative;
+  /* Slightly tilted — different per card */
+  transition:
+    transform 0.5s var(--ease-cinematic),
+    box-shadow 0.4s var(--ease-cinematic);
+  box-shadow: 4px 6px 28px rgba(0,0,0,0.35);
+  /* Slight rotations like the project posters */
+  overflow: visible;
+}
+
+.edu-film-frame:nth-child(2) { transform: rotate(-0.5deg); }
+.edu-film-frame:nth-child(3) { transform: rotate(0.4deg); }
+
+.edu-film-frame:hover,
+.edu-film-frame:focus-visible {
+  transform: rotate(0deg) translateY(-4px) !important;
+  box-shadow: 6px 14px 40px rgba(0,0,0,0.5);
+  outline: none;
+}
+
+/* Perforation strips — left and right edges */
+.frame-perfs {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0.8rem 0.55rem;
+  background-color: #0d0604;
+  border-right: 1.5px solid rgba(244,236,200,0.06);
+  justify-content: space-around;
+  min-width: 28px;
+}
+
+.frame-perfs:last-child {
+  border-right: none;
+  border-left: 1.5px solid rgba(244,236,200,0.06);
+}
+
+.perf {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--bg-terracotta);
+  border: 1px solid rgba(244,236,200,0.08);
+}
+
+/* Frame body — the actual content area */
+.frame-body {
+  flex: 1;
+  padding: 1.8rem 2rem;
   position: relative;
 }
 
-.spec-header {
+.frame-number-badge {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
   color: var(--accent-gold);
-  border-bottom: 1.5px solid rgba(244, 236, 200, 0.15);
-  padding-bottom: 0.6rem;
   margin-bottom: 1.2rem;
 }
 
-.spec-row {
+/* Collapsed row — always visible */
+.frame-collapsed {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.frame-inst {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2.2vw, 1.95rem);
+  font-weight: 600;
+  color: var(--text-cream);
+  line-height: 1.2;
+}
+
+.frame-year {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: rgba(244, 236, 200, 0.45);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Expanded detail panel — hidden by default */
+.frame-expanded {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    max-height 0.55s var(--ease-cinematic),
+    opacity 0.45s var(--ease-cinematic),
+    margin-top 0.4s var(--ease-cinematic);
+  margin-top: 0;
+}
+
+/* Active / open state — driven by JS toggling .is-open */
+.edu-film-frame.is-open .frame-expanded {
+  max-height: 320px;
+  opacity: 1;
+  margin-top: 1.5rem;
+}
+
+/* Spinning reel when any frame is open */
+.edu-film-frame.is-open + .edu-film-frame .reel-svg,
+.education-section:has(.edu-film-frame.is-open) .reel-svg {
+  animation-play-state: running;
+}
+
+/* Degree line */
+.frame-degree {
+  font-size: 0.9rem;
+  color: rgba(244,236,200,0.75);
+  font-weight: 500;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+/* Subject tags */
+.frame-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.4rem;
+}
+
+.frame-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--text-cream);
+  border: 1px solid rgba(244,236,200,0.2);
+  padding: 0.28rem 0.65rem;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.frame-tag:hover {
+  background: var(--accent-gold);
+  color: var(--bg-black);
+  border-color: var(--accent-gold);
+}
+
+/* Spec rows inside expanded panel */
+.frame-spec-row {
   display: flex;
   justify-content: space-between;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  color: rgba(244,236,200,0.5);
+  border-top: 1px solid rgba(244,236,200,0.06);
   padding: 0.4rem 0;
-  border-bottom: 1px solid rgba(244, 236, 200, 0.05);
 }
 
-.spec-row:last-of-type {
-  border-bottom: none;
-  margin-bottom: 1.5rem;
-}
-
-.spec-label {
-  color: var(--text-muted);
-}
-
-.spec-value {
+.frame-spec-row span:last-child {
   color: var(--text-cream);
   font-weight: 700;
 }
 
-.spec-footer {
-  display: flex;
-  justify-content: center;
+/* Click-to-open chevron indicator */
+.edu-film-frame::after {
+  content: '▾';
+  position: absolute;
+  bottom: 1.4rem;
+  right: 1.8rem;
+  font-size: 0.85rem;
+  color: rgba(244,236,200,0.25);
+  transition: transform 0.4s var(--ease-cinematic), color 0.3s;
 }
 
-.barcode-visual {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  height: 28px;
+.edu-film-frame.is-open::after {
+  transform: rotate(180deg);
+  color: var(--accent-gold);
 }
 
-.barcode-visual span {
-  height: 100%;
-  background-color: var(--text-cream);
-  width: 2px;
+/* Bottom mono strip */
+.edu-bottom-meta {
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+  color: rgba(10,9,8,0.35);
+  text-align: right;
 }
 
-.barcode-visual span:nth-child(even) { width: 4px; }
-.barcode-visual span:nth-child(3n)   { width: 1px; }
-.barcode-visual span:nth-child(5n)   { width: 5px; }
+/* ── Section separator (shared class) ── */
+.education-section .section-separator-black {
+  display: block;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  color: rgba(244,236,200,0.3);
+  background-color: var(--bg-black);
+  padding: 1.4rem 0;
+}

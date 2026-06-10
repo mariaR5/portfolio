@@ -1,22 +1,34 @@
 /* ==========================================================================
-   EXPERIENCE SECTION (Vinyl Discography Sleeve Rack Layout)
+   EXPERIENCE SECTION (Split Panel & Film Strip Viewer)
    ========================================================================== */
 .experience-section {
-  padding: 8rem 2.5rem 8rem;
-  max-width: 1400px;
-  margin: 0 auto;
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
-.exp-inner {
+.exp-top-panel {
+  background-color: var(--bg-black);
+  color: var(--text-cream);
+  padding: 4rem 2.5rem 6.5rem;
   width: 100%;
 }
 
-/* Header strip — matches about page style */
+.exp-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Header strip */
 .exp-header-strip {
   display: flex;
   align-items: center;
   gap: 1.8rem;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .exp-header-strip .section-title-label {
@@ -49,376 +61,425 @@
   text-transform: lowercase;
   letter-spacing: -0.04em;
   line-height: 0.85;
-  color: transparent;
-  -webkit-text-stroke: 2px var(--text-cream);
-  text-stroke: 2px var(--text-cream);
-  margin: 0 0 4rem;
+  color: var(--text-cream);
+  margin: 0;
 }
 
-/* Stat counter row — mirrors hero credits grid */
-.exp-stat-row {
-  display: flex;
-  align-items: center;
-  gap: 3rem;
-  margin-bottom: 5rem;
-  padding-bottom: 3rem;
-  border-bottom: 1px solid rgba(244, 236, 200, 0.08);
+/* Bottom 3/4 Red Panel */
+.exp-bottom-panel {
+  background-color: var(--bg-terracotta) !important;
+  color: var(--bg-black) !important;
+  padding: 6rem 2.5rem 8rem;
+  width: 100%;
+  position: relative;
+  z-index: 2;
 }
 
-.exp-stat-col {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
-
-.exp-stat-num {
-  font-family: var(--font-display);
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  font-weight: 700;
-  color: var(--accent-gold);
-  line-height: 1;
-}
-
-.exp-stat-label {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.12em;
-  color: var(--text-muted);
-  text-transform: uppercase;
-}
-
-.exp-stat-divider {
-  width: 1px;
-  height: 3rem;
-  background-color: rgba(244, 236, 200, 0.12);
-  flex-shrink: 0;
-}
-
-/* Playing status highlight */
-.playing-status {
-  color: var(--accent-gold) !important;
-  animation: statusBlink 2.2s infinite;
-}
-
-@keyframes statusBlink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.45; }
-}
-
-/* Notes meta chips (role + date) */
-.notes-meta-row {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 0.6rem;
-  flex-wrap: wrap;
-}
-
-.notes-meta-chip {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  font-weight: 700;
-  color: var(--text-muted);
-  border: 1px solid rgba(244, 236, 200, 0.12);
-  padding: 0.25rem 0.6rem;
-  letter-spacing: 0.05em;
-}
-
-.discography-container {
+.exp-bottom-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
   display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
+  grid-template-columns: 0.95fr 1.05fr;
   gap: 5.5rem;
   align-items: flex-start;
 }
 
 @media (max-width: 1024px) {
-  .discography-container {
+  .exp-bottom-inner {
     grid-template-columns: 1fr;
     gap: 4.5rem;
   }
 }
 
-.sleeves-rack {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.sleeve-wrapper {
-  background: none;
-  border: none;
+/* Left side tabs */
+.exp-left-col {
   width: 100%;
-  height: 140px;
-  position: relative;
-  text-align: left;
-  display: block;
-  outline: none;
-  padding: 0;
 }
 
-.sleeve-cover {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 85%;
-  /* space for record sliding out on the right */
-  height: 100%;
-  background-color: var(--bg-surface);
-  border: 1.5px solid rgba(244, 236, 200, 0.15);
-  padding: 1.2rem 1.8rem;
-  z-index: 2;
+.exp-tabs-list {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  transition: transform 0.4s var(--ease-cinematic), border-color 0.4s var(--ease-cinematic), background-color 0.4s var(--ease-cinematic);
-  color: var(--text-cream);
+  gap: 1.5rem;
 }
 
-.sleeve-header {
-  display: flex;
-  justify-content: space-between;
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  color: var(--accent-gold);
-}
-
-.sleeve-body h4 {
-  font-family: var(--font-display);
-  font-size: clamp(1.3rem, 2.2vw, 1.95rem);
-  font-weight: 700;
-  text-transform: lowercase;
-  line-height: 1;
-}
-
-.sleeve-company {
-  font-family: var(--font-body);
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  font-style: italic;
-  display: block;
-  margin-top: 0.15rem;
-}
-
-.sleeve-footer {
-  display: flex;
-  justify-content: space-between;
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  color: var(--text-muted);
-}
-
-.sleeve-status {
-  color: var(--accent-gold);
-  font-weight: 700;
-  letter-spacing: 0.05em;
-}
-
-/* Vinyl record styling */
-.vinyl-disc {
-  position: absolute;
-  top: 8px;
-  left: 20%;
-  width: 124px;
-  height: 124px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #333 4%, #111 30%, #222 50%, #050505 70%, #000 100%);
-  z-index: 1;
-  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05), 0 5px 15px rgba(0, 0, 0, 0.6);
-  transition: transform 0.5s var(--ease-cinematic);
+.exp-tab-item {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 1.8rem;
+  background: none;
+  border: 2px solid rgba(11, 6, 5, 0.15);
+  padding: 1.6rem 2rem;
+  width: 100%;
+  text-align: left;
+  transition: all 0.4s var(--ease-cinematic);
+  outline: none;
+  cursor: pointer;
+  color: var(--bg-black) !important;
+  position: relative;
 }
 
-.vinyl-grooves {
-  position: absolute;
-  width: 85%;
-  height: 85%;
-  border-radius: 50%;
-  border: 1px double rgba(255, 255, 255, 0.03);
-  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.85);
-}
-
-.vinyl-label {
-  width: 38%;
-  height: 38%;
-  border-radius: 50%;
-  background-color: var(--bg-terracotta);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
-}
-
-.label-center {
-  font-family: var(--font-mono);
-  font-size: 0.42rem;
-  font-weight: 700;
-  color: var(--text-cream);
-  border: 1px solid var(--text-cream);
-  width: 80%;
-  height: 80%;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Hover and active states for sleeves */
-.sleeve-wrapper:hover .sleeve-cover {
-  border-color: var(--accent-gold);
+.exp-tab-item:hover {
+  border-color: var(--bg-black);
   transform: translateX(-4px);
 }
 
-.sleeve-wrapper:hover .vinyl-disc {
-  transform: translateX(20%) rotate(15deg);
-}
-
-.sleeve-wrapper.active .sleeve-cover {
-  border-color: var(--text-cream);
-  background-color: #24140F;
+.exp-tab-item.active {
+  background-color: var(--bg-black) !important;
+  border-color: var(--bg-black);
+  color: var(--text-cream) !important;
   transform: translateX(-8px);
+  box-shadow: 8px 8px 0 rgba(11, 6, 5, 0.25);
 }
 
-.sleeve-wrapper.active .vinyl-disc {
-  transform: translateX(45%) rotate(72deg);
-  animation: spinVinyl 8s linear infinite;
-  animation-delay: 0.4s;
+/* Color overrides for active tab */
+.exp-tab-item.active * {
+  color: var(--text-cream) !important;
 }
 
-@keyframes spinVinyl {
-  0% {
-    transform: translateX(45%) rotate(0deg);
-  }
-
-  100% {
-    transform: translateX(45%) rotate(360deg);
-  }
+.exp-tab-item.active .tab-track-no,
+.exp-tab-item.active .logo-svg {
+  color: var(--accent-gold) !important;
 }
 
-/* Liner Notes layout */
-.liner-notes-container {
-  background-color: var(--bg-surface);
-  border: 2px solid var(--text-cream);
-  padding: 3rem;
-  box-shadow: 12px 12px 0 var(--bg-black);
-  min-height: 440px;
-  position: relative;
+.tab-item-logo {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bg-black);
+  transition: color 0.4s var(--ease-cinematic);
 }
 
-.liner-notes-sheet {
+.logo-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.tab-item-content {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  min-height: 380px;
-  animation: notesReveal 0.5s var(--ease-cinematic) forwards;
+  line-height: 1.3;
 }
 
-.notes-header {
-  border-bottom: 1.5px solid rgba(244, 236, 200, 0.15);
-  padding-bottom: 0.8rem;
-  margin-bottom: 1.5rem;
-}
-
-.notes-catalogue {
+.tab-track-no {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--accent-gold);
-  font-weight: 700;
-  display: block;
+  font-size: 0.68rem;
+  color: var(--bg-black);
+  opacity: 0.65;
+  margin-bottom: 0.2rem;
+  letter-spacing: 0.05em;
 }
 
-.notes-title {
+.tab-role {
   font-family: var(--font-display);
-  font-size: 2.2rem;
+  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
   font-weight: 700;
-  color: var(--text-cream);
-  line-height: 1.1;
   text-transform: lowercase;
 }
 
-.notes-intro {
+.tab-company {
   font-family: var(--font-body);
-  font-size: 0.95rem;
-  color: var(--text-muted);
-  margin-bottom: 1rem;
+  font-size: 0.9rem;
   font-style: italic;
+  opacity: 0.85;
 }
 
-.notes-bullets {
+.tab-duration {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  margin-top: 0.3rem;
+  opacity: 0.75;
+}
+
+/* Right side film strip viewer */
+.exp-right-col {
+  width: 100%;
+}
+
+.film-strip-viewer {
+  position: relative;
+  width: 100%;
+  min-height: 520px;
+  background-color: var(--bg-black);
+  border: 3px solid var(--bg-black);
+  box-shadow: 12px 12px 0 var(--bg-black);
+  overflow: hidden;
+}
+
+/* Shutter Flash Screen Overlay */
+.shutter-flash {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--text-cream);
+  z-index: 10;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.shutter-flash.flash-active {
+  animation: shutterAnimation 0.4s ease-out;
+}
+
+@keyframes shutterAnimation {
+  0% { opacity: 0; }
+  35% { opacity: 0.95; }
+  100% { opacity: 0; }
+}
+
+/* Film Strip items */
+.film-strip {
+  width: 100%;
+  height: 100%;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-standard);
+}
+
+.film-strip.active {
+  display: block;
+  opacity: 1;
+}
+
+/* Track holding two frames side-by-side */
+.film-strip-track {
+  display: flex;
+  width: 200%;
+  height: 100%;
+  transition: transform 0.65s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/* Translate left when next-frame class is active */
+.film-strip.next-frame .film-strip-track {
+  transform: translateX(-50%);
+}
+
+/* Film cell frames */
+.film-frame {
+  width: 50%;
+  height: 100%;
+  min-height: 520px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: var(--bg-black);
+  color: var(--text-cream) !important;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* Sprocket hole bars */
+.frame-edge-top,
+.frame-edge-bottom {
+  width: 100%;
+  height: 18px;
+  background-image: repeating-linear-gradient(90deg, var(--bg-terracotta) 0px, var(--bg-terracotta) 12px, transparent 12px, transparent 28px);
+  opacity: 0.9;
+  flex-shrink: 0;
+  margin: 6px 0;
+  transition: background-image 0.4s;
+}
+
+.frame-content {
+  flex-grow: 1;
+  padding: 2.2rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  border-top: 1.5px solid rgba(244, 236, 200, 0.12);
+  border-bottom: 1.5px solid rgba(244, 236, 200, 0.12);
+  margin: 0 1rem;
+}
+
+/* Film mount margins label */
+.frame-content::before {
+  content: "SAFETY FILM · KODAK 400";
+  position: absolute;
+  top: 6px;
+  left: 3rem;
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  color: var(--accent-gold);
+  letter-spacing: 0.1em;
+  opacity: 0.6;
+}
+
+/* Content details */
+.frame-cat {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--accent-gold) !important;
+  letter-spacing: 0.08em;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.frame-title {
+  font-family: var(--font-display);
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: var(--text-cream) !important;
+  line-height: 1.15;
+  text-transform: lowercase;
+  margin-bottom: 0.6rem;
+}
+
+.frame-meta-row {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 1.6rem;
+  flex-wrap: wrap;
+}
+
+.frame-meta-chip {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-cream) !important;
+  border: 1px solid rgba(244, 236, 200, 0.25);
+  padding: 0.2rem 0.6rem;
+  letter-spacing: 0.05em;
+}
+
+.frame-body {
+  flex-grow: 1;
+}
+
+.frame-intro {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--text-muted) !important;
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.frame-bullets {
   list-style: none;
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
 }
 
-.notes-bullets li {
+.frame-bullets li {
   font-family: var(--font-body);
-  font-size: 1rem;
-  color: var(--text-cream);
+  font-size: 0.95rem;
+  color: var(--text-cream) !important;
   position: relative;
   padding-left: 1.2rem;
-  line-height: 1.5;
+  line-height: 1.55;
 }
 
-.notes-bullets li::before {
+.frame-bullets li::before {
   content: "·";
   position: absolute;
   left: 0;
-  top: -2px;
+  top: -3px;
   color: var(--accent-gold);
-  font-size: 1.6rem;
+  font-size: 1.8rem;
 }
 
-.notes-footer-barcode {
-  border-top: 1px solid rgba(244, 236, 200, 0.08);
-  padding-top: 1.2rem;
-  margin-top: 2rem;
+/* Certificate image inside frame */
+.frame-cert-body {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin: 1.2rem 0;
+  border: 1px solid rgba(244, 236, 200, 0.15);
+  background-color: rgba(255, 255, 255, 0.02);
+  height: 250px;
+}
+
+.frame-cert-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: contrast(1.02) sepia(0.04) brightness(0.95);
+}
+
+/* Frame footer details */
+.frame-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-top: 1px dashed rgba(244, 236, 200, 0.15);
+  padding-top: 1.2rem;
+  margin-top: 1.2rem;
 }
 
-.barcode-visual-black {
-  display: flex;
-  gap: 2px;
-  height: 22px;
-}
-
-.barcode-visual-black span {
-  width: 2px;
-  background-color: var(--text-cream);
-  height: 100%;
-}
-
-.barcode-visual-black span:nth-child(even) {
-  width: 4px;
-}
-
-.barcode-visual-black span:nth-child(3n) {
-  width: 1px;
-}
-
-.barcode-id {
+.frame-stamp {
   font-family: var(--font-mono);
   font-size: 0.65rem;
-  color: var(--text-muted);
+  color: var(--text-muted) !important;
+  letter-spacing: 0.05em;
+}
+
+.frame-action-prompt {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--accent-gold) !important;
+  text-transform: uppercase;
   letter-spacing: 0.08em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
-@keyframes notesReveal {
-  0% {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Hover effect expanding cursor over the viewer */
+.film-strip-viewer {
+  cursor: pointer;
 }
 
+@keyframes promptPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.frame-action-prompt {
+  animation: promptPulse 2.2s infinite;
+}
+
+/* Mobile responsive styles */
 @media (max-width: 768px) {
-  .liner-notes-container {
-    padding: 1.8rem;
+  .exp-top-panel {
+    padding: 6rem 1.5rem 3rem;
+  }
+  
+  .exp-bottom-panel {
+    padding: 4rem 1.5rem 6rem;
+  }
+  
+  .exp-tab-item {
+    padding: 1.2rem 1.5rem;
+    gap: 1.2rem;
+  }
+  
+  .tab-item-logo {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .film-strip-viewer, .film-frame {
+    min-height: 470px;
+  }
+  
+  .frame-content {
+    padding: 1.6rem 1.8rem;
+  }
+  
+  .frame-title {
+    font-size: 1.7rem;
+  }
+  
+  .frame-cert-body {
+    height: 200px;
   }
 }

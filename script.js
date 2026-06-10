@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     requestAnimationFrame(updateCursor);
 
     // Dynamic hover listeners for cursor scale expansions
-    const interactiveSelectors = 'a, button, .project-media-wrapper, .sleeve-wrapper, [role="button"], .poster-main-title, .scrapbook-sticker';
+    const interactiveSelectors = 'a, button, .project-poster-frame, .exp-tab-item, .paper-card, [role="button"], .poster-main-title, .scrapbook-sticker';
     const addHoverListeners = () => {
       document.querySelectorAll(interactiveSelectors).forEach(element => {
         if (element.dataset.cursorBound) return;
@@ -196,41 +196,68 @@ document.addEventListener('DOMContentLoaded', () => {
   sections.forEach(sec => activeObserver.observe(sec));
 
   /* ==========================================================================
-     VINYL DISCOGRAPHY INTERACTIONS (Cool work experience swap)
+     EXPERIENCE TABS & CINEMATIC FILM STRIPS
      ========================================================================== */
-  const sleeveWrappers = document.querySelectorAll('.sleeve-wrapper');
-  const linerNotesSheets = document.querySelectorAll('.liner-notes-sheet');
+  const expTabItems = document.querySelectorAll('.exp-tab-item');
+  const filmStrips = document.querySelectorAll('.film-strip');
+  const shutterFlash = document.getElementById('shutterFlash');
 
-  sleeveWrappers.forEach(sleeve => {
-    sleeve.addEventListener('click', () => {
-      // 1. Remove active state from all sleeves and toggle status labels
-      sleeveWrappers.forEach(sw => {
-        sw.classList.remove('active');
-        sw.setAttribute('aria-selected', 'false');
-        const status = sw.querySelector('.sleeve-status');
-        if (status) status.textContent = 'CUE';
+  expTabItems.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // 1. Deactivate all tabs
+      expTabItems.forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
       });
 
-      // 2. Set active state on clicked sleeve
-      sleeve.classList.add('active');
-      sleeve.setAttribute('aria-selected', 'true');
-      const status = sleeve.querySelector('.sleeve-status');
-      if (status) status.textContent = 'PLAYING';
+      // 2. Activate clicked tab
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
 
-      // 3. Hide all liner notes inserts
-      linerNotesSheets.forEach(sheet => {
-        sheet.classList.remove('active');
-        sheet.style.display = 'none';
+      // 3. Hide all film strips & reset their frame position
+      filmStrips.forEach(strip => {
+        strip.classList.remove('active', 'next-frame');
+        strip.style.display = 'none';
       });
 
-      // 4. Slide up corresponding details sheet
-      const trackId = sleeve.getAttribute('data-track');
-      const targetSheet = document.getElementById(`notes-panel-${trackId}`);
-      if (targetSheet) {
-        targetSheet.style.display = 'flex';
+      // 4. Show corresponding film strip
+      const trackId = tab.getAttribute('data-track');
+      const targetStrip = document.getElementById(`film-strip-${trackId}`);
+      if (targetStrip) {
+        targetStrip.style.display = 'block';
         // trigger reflow
-        void targetSheet.offsetWidth;
-        targetSheet.classList.add('active');
+        void targetStrip.offsetWidth;
+        targetStrip.classList.add('active');
+      }
+    });
+  });
+
+  // Handle film strip click to trigger shutter flash & slide to next frame
+  filmStrips.forEach(strip => {
+    strip.addEventListener('click', (e) => {
+      // Ignore click if clicking links or interactive elements inside
+      if (e.target.closest('a') || e.target.closest('button')) return;
+
+      if (shutterFlash) {
+        // Prevent double trigger during active flash
+        if (shutterFlash.classList.contains('flash-active')) return;
+
+        shutterFlash.classList.add('flash-active');
+
+        // Swap the active frame display at peak brightness (150ms)
+        setTimeout(() => {
+          strip.classList.toggle('next-frame');
+        }, 150);
+
+        // Remove flash class once animation finishes
+        const onAnimationEnd = () => {
+          shutterFlash.classList.remove('flash-active');
+          shutterFlash.removeEventListener('animationend', onAnimationEnd);
+        };
+        shutterFlash.addEventListener('animationend', onAnimationEnd);
+      } else {
+        // Fallback if flash element is missing
+        strip.classList.toggle('next-frame');
       }
     });
   });
@@ -240,12 +267,12 @@ document.addEventListener('DOMContentLoaded', () => {
      ========================================================================== */
   const lightbox = document.getElementById('videoLightbox');
   const lightboxClose = document.getElementById('lightboxClose');
-  const projectMediaWrappers = document.querySelectorAll('.project-media-wrapper');
+  const projectMediaWrappers = document.querySelectorAll('.project-poster-frame');
 
   if (lightbox && lightboxClose) {
     projectMediaWrappers.forEach(wrapper => {
       wrapper.addEventListener('click', (e) => {
-        if (e.target.closest('.project-actions') || e.target.closest('.project-link-btn')) {
+        if (e.target.closest('.project-ticket-btn')) {
           return;
         }
 
@@ -325,4 +352,77 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  /* ==========================================================================
+     EDUCATION — Film Frame Expand / Reel Spin
+     ========================================================================== */
+  const eduSection    = document.querySelector('.education-section');
+  const reelSvg       = document.querySelector('.reel-svg');
+  const filmFrames    = document.querySelectorAll('.edu-film-frame');
+
+  if (filmFrames.length && reelSvg) {
+    // Helper: start reel for a moment then slow to pause
+    let reelTimer = null;
+    const spinReel = () => {
+      reelSvg.style.animationPlayState = 'running';
+      if (reelTimer) clearTimeout(reelTimer);
+      // If no frame is open, stop after 2s
+      const anyOpen = () => [...filmFrames].some(f => f.classList.contains('is-open'));
+      reelTimer = setTimeout(() => {
+        if (!anyOpen()) reelSvg.style.animationPlayState = 'paused';
+      }, 2000);
+    };
+
+    filmFrames.forEach(frame => {
+      const toggle = () => {
+        const isOpen = frame.classList.contains('is-open');
+
+        // Close all frames first
+        filmFrames.forEach(f => {
+          f.classList.remove('is-open');
+          f.setAttribute('aria-expanded', 'false');
+        });
+
+        if (!isOpen) {
+          frame.classList.add('is-open');
+          frame.setAttribute('aria-expanded', 'true');
+          // Spin reel continuously while a frame is open
+          reelSvg.style.animationPlayState = 'running';
+        } else {
+          // Was open → now closed; slow reel to pause
+          spinReel();
+        }
+      };
+
+      frame.addEventListener('click', toggle);
+      frame.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+      });
+    });
+
+    // Brief spin when section scrolls into view
+    const reelObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          reelSvg.style.animationPlayState = 'running';
+          setTimeout(() => {
+            if (![...filmFrames].some(f => f.classList.contains('is-open'))) {
+              reelSvg.style.animationPlayState = 'paused';
+            }
+          }, 2400);
+        }
+      });
+    }, { threshold: 0.25 });
+
+    if (eduSection) reelObserver.observe(eduSection);
+  }
+
+  // Add film frames to cursor hover listeners
+  document.querySelectorAll('.edu-film-frame').forEach(el => {
+    if (customCursor && !el.dataset.cursorBound) {
+      el.dataset.cursorBound = 'true';
+      el.addEventListener('mouseenter', () => customCursor.classList.add('cursor-expand'));
+      el.addEventListener('mouseleave', () => customCursor.classList.remove('cursor-expand'));
+    }
+  });
 });

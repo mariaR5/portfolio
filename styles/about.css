@@ -2,7 +2,7 @@
    ABOUT SECTION — Poster Spec Profile
    ========================================================================== */
 .about-section {
-  padding: 8rem 2.5rem 6rem;
+  padding: 8rem 2.5rem 2rem;
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
@@ -491,7 +491,7 @@
   color: var(--accent-gold);
   font-size: 2rem;
   letter-spacing: 0.5em;
-  margin-top: 8rem;
+  margin-top: 3rem;
   opacity: 0.5;
 }
 
