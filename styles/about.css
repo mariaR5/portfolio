@@ -1,0 +1,402 @@
+/* ==========================================================================
+   ABOUT SECTION — Poster Spec Profile
+   ========================================================================== */
+.about-section {
+  padding: 8rem 2.5rem 6rem;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.about-inner {
+  width: 100%;
+}
+
+/* ── Header strip: mirrors hero bottom credits bar ── */
+.about-header-strip {
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+  margin-bottom: 5rem;
+}
+
+.about-header-strip .section-title-label {
+  margin-bottom: 0;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.about-divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, var(--accent-gold), transparent);
+  opacity: 0.4;
+}
+
+.about-header-coords {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── Main two-column poster grid ── */
+.about-poster-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 6rem;
+  align-items: flex-start;
+}
+
+@media (max-width: 1024px) {
+  .about-poster-grid {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+}
+
+/* ── Left column ── */
+.about-left-col {
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+}
+
+/* Giant name — echoes hero "maria" outline style */
+.about-name-block {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.about-name-display {
+  font-family: var(--font-display);
+  font-size: clamp(7rem, 14vw, 14rem);
+  font-weight: 700;
+  text-transform: lowercase;
+  letter-spacing: -0.04em;
+  line-height: 0.85;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--text-cream);
+  text-stroke: 2px var(--text-cream);
+  margin: 0;
+}
+
+.about-name-sub {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid rgba(244, 236, 200, 0.12);
+}
+
+.about-name-role {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  color: var(--accent-gold);
+  text-transform: uppercase;
+}
+
+.about-stamp {
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+}
+
+/* Bio paragraphs */
+.about-bio-prose {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.about-bio-lead {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.4vw, 2.2rem);
+  line-height: 1.3;
+  color: var(--text-cream);
+  font-weight: 400;
+  font-style: italic;
+}
+
+.about-bio-body {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+  max-width: 580px;
+}
+
+/* Credential rows — mirrors hero credits-column layout */
+.about-credential-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  border-top: 1.5px solid rgba(244, 236, 200, 0.1);
+  border-bottom: 1.5px solid rgba(244, 236, 200, 0.1);
+  padding: 1.8rem 0;
+}
+
+@media (max-width: 640px) {
+  .about-credential-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.about-cred-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.cred-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+  display: block;
+}
+
+.cred-value {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-cream);
+  display: block;
+  line-height: 1.4;
+}
+
+.cred-available {
+  color: var(--accent-gold) !important;
+}
+
+/* Skill tags — horizontal wrapped row */
+.about-skills-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.about-skill-tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  border: 1px solid rgba(244, 236, 200, 0.15);
+  padding: 0.35rem 0.75rem;
+  letter-spacing: 0.06em;
+  transition: color 0.3s var(--ease-cinematic), border-color 0.3s var(--ease-cinematic);
+}
+
+.about-skill-tag:hover {
+  color: var(--accent-gold);
+  border-color: var(--accent-gold);
+}
+
+/* ── Right column ── */
+.about-right-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+  position: sticky;
+  top: 8rem;
+}
+
+/* Viewfinder headshot frame */
+.about-headshot-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3/4;
+  background-color: var(--bg-surface);
+  border: 1px dashed rgba(244, 236, 200, 0.2);
+  padding: 0.8rem 0.8rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Rotating Stamp Badge */
+.stamp-badge {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  color: var(--accent-gold);
+  flex-shrink: 0;
+  animation: rotateStamp 22s linear infinite;
+}
+
+.stamp-badge:hover {
+  animation-play-state: paused;
+}
+
+.stamp-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-cream);
+}
+
+.title-badge-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+/* Viewfinder crosshairs */
+.viewfinder-crosshairs {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.crosshair {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--accent-gold);
+  line-height: 1;
+  opacity: 0.55;
+}
+
+.crosshair.top-left    { top: 0.5rem; left: 0.5rem; }
+.crosshair.top-right   { top: 0.5rem; right: 0.5rem; }
+.crosshair.bottom-left { bottom: 2.2rem; left: 0.5rem; }
+.crosshair.bottom-right{ bottom: 2.2rem; right: 0.5rem; }
+
+/* Subtle animated scanline on headshot */
+.headshot-scanline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(to right, transparent, rgba(208,161,100,0.35), transparent);
+  z-index: 3;
+  animation: scanMove 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes scanMove {
+  0%   { top: 0; opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { top: calc(100% - 3px); opacity: 0; }
+}
+
+.headshot-photo {
+  width: 100%;
+  height: calc(100% - 1.6rem);
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+.frame-metadata {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0.8rem;
+  right: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  z-index: 3;
+}
+
+/* Restricted-style availability block */
+.about-restricted-block {
+  border: 2px solid rgba(244, 236, 200, 0.3);
+  padding: 0.7rem 1rem;
+  line-height: 1.1;
+}
+
+.about-restricted-block .restricted-header {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-align: center;
+  border-bottom: 1.5px solid rgba(244, 236, 200, 0.2);
+  padding-bottom: 0.3rem;
+  margin-bottom: 0.4rem;
+  color: var(--text-muted);
+}
+
+.about-restricted-block .restricted-body {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.about-restricted-block .restricted-letter {
+  font-family: var(--font-body);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+  line-height: 1;
+}
+
+.about-restricted-block .restricted-text-rules {
+  font-family: var(--font-mono);
+  font-size: 0.42rem;
+  line-height: 1.4;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+/* Barcode row */
+.about-barcode-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.about-barcode {
+  height: 20px;
+  flex: 1;
+}
+
+.about-barcode-id {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+.section-separator {
+  text-align: center;
+  color: var(--accent-gold);
+  font-size: 2rem;
+  letter-spacing: 0.5em;
+  margin-top: 8rem;
+  opacity: 0.5;
+}
+
+.section-separator-black {
+  text-align: center;
+  color: var(--bg-black) !important;
+  font-size: 2rem;
+  letter-spacing: 0.5em;
+  margin-top: 8rem;
+  opacity: 0.45;
+}

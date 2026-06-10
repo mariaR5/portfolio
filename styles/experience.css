@@ -1,0 +1,424 @@
+/* ==========================================================================
+   EXPERIENCE SECTION (Vinyl Discography Sleeve Rack Layout)
+   ========================================================================== */
+.experience-section {
+  padding: 8rem 2.5rem 8rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.exp-inner {
+  width: 100%;
+}
+
+/* Header strip — matches about page style */
+.exp-header-strip {
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+  margin-bottom: 3rem;
+}
+
+.exp-header-strip .section-title-label {
+  margin-bottom: 0;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.exp-divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, var(--accent-gold), transparent);
+  opacity: 0.4;
+}
+
+.exp-header-code {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Giant outlined title */
+.exp-main-title {
+  font-family: var(--font-display);
+  font-size: clamp(5.5rem, 12vw, 11rem);
+  font-weight: 700;
+  text-transform: lowercase;
+  letter-spacing: -0.04em;
+  line-height: 0.85;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--text-cream);
+  text-stroke: 2px var(--text-cream);
+  margin: 0 0 4rem;
+}
+
+/* Stat counter row — mirrors hero credits grid */
+.exp-stat-row {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  margin-bottom: 5rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(244, 236, 200, 0.08);
+}
+
+.exp-stat-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.exp-stat-num {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  color: var(--accent-gold);
+  line-height: 1;
+}
+
+.exp-stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.exp-stat-divider {
+  width: 1px;
+  height: 3rem;
+  background-color: rgba(244, 236, 200, 0.12);
+  flex-shrink: 0;
+}
+
+/* Playing status highlight */
+.playing-status {
+  color: var(--accent-gold) !important;
+  animation: statusBlink 2.2s infinite;
+}
+
+@keyframes statusBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
+/* Notes meta chips (role + date) */
+.notes-meta-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.notes-meta-chip {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  border: 1px solid rgba(244, 236, 200, 0.12);
+  padding: 0.25rem 0.6rem;
+  letter-spacing: 0.05em;
+}
+
+.discography-container {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 5.5rem;
+  align-items: flex-start;
+}
+
+@media (max-width: 1024px) {
+  .discography-container {
+    grid-template-columns: 1fr;
+    gap: 4.5rem;
+  }
+}
+
+.sleeves-rack {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.sleeve-wrapper {
+  background: none;
+  border: none;
+  width: 100%;
+  height: 140px;
+  position: relative;
+  text-align: left;
+  display: block;
+  outline: none;
+  padding: 0;
+}
+
+.sleeve-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 85%;
+  /* space for record sliding out on the right */
+  height: 100%;
+  background-color: var(--bg-surface);
+  border: 1.5px solid rgba(244, 236, 200, 0.15);
+  padding: 1.2rem 1.8rem;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.4s var(--ease-cinematic), border-color 0.4s var(--ease-cinematic), background-color 0.4s var(--ease-cinematic);
+  color: var(--text-cream);
+}
+
+.sleeve-header {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--accent-gold);
+}
+
+.sleeve-body h4 {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2.2vw, 1.95rem);
+  font-weight: 700;
+  text-transform: lowercase;
+  line-height: 1;
+}
+
+.sleeve-company {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-style: italic;
+  display: block;
+  margin-top: 0.15rem;
+}
+
+.sleeve-footer {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.sleeve-status {
+  color: var(--accent-gold);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* Vinyl record styling */
+.vinyl-disc {
+  position: absolute;
+  top: 8px;
+  left: 20%;
+  width: 124px;
+  height: 124px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #333 4%, #111 30%, #222 50%, #050505 70%, #000 100%);
+  z-index: 1;
+  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05), 0 5px 15px rgba(0, 0, 0, 0.6);
+  transition: transform 0.5s var(--ease-cinematic);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vinyl-grooves {
+  position: absolute;
+  width: 85%;
+  height: 85%;
+  border-radius: 50%;
+  border: 1px double rgba(255, 255, 255, 0.03);
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.85);
+}
+
+.vinyl-label {
+  width: 38%;
+  height: 38%;
+  border-radius: 50%;
+  background-color: var(--bg-terracotta);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.label-center {
+  font-family: var(--font-mono);
+  font-size: 0.42rem;
+  font-weight: 700;
+  color: var(--text-cream);
+  border: 1px solid var(--text-cream);
+  width: 80%;
+  height: 80%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hover and active states for sleeves */
+.sleeve-wrapper:hover .sleeve-cover {
+  border-color: var(--accent-gold);
+  transform: translateX(-4px);
+}
+
+.sleeve-wrapper:hover .vinyl-disc {
+  transform: translateX(20%) rotate(15deg);
+}
+
+.sleeve-wrapper.active .sleeve-cover {
+  border-color: var(--text-cream);
+  background-color: #24140F;
+  transform: translateX(-8px);
+}
+
+.sleeve-wrapper.active .vinyl-disc {
+  transform: translateX(45%) rotate(72deg);
+  animation: spinVinyl 8s linear infinite;
+  animation-delay: 0.4s;
+}
+
+@keyframes spinVinyl {
+  0% {
+    transform: translateX(45%) rotate(0deg);
+  }
+
+  100% {
+    transform: translateX(45%) rotate(360deg);
+  }
+}
+
+/* Liner Notes layout */
+.liner-notes-container {
+  background-color: var(--bg-surface);
+  border: 2px solid var(--text-cream);
+  padding: 3rem;
+  box-shadow: 12px 12px 0 var(--bg-black);
+  min-height: 440px;
+  position: relative;
+}
+
+.liner-notes-sheet {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 380px;
+  animation: notesReveal 0.5s var(--ease-cinematic) forwards;
+}
+
+.notes-header {
+  border-bottom: 1.5px solid rgba(244, 236, 200, 0.15);
+  padding-bottom: 0.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.notes-catalogue {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--accent-gold);
+  font-weight: 700;
+  display: block;
+}
+
+.notes-title {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--text-cream);
+  line-height: 1.1;
+  text-transform: lowercase;
+}
+
+.notes-intro {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.notes-bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.notes-bullets li {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--text-cream);
+  position: relative;
+  padding-left: 1.2rem;
+  line-height: 1.5;
+}
+
+.notes-bullets li::before {
+  content: "·";
+  position: absolute;
+  left: 0;
+  top: -2px;
+  color: var(--accent-gold);
+  font-size: 1.6rem;
+}
+
+.notes-footer-barcode {
+  border-top: 1px solid rgba(244, 236, 200, 0.08);
+  padding-top: 1.2rem;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.barcode-visual-black {
+  display: flex;
+  gap: 2px;
+  height: 22px;
+}
+
+.barcode-visual-black span {
+  width: 2px;
+  background-color: var(--text-cream);
+  height: 100%;
+}
+
+.barcode-visual-black span:nth-child(even) {
+  width: 4px;
+}
+
+.barcode-visual-black span:nth-child(3n) {
+  width: 1px;
+}
+
+.barcode-id {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+}
+
+@keyframes notesReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .liner-notes-container {
+    padding: 1.8rem;
+  }
+}

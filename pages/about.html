@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>rose maria — about</title>
+  <meta name="description"
+    content="About Rose Maria, systems engineering and interactive frontend specialist from NIT Calicut.">
+
+  <!-- Google Fonts: Cormorant Garamond, DM Sans, Space Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,700;1,9..40,400&family=Space+Mono:wght@400;700&display=block"
+    rel="stylesheet">
+
+  <!-- Modular Stylesheets -->
+  <link rel="stylesheet" href="../styles/global.css">
+  <link rel="stylesheet" href="../styles/about.css">
+  <link rel="stylesheet" href="../styles/hobbies.css">
+</head>
+
+<body>
+
+  <!-- Custom Cursor Wrapper -->
+  <div class="custom-cursor" id="customCursor"></div>
+
+  <!-- Grain overlay -->
+  <div class="grain-overlay"></div>
+
+  <!-- Navigation -->
+  <header class="nav-container">
+    <nav class="nav" aria-label="Main Navigation">
+      <a href="../index.html" class="nav-logo" id="navLogo">Rose Maria</a>
+      <div class="nav-links">
+        <a href="about.html" class="nav-link active" data-section="about">About</a>
+        <a href="education.html" class="nav-link" data-section="education">Education</a>
+        <a href="experience.html" class="nav-link" data-section="experience">Work</a>
+        <a href="projects.html" class="nav-link" data-section="projects">Projects</a>
+        <a href="contact.html" class="nav-link" data-section="contact">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Section 2: ABOUT (Poster Spec Profile) -->
+    <section id="about" class="about-section panel-split bg-black reveal-on-scroll">
+      <div class="about-inner">
+
+        <!-- ── Top: mono label + divider strip ── -->
+        <div class="about-header-strip">
+          <span class="section-title-label">01 // the profile</span>
+          <div class="about-divider-line"></div>
+          <span class="about-header-coords">[ 11.2588° N · 75.7804° E ]</span>
+        </div>
+
+        <!-- ── Main grid: name block left, headshot right ── -->
+        <div class="about-poster-grid">
+
+          <!-- Left: Big name + bio text + credential rows -->
+          <div class="about-left-col">
+
+            <!-- Giant name -->
+            <div class="about-name-block">
+              <h2 class="about-name-display">rose<br>maria</h2>
+              <div class="about-name-sub">
+                <span class="about-name-role">Software Engineer · Creative Technologist</span>
+                <div class="stamp-badge about-stamp" aria-hidden="true">
+                  <svg viewBox="0 0 100 100">
+                    <path id="aboutStampPath" d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="none" />
+                    <text font-family="Space Mono" font-size="7.8" fill="currentColor">
+                      <textPath href="#aboutStampPath" letter-spacing="1">APPROVED SYSTEM DESIGN · VERIFIED ENGINE · </textPath>
+                    </text>
+                  </svg>
+                  <div class="stamp-center">RM</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Professional bio paragraphs -->
+            <div class="about-bio-prose">
+              <p class="about-bio-lead">
+                I build software that operates with precision and quiet elegance — performant backends, clean system architecture, and rich, tactile web frontends.
+              </p>
+              <p class="about-bio-body">
+                Based in Calicut, my work spans the full stack: from optimising database pipelines and writing robust APIs, to engineering interactive canvas animations and digital audio systems. I treat every interface as a product — intentional, textured, and alive.
+              </p>
+            </div>
+
+            <!-- Credential rows -->
+            <div class="about-credential-grid">
+              <div class="about-cred-col">
+                <span class="cred-label">INSTITUTION</span>
+                <span class="cred-value">NIT Calicut</span>
+                <span class="cred-value">B.Tech · CSE · 2026</span>
+              </div>
+              <div class="about-cred-col">
+                <span class="cred-label">SPECIALISATION</span>
+                <span class="cred-value">Systems Engineering</span>
+                <span class="cred-value">Audio &amp; Interactive UI</span>
+              </div>
+              <div class="about-cred-col">
+                <span class="cred-label">AVAILABILITY</span>
+                <span class="cred-value cred-available">Open to Roles</span>
+                <span class="cred-value">Calicut / Remote</span>
+              </div>
+            </div>
+
+            <!-- Skill tags -->
+            <div class="about-skills-row">
+              <span class="about-skill-tag">JavaScript</span>
+              <span class="about-skill-tag">TypeScript</span>
+              <span class="about-skill-tag">Python</span>
+              <span class="about-skill-tag">C++</span>
+              <span class="about-skill-tag">SQL</span>
+              <span class="about-skill-tag">Web Audio API</span>
+              <span class="about-skill-tag">WebGL</span>
+              <span class="about-skill-tag">React</span>
+              <span class="about-skill-tag">Node.js</span>
+              <span class="about-skill-tag">Docker</span>
+            </div>
+
+          </div>
+
+          <!-- Right: Viewfinder headshot + restricted-style status box -->
+          <div class="about-right-col">
+
+            <!-- Camera viewfinder frame -->
+            <div class="about-headshot-frame">
+              <div class="viewfinder-crosshairs">
+                <div class="crosshair top-left">+</div>
+                <div class="crosshair top-right">+</div>
+                <div class="crosshair bottom-left">+</div>
+                <div class="crosshair bottom-right">+</div>
+              </div>
+              <div class="headshot-scanline"></div>
+              <img class="headshot-photo" src="../assets/image.png" alt="Rose Maria — Professional Headshot" loading="lazy">
+              <div class="frame-metadata">
+                <span class="meta-label">REF: RM-2026-NITC</span>
+                <span class="meta-scale">SCALE: 1:1</span>
+              </div>
+            </div>
+
+            <!-- Availability block -->
+            <div class="about-restricted-block">
+              <div class="restricted-header">CANDIDATE STATUS</div>
+              <div class="restricted-body">
+                <div class="restricted-letter">RM</div>
+                <div class="restricted-text-rules">
+                  AVAILABLE FOR FULL-TIME ROLES · SOFTWARE ENGINEERING · INTERACTIVE SYSTEMS · CALICUT, INDIA
+                </div>
+              </div>
+            </div>
+
+            <!-- Barcode decoration -->
+            <div class="about-barcode-row">
+              <div class="barcode-visual-black about-barcode">
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+              </div>
+              <span class="about-barcode-id">RM-CS-2026-NITC</span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section 6: HOBBIES -->
+    <section id="hobbies" class="hobbies-section">
+      <div class="marquee-outer">
+        <div class="marquee-track" id="marqueeTrack">
+          <div class="hobby-card">
+            <span class="hobby-icon">🎸</span>
+            <span class="hobby-label">GUITAR</span>
+          </div>
+          <div class="hobby-card">
+            <span class="hobby-icon">🎧</span>
+            <span class="hobby-label">LISTENING</span>
+          </div>
+          <div class="hobby-card">
+            <span class="hobby-icon">✂️</span>
+            <span class="hobby-label">SCRAPBOOK</span>
+          </div>
+          <div class="hobby-card">
+            <span class="hobby-icon">✏️</span>
+            <span class="hobby-label">DRAWING</span>
+          </div>
+          <div class="hobby-card">
+            <span class="hobby-icon">🧥</span>
+            <span class="hobby-label">FASHION</span>
+          </div>
+          <div class="hobby-card">
+            <span class="hobby-icon">💻</span>
+            <span class="hobby-label">DEV LOG</span>
+          </div>
+          <!-- Loop duplicates -->
+          <div class="hobby-card">
+            <span class="hobby-icon">🎸</span>
+            <span class="hobby-label">GUITAR</span>
+          </div>
+          <div class="hobby-card">
+            <span class="hobby-icon">🎧</span>
+            <span class="hobby-label">LISTENING</span>
+          </div>
+          <div class="hobby-card">
+            <span class="hobby-icon">✂️</span>
+            <span class="hobby-label">SCRAPBOOK</span>
+          </div>
+          <div class="hobby-card">
+            <span class="hobby-icon">✏️</span>
+            <span class="hobby-label">DRAWING</span>
+          </div>
+          <div class="hobby-card">
+            <span class="hobby-icon">🧥</span>
+            <span class="hobby-label">FASHION</span>
+          </div>
+          <div class="hobby-card">
+            <span class="hobby-icon">💻</span>
+            <span class="hobby-label">DEV LOG</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Section 8: FOOTER -->
+  <footer class="footer">
+    <div class="footer-left">
+      <span>Rose Maria &copy; 2026</span>
+    </div>
+    <div class="footer-right">
+      <span>Designed & built with intention.</span>
+    </div>
+  </footer>
+
+  <!-- Javascript -->
+  <script src="../script.js?v=3"></script>
+</body>
+
+</html>

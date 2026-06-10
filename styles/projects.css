@@ -1,0 +1,218 @@
+/* ==========================================================================
+   PROJECTS SECTION (Record Sleeve Design)
+   ========================================================================== */
+.projects-section {
+  padding: 6rem 2.5rem 8rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 4.5rem;
+}
+
+.project-card {
+  grid-column: span 12;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.4s var(--ease-cinematic);
+  will-change: transform;
+}
+
+@media (min-width: 992px) {
+  .card-large {
+    grid-column: span 7;
+  }
+
+  .card-small {
+    grid-column: span 5;
+    margin-top: 6rem;
+  }
+
+  .card-wide {
+    grid-column: 2 / span 10;
+    margin-top: 2rem;
+  }
+}
+
+.project-media-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/10;
+  background-color: var(--bg-surface);
+  overflow: hidden;
+  transition: box-shadow 0.4s var(--ease-cinematic);
+  border: 1px solid rgba(244, 236, 200, 0.12);
+  /* Framing line */
+}
+
+.project-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.15);
+  display: block;
+  transition: transform 0.6s var(--ease-cinematic);
+}
+
+.project-media-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-terracotta);
+  mix-blend-mode: multiply;
+  opacity: 0.3;
+  pointer-events: none;
+  transition: opacity 0.4s var(--ease-cinematic);
+}
+
+/* Technical Specification Tag Overlay on Image Frame */
+.sleeve-spec-label {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-cream);
+  background-color: var(--bg-black);
+  padding: 0.3rem 0.6rem;
+  z-index: 1;
+  letter-spacing: 0.05em;
+}
+
+.project-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(11, 6, 5, 0.9);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s var(--ease-cinematic);
+  z-index: 2;
+}
+
+.overlay-header-specs {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--accent-gold);
+  border-bottom: 1px solid rgba(244, 236, 200, 0.1);
+  padding-bottom: 0.5rem;
+}
+
+.project-summary-long {
+  color: var(--text-cream);
+  font-size: clamp(1rem, 1.4vw, 1.25rem);
+  line-height: 1.7;
+}
+
+.play-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: var(--text-cream);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+.project-details {
+  padding-top: 1.8rem;
+}
+
+.project-title {
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  margin-bottom: 0.5rem;
+}
+
+.project-desc {
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.project-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.project-tags {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.tech-pill {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  background-color: var(--bg-surface);
+  color: var(--accent-gold);
+  padding: 0.4rem 0.9rem;
+}
+
+.project-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.project-link-btn {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  transition: color 0.4s var(--ease-cinematic),
+    background-color 0.4s var(--ease-cinematic),
+    transform 0.4s var(--ease-cinematic);
+}
+
+.project-link-btn:hover {
+  color: var(--text-cream);
+  background-color: var(--bg-surface);
+  transform: translateY(-2px);
+}
+
+/* Hover Animations */
+.project-card:hover {
+  transform: scale(1.02);
+}
+
+.project-card:hover .project-media-wrapper {
+  box-shadow: 0 20px 40px rgba(126, 37, 25, 0.35);
+}
+
+.project-card:hover .project-image {
+  transform: scale(1.05);
+}
+
+.project-card:hover .project-media-wrapper::after {
+  opacity: 0.05;
+}
+
+.project-card:hover .project-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}

@@ -1,0 +1,60 @@
+/* ==========================================================================
+   HOBBIES SECTION (Infinite Ticker Strip)
+   ========================================================================== */
+.hobbies-section {
+  padding: 6rem 0;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  background-color: var(--bg-terracotta);
+  overflow: hidden;
+}
+
+.marquee-outer {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+}
+
+.marquee-track {
+  display: flex;
+  gap: 3rem;
+  padding: 1rem 0;
+  white-space: nowrap;
+  animation: marqueeLoop 26s linear infinite;
+  will-change: transform;
+}
+
+.marquee-outer:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.hobby-card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background-color: var(--bg-black);
+  padding: 1.8rem 3rem;
+  width: 320px;
+  justify-content: center;
+  transition: transform 0.4s var(--ease-cinematic);
+}
+
+.hobby-icon {
+  font-size: 2.2rem;
+}
+
+.hobby-label {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  color: var(--text-cream);
+}
+
+.hobby-card:hover {
+  transform: scale(1.04);
+}

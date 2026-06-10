@@ -1,0 +1,668 @@
+/* ==========================================================================
+   HERO - POSTER LAYOUT (Visual Showstopper)
+   ========================================================================== */
+.hero-poster {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+  background-color: var(--bg-black);
+  overflow: hidden;
+}
+
+.poster-top-panel {
+  background-color: var(--bg-terracotta);
+  color: var(--text-cream);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0.5rem 2.5rem 0;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.poster-header-meta {
+  width: 100%;
+  max-width: 1300px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+.produced-by-label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.2;
+}
+
+.script-small {
+  font-family: var(--font-display);
+  font-style: italic;
+  text-transform: none;
+  font-size: 1rem;
+  color: var(--text-cream);
+  opacity: 0.85;
+}
+
+.bold-label {
+  font-weight: 700;
+  font-size: 5rem;
+  margin-top: 0.1rem;
+}
+
+.awards-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.laurel-leaf {
+  font-size: 1.8rem;
+  color: var(--accent-gold);
+  line-height: 1;
+}
+
+.award-text {
+  font-weight: 700;
+  max-width: 380px;
+  text-align: center;
+  line-height: 1.4;
+  color: var(--text-cream);
+}
+
+.poster-main-title {
+  font-family: var(--font-display);
+  font-size: clamp(25rem, 40vw, 55rem);
+  font-weight: 700;
+  text-transform: lowercase;
+  letter-spacing: -0.04em;
+  line-height: 0.85;
+  margin-top: -3.5rem;
+  width: 100%;
+  max-width: 1300px;
+  z-index: 2;
+  text-align: center;
+  -webkit-text-stroke: 9px var(--text-cream);
+}
+
+@media (max-width: 768px) {
+  .poster-main-title {
+    font-size: clamp(14rem, 38vw, 22rem);
+    -webkit-text-stroke: 4.5px var(--text-cream);
+    margin-top: -1rem;
+  }
+}
+
+.poster-subtitle {
+  margin-top: 1.5rem;
+  z-index: 4;
+}
+
+.script-subtitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 2.5vw, 2.4rem);
+  font-style: italic;
+  color: var(--text-cream);
+}
+
+.poster-portrait-container {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(450px, 95vw, 1300px);
+  height: clamp(650px, 100vh, 1200px);
+  z-index: 6;
+  pointer-events: none;
+}
+
+.poster-portrait-img {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.poster-portrait-img-gray {
+  z-index: 1;
+  filter: grayscale(1) contrast(3) brightness(0.5);
+  opacity: 0.5;
+}
+
+.poster-portrait-img-color {
+  z-index: 2;
+  filter: contrast(1.05) brightness(1.0);
+  pointer-events: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.portrait-radial-glow {
+  position: absolute;
+  bottom: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 110%;
+  height: 90%;
+  background: radial-gradient(circle, var(--glow-orange) 0%, rgba(126, 37, 25, 0.85) 45%, transparent 70%);
+  z-index: 1;
+  filter: blur(35px);
+  opacity: 0.95;
+  mix-blend-mode: screen;
+}
+
+.poster-bottom-panel {
+  background-color: var(--bg-black);
+  padding: 4.5rem 2.5rem 2.5rem;
+  position: relative;
+  z-index: 5;
+}
+
+.poster-credits-grid {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 3.5rem;
+  align-items: center;
+}
+
+.credits-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.credit-item {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  line-height: 1.3;
+}
+
+.credits-badge-block {
+  display: flex;
+  align-items: center;
+  gap: 2.2rem;
+}
+
+.digital-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  border: 1.5px solid var(--text-cream);
+  padding: 0.5rem 0.8rem;
+}
+
+.badge-logo-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px;
+}
+
+.grid-square {
+  width: 11px;
+  height: 11px;
+  background-color: transparent;
+  border: 1px solid var(--text-cream);
+}
+
+.grid-square.highlight {
+  background-color: var(--text-cream);
+}
+
+.badge-text-block {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.badge-title {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-cream);
+}
+
+.badge-subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  color: var(--text-cream);
+}
+
+.badge-desc {
+  font-family: var(--font-mono);
+  font-size: 0.42rem;
+  color: var(--text-muted);
+}
+
+.globe-logo {
+  color: var(--text-cream);
+  width: 32px;
+  height: 32px;
+}
+
+.globe-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.credits-rating-block {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.restricted-box {
+  border: 2px solid var(--text-cream);
+  padding: 0.4rem 0.8rem;
+  max-width: 250px;
+  line-height: 1.1;
+}
+
+.restricted-header {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-align: center;
+  border-bottom: 1.5px solid var(--text-cream);
+  padding-bottom: 0.2rem;
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+}
+
+.restricted-body {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.restricted-letter {
+  font-family: var(--font-body);
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.restricted-text-rules {
+  font-family: var(--font-mono);
+  font-size: 0.42rem;
+  line-height: 1.3;
+  color: var(--text-muted);
+}
+
+@media (max-width: 1024px) {
+  .poster-credits-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .poster-header-meta {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .produced-by-label {
+    align-items: center;
+  }
+
+  .poster-top-panel {
+    padding-top: 3.5rem;
+  }
+
+  .poster-credits-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .poster-portrait-container {
+    bottom: 0;
+    width: 320px;
+    height: 420px;
+  }
+}
+
+/* ==========================================================================
+   SCRAPBOOK COLLAGE ELEMENTS & STICKERS
+   ========================================================================== */
+.poster-top-panel {
+  position: relative;
+  overflow: visible !important;
+}
+
+/* Camera Viewfinders */
+.viewfinder-top-left,
+.viewfinder-top-right {
+  position: absolute;
+  top: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent-gold);
+  opacity: 0.65;
+  letter-spacing: 0.05em;
+  z-index: 1;
+}
+
+.viewfinder-top-left {
+  left: 2.5rem;
+}
+
+.viewfinder-top-right {
+  right: 2.5rem;
+}
+
+/* Base scrapbook sticker styles */
+.scrapbook-sticker {
+  position: absolute;
+  z-index: 7;
+  transition: transform 0.4s var(--ease-cinematic);
+}
+
+.scrapbook-sticker:hover {
+  transform: scale(1.05) rotate(0deg) !important;
+}
+
+/* Sticker 1: Taped Price Tag */
+.price-sticker {
+  top: 15%;
+  left: 8%;
+  transform: rotate(-10deg);
+  width: 130px;
+}
+
+.price-sticker .sticker-content {
+  background-color: #F0E6D2;
+  border: 1px solid #C9BEA3;
+  padding: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.15);
+  color: var(--bg-black);
+}
+
+.price-sticker .tape-strip {
+  position: absolute;
+  top: -15px;
+  left: 20px;
+  width: 70px;
+  height: 22px;
+  background-color: rgba(224, 200, 150, 0.45);
+  backdrop-filter: blur(1px);
+  border-left: 2px dashed rgba(0, 0, 0, 0.1);
+  border-right: 2px dashed rgba(0, 0, 0, 0.1);
+  transform: rotate(4deg);
+}
+
+.sticker-meta {
+  font-family: var(--font-mono);
+  font-size: 0.45rem;
+  opacity: 0.6;
+  text-align: center;
+  width: 100%;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.15);
+  padding-bottom: 0.2rem;
+  margin-bottom: 0.3rem;
+}
+
+.sticker-price {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--bg-black);
+  margin-bottom: 0.3rem;
+}
+
+.sticker-barcode {
+  display: flex;
+  gap: 1.5px;
+  height: 18px;
+  width: 90%;
+  margin-bottom: 0.2rem;
+}
+
+.sticker-barcode span {
+  background-color: var(--bg-black);
+  height: 100%;
+  width: 1px;
+}
+
+.sticker-barcode span:nth-child(2n) {
+  width: 3px;
+}
+
+.sticker-barcode span:nth-child(3n) {
+  width: 2px;
+}
+
+.sticker-serial {
+  font-family: var(--font-mono);
+  font-size: 0.48rem;
+  opacity: 0.7;
+}
+
+/* Sticker 2: Parental Advisory */
+.advisory-sticker {
+  top: 48%;
+  left: 6%;
+  transform: rotate(6deg);
+  background-color: var(--bg-black);
+  color: var(--text-cream);
+  padding: 0.5rem 0.8rem;
+  border-radius: 2px;
+  box-shadow: 5px 5px 12px rgba(0, 0, 0, 0.25);
+  width: 150px;
+}
+
+.advisory-border {
+  border: 2px solid var(--text-cream);
+  padding: 0.2rem;
+  text-align: center;
+}
+
+.advisory-title {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+
+.advisory-sub {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  border-bottom: 1.5px solid var(--text-cream);
+  padding-bottom: 0.1rem;
+  margin-bottom: 0.2rem;
+  line-height: 1;
+}
+
+.advisory-desc {
+  font-family: var(--font-mono);
+  font-size: 0.4rem;
+  line-height: 1.2;
+}
+
+/* Sticker 3: Circular Hi-Fi Badge */
+.hifi-badge {
+  top: 15%;
+  right: 8%;
+  transform: rotate(8deg);
+  width: 90px;
+  height: 90px;
+  color: var(--text-cream);
+  opacity: 0.8;
+}
+
+.hifi-svg {
+  width: 100%;
+  height: 100%;
+  animation: rotateStamp 30s linear infinite;
+}
+
+/* Sticker 4: Rubber Stamp Label */
+.stamp-label {
+  top: 44%;
+  right: 6%;
+  transform: rotate(-6deg);
+  border: 2px solid #5A1E15;
+  color: #5A1E15;
+  padding: 0.4rem 0.6rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+  text-align: center;
+  border-radius: 4px;
+  opacity: 0.75;
+}
+
+.stamp-txt {
+  font-size: 0.55rem;
+  letter-spacing: 0.05em;
+}
+
+.stamp-ver {
+  font-size: 0.48rem;
+  opacity: 0.8;
+}
+
+/* Quirky AI disclosure label - reveals on hover */
+.ai-generated-label {
+  position: absolute;
+  top: clamp(240px, 32vh, 320px);
+  left: calc(50% + 50px);
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--accent-gold);
+  z-index: 10;
+  cursor: help;
+  padding: 1rem;
+  pointer-events: auto;
+}
+
+.ai-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.ai-trigger {
+  opacity: 0.35;
+  transition: opacity 0.4s var(--ease-cinematic);
+  font-weight: 700;
+}
+
+.ai-text {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  display: inline-block;
+  transition: opacity 0.4s var(--ease-cinematic), width 0.4s var(--ease-cinematic);
+}
+
+.ai-arrow {
+  opacity: 0;
+  width: 20px;
+  height: 0;
+  overflow: hidden;
+  color: var(--accent-gold);
+  transition: opacity 0.4s var(--ease-cinematic), height 0.4s var(--ease-cinematic);
+}
+
+.ai-generated-label:hover .ai-trigger {
+  opacity: 1;
+}
+
+.ai-generated-label:hover .ai-text {
+  opacity: 1;
+  width: 210px;
+}
+
+.ai-generated-label:hover .ai-arrow {
+  opacity: 1;
+  height: 35px;
+}
+
+/* Mobile responsive scrapbook settings */
+@media (max-width: 768px) {
+  .price-sticker {
+    top: 55%;
+    left: 4%;
+    width: 90px;
+  }
+
+  .price-sticker .tape-strip {
+    width: 45px;
+    height: 15px;
+    top: -10px;
+  }
+
+  .price-sticker .sticker-price {
+    font-size: 1rem;
+  }
+
+  .advisory-sticker {
+    display: none;
+  }
+
+  .hifi-badge {
+    top: 55%;
+    right: 4%;
+    width: 70px;
+    height: 70px;
+  }
+
+  .stamp-label {
+    display: none;
+  }
+
+  .ai-generated-label {
+    top: clamp(140px, 24vh, 200px);
+    bottom: auto;
+    left: calc(50% + 50px);
+    transform: translateX(-50%);
+    font-size: 0.65rem;
+    padding: 0.8rem;
+  }
+
+  .ai-arrow {
+    width: 16px;
+  }
+
+  .ai-generated-label:hover .ai-arrow {
+    height: 25px;
+  }
+}

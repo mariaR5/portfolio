@@ -1,0 +1,249 @@
+/* ==========================================================================
+   EDUCATION SECTION (Reverse high-contrast — terracotta red panel)
+   ========================================================================== */
+.education-section {
+  padding: 8rem 2.5rem 6rem;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.edu-inner {
+  width: 100%;
+}
+
+/* Header strip — inverted (black text on red) */
+.edu-header-strip {
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+  margin-bottom: 3rem;
+}
+
+.edu-header-strip .section-title-label-black {
+  margin-bottom: 0;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.edu-divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, var(--bg-black), transparent);
+  opacity: 0.35;
+}
+
+.edu-header-code {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: rgba(10, 9, 8, 0.5);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Giant outlined title — echoes hero "maria" but in black stroke on red */
+.edu-main-title {
+  font-family: var(--font-display);
+  font-size: clamp(5.5rem, 12vw, 11rem);
+  font-weight: 700;
+  text-transform: lowercase;
+  letter-spacing: -0.04em;
+  line-height: 0.85;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--bg-black);
+  text-stroke: 2px var(--bg-black);
+  margin: 0 0 5rem;
+}
+
+.section-header-poster {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+  width: 100%;
+}
+
+.education-poster-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 5.5rem;
+  align-items: flex-start;
+}
+
+@media (max-width: 992px) {
+  .education-poster-layout {
+    grid-template-columns: 1fr;
+    gap: 4.5rem;
+  }
+}
+
+.education-timeline {
+  position: relative;
+  padding-left: 2.5rem;
+}
+
+.timeline-track-black {
+  position: absolute;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  left: 0;
+  width: 2px;
+  background-color: var(--bg-black) !important;
+}
+
+.education-item-black {
+  position: relative;
+  margin-bottom: 4rem;
+  transition: transform 0.4s var(--ease-cinematic);
+}
+
+.education-item-black:last-child {
+  margin-bottom: 0;
+}
+
+.timeline-marker-black {
+  position: absolute;
+  top: 0.65rem;
+  left: -2.5rem;
+  transform: translateX(-50%);
+  width: 9px;
+  height: 9px;
+  background-color: var(--bg-black) !important;
+  border-radius: 50%;
+  transition: transform 0.4s var(--ease-cinematic),
+    background-color 0.4s var(--ease-cinematic);
+}
+
+.institution-name-black {
+  font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+  font-weight: 700;
+  color: var(--bg-black) !important;
+}
+
+.edu-duration-black {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: rgba(10, 9, 8, 0.55) !important;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.degree-info-black {
+  font-size: 1.05rem;
+  color: var(--bg-black) !important;
+  font-weight: 500;
+  margin-top: 0.4rem;
+}
+
+/* Course focus tags */
+.edu-focus-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.edu-tag {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--bg-black);
+  border: 1px solid rgba(10, 9, 8, 0.3);
+  padding: 0.3rem 0.65rem;
+  letter-spacing: 0.05em;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.edu-tag:hover {
+  background-color: var(--bg-black);
+  color: var(--text-cream);
+}
+
+.education-item-black:hover {
+  transform: translateX(12px);
+}
+
+.education-item-black:hover .timeline-marker-black {
+  transform: translateX(-50%) scale(1.6);
+  background-color: var(--text-cream) !important;
+  box-shadow: 0 0 15px var(--bg-black);
+}
+
+/* Technical Specification Print Sheet */
+.spec-sheet-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 992px) {
+  .spec-sheet-container {
+    justify-content: flex-start;
+  }
+}
+
+.spec-sheet {
+  border: 2px solid var(--bg-black);
+  padding: 2.2rem;
+  width: 100%;
+  max-width: 440px;
+  background-color: var(--bg-black);
+  color: var(--text-cream);
+  box-shadow: 8px 8px 0 rgba(10, 9, 8, 0.25);
+  position: relative;
+}
+
+.spec-header {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--accent-gold);
+  border-bottom: 1.5px solid rgba(244, 236, 200, 0.15);
+  padding-bottom: 0.6rem;
+  margin-bottom: 1.2rem;
+}
+
+.spec-row {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid rgba(244, 236, 200, 0.05);
+}
+
+.spec-row:last-of-type {
+  border-bottom: none;
+  margin-bottom: 1.5rem;
+}
+
+.spec-label {
+  color: var(--text-muted);
+}
+
+.spec-value {
+  color: var(--text-cream);
+  font-weight: 700;
+}
+
+.spec-footer {
+  display: flex;
+  justify-content: center;
+}
+
+.barcode-visual {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 28px;
+}
+
+.barcode-visual span {
+  height: 100%;
+  background-color: var(--text-cream);
+  width: 2px;
+}
+
+.barcode-visual span:nth-child(even) { width: 4px; }
+.barcode-visual span:nth-child(3n)   { width: 1px; }
+.barcode-visual span:nth-child(5n)   { width: 5px; }
