@@ -170,9 +170,30 @@ document.addEventListener('DOMContentLoaded', () => {
   revealElements.forEach(el => revealObserver.observe(el));
 
   /* ==========================================================================
-     ACTIVE NAVIGATION HIGHLIGHTS
-     Managed statically on each separate HTML page (e.g., class="nav-link active")
+     INTERSECTION OBSERVER - ACTIVE NAVIGATION HIGHLIGHTS
      ========================================================================== */
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const activeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute('id');
+        navLinks.forEach(link => {
+          if (link.getAttribute('data-section') === id) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+      }
+    });
+  }, {
+    threshold: 0.15,
+    rootMargin: '-20% 0px -40% 0px'
+  });
+
+  sections.forEach(sec => activeObserver.observe(sec));
 
   /* ==========================================================================
      VINYL DISCOGRAPHY INTERACTIONS (Cool work experience swap)
