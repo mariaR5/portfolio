@@ -623,3 +623,46 @@ h4 {
     cursor: auto !important;
   }
 }
+
+/* ==========================================================================
+   CINEMATIC VIEWPORT FILM BORDERS
+   ========================================================================== */
+.film-screen-border {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 36px;
+  z-index: 9995; /* Above navigation, below cursor and scroll reveal modals */
+  pointer-events: none; /* Let all clicks pass through */
+  background-image: radial-gradient(circle 5.5px at 18px center, transparent 5.5px, var(--bg-black) 6.5px);
+  background-size: 36px 30px;
+  background-repeat: repeat-y;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  transition: width 0.3s ease, background-image 0.3s ease;
+}
+
+.film-screen-border-left {
+  left: 0;
+  border-right: 1.5px solid rgba(244, 236, 200, 0.12);
+}
+
+.film-screen-border-right {
+  right: 0;
+  border-left: 1.5px solid rgba(244, 236, 200, 0.12);
+}
+
+/* Hide or scale responsively */
+@media (max-width: 1024px) {
+  .film-screen-border {
+    width: 24px;
+    background-image: radial-gradient(circle 4px at 12px center, transparent 4px, var(--bg-black) 5px);
+    background-size: 24px 22px;
+  }
+}
+
+@media (max-width: 768px) {
+  .film-screen-border {
+    display: none;
+  }
+}
+

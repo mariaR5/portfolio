@@ -1,8 +1,7 @@
 /* ==========================================================================
-   EDUCATION SECTION — Retro Film Reel Cinema Strip
+   EDUCATION SECTION — Interactive Retro Film Projector & Screen
    ========================================================================== */
 
-/* ── Section shell: black/red split, no padding (panels manage spacing) ── */
 .education-section {
   width: 100%;
   overflow: hidden;
@@ -11,7 +10,7 @@
 }
 
 /* ──────────────────────────────────────────────
-   TOP PANEL — black, 28vh, heading lives here
+   TOP PANEL — Black, 1/4 Height Heading
    ────────────────────────────────────────────── */
 .edu-top-panel {
   background-color: var(--bg-black);
@@ -19,16 +18,14 @@
   display: flex;
   flex-direction: column;
   gap: 1.8rem;
-  max-width: 1400px;
   width: 100%;
-  margin: 0 auto;
 }
 
 .edu-label-code {
   font-family: var(--font-mono);
   font-size: 0.7rem;
   letter-spacing: 0.18em;
-  color: rgba(244, 236, 200, 0.4);
+  color: rgba(244, 236, 200, 0.6);
   text-transform: uppercase;
 }
 
@@ -37,389 +34,882 @@
   font-size: clamp(5rem, 11vw, 10rem);
   font-weight: 700;
   text-transform: lowercase;
-  letter-spacing: -0.04em;
+  letter-spacing: 0.15em;
+  opacity: 0;
   line-height: 0.85;
-  color: transparent;
-  -webkit-text-stroke: 2px var(--text-cream);
-  text-stroke: 2px var(--text-cream);
+  color: var(--text-cream);
+  transition: opacity 1.4s var(--ease-cinematic) 0.1s, letter-spacing 1.4s var(--ease-cinematic) 0.1s;
+}
+
+.education-section.revealed .edu-headline {
+  opacity: 1;
+  letter-spacing: -0.04em;
 }
 
 /* ──────────────────────────────────────────────
-   BOTTOM PANEL — terracotta red, 3/4 height
+   BOTTOM PANEL — Terracotta Red, Projector Setup
    ────────────────────────────────────────────── */
 .edu-bottom-panel {
   background-color: var(--bg-terracotta);
-  padding: 5rem 2.5rem 6rem;
+  /* Retro technical drafting grid overlay */
+  background-image: 
+    linear-gradient(rgba(11, 6, 5, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11, 6, 5, 0.05) 1px, transparent 1px);
+  background-size: 30px 30px;
+  background-position: center;
+  padding: 5rem 2.5rem 7rem;
   flex: 1;
-}
-
-/* ──────────────────────────────────────────────
-   MAIN LAYOUT — reel left, film frames right
-   ────────────────────────────────────────────── */
-.edu-reel-layout {
-  display: grid;
-  grid-template-columns: 260px 1fr;
-  gap: 5rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  align-items: flex-start;
-}
-
-@media (max-width: 860px) {
-  .edu-reel-layout {
-    grid-template-columns: 1fr;
-    gap: 3.5rem;
-  }
-  .edu-reel-column {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-  }
-  .reel-wrapper {
-    flex-shrink: 0;
-    width: 140px !important;
-  }
-  .reel-strip-vertical {
-    flex-direction: row !important;
-    gap: 0.5rem !important;
-    width: auto !important;
-    height: auto !important;
-  }
-  .strip-hole { width: 14px !important; height: 14px !important; }
-  .strip-frame-mini {
-    width: 40px !important;
-    height: 40px !important;
-    font-size: 0.55rem !important;
-  }
-}
-
-/* ──────────────────────────────────────────────
-   REEL COLUMN — SVG + vertical film strip
-   ────────────────────────────────────────────── */
-.edu-reel-column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2.5rem;
-}
-
-/* The whole reel wrapper for positioning the REEL 01 label */
-.reel-wrapper {
   position: relative;
-  width: 220px;
+  overflow: visible; /* Keeps absolute positioned stickers visible */
 }
 
-/* Spinning reel SVG */
-.reel-svg {
-  width: 100%;
-  height: auto;
-  display: block;
-  animation: reelSpin 12s linear infinite;
-  filter: drop-shadow(0 6px 24px rgba(0,0,0,0.5));
-  /* Start paused, JS or .is-spinning class will run it */
-  animation-play-state: paused;
-}
-
-.edu-bottom-panel:hover .reel-svg,
-.edu-film-frame.is-open ~ .edu-bottom-meta .reel-svg,
-.education-section.reel-spinning .reel-svg {
-  animation-play-state: running;
-}
-
-/* Always spin on hover of the reel itself */
-.reel-wrapper:hover .reel-svg {
-  animation-play-state: running;
-}
-
-@keyframes reelSpin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-
-/* REEL 01 label centred under SVG */
-.reel-center-label {
+/* Background watermark styling */
+.edu-bg-watermark-title {
   position: absolute;
-  bottom: -2rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 5vw, 4.2rem);
+  color: var(--bg-black);
+  opacity: 0.05;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  z-index: 0;
+}
+
+.edu-bg-watermark-title:not(.watermark-secondary) {
+  top: 15%;
+  left: 6%;
+  transform: rotate(-3.5deg);
+}
+
+.edu-bg-watermark-title.watermark-secondary {
+  bottom: 15%;
+  right: 6%;
+  transform: rotate(1.5deg);
+  font-size: clamp(1.8rem, 4vw, 3.2rem);
+}
+
+/* Blueprint schematic stamp alignment dial */
+.edu-bg-watermark-stamp {
+  position: absolute;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.2em;
-  color: rgba(10, 9, 8, 0.55);
-  white-space: nowrap;
+  transform: translate(-50%, -50%);
+  width: clamp(320px, 45vw, 620px);
+  height: auto;
+  color: var(--bg-black);
+  opacity: 0.05;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
 }
 
-/* Vertical filmstrip strip below the reel */
-.reel-strip-vertical {
-  display: flex;
-  flex-direction: column;
+/* Corner plus mark decorations */
+.edu-corner-mark {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--bg-black);
+  opacity: 0.22;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+}
+
+.mark-top-left { top: 1.5rem; left: 1.5rem; }
+.mark-top-right { top: 1.5rem; right: 1.5rem; }
+.mark-bottom-left { bottom: 1.5rem; left: 1.5rem; }
+.mark-bottom-right { bottom: 1.5rem; right: 1.5rem; }
+
+/* Main Grid Layout */
+.edu-projector-layout {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 4.5rem;
+  max-width: 1280px;
+  margin: 0 auto;
   align-items: center;
-  gap: 0;
-  width: 52px;
-  background-color: var(--bg-black);
-  border: 2px solid rgba(10,9,8,0.6);
-  padding: 0.5rem 0;
-  border-radius: 2px;
-}
-
-.strip-hole {
-  width: 18px;
-  height: 18px;
-  background-color: var(--bg-terracotta);
-  border-radius: 50%;
-  border: 2px solid rgba(244,236,200,0.12);
-  margin: 0.35rem auto;
-}
-
-.strip-frame-mini {
-  width: 100%;
-  height: 50px;
-  background-color: #1a0c08;
-  border-top: 1px solid rgba(244,236,200,0.08);
-  border-bottom: 1px solid rgba(244,236,200,0.08);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
-  color: rgba(244,236,200,0.5);
-  letter-spacing: 0.04em;
-}
-
-/* ──────────────────────────────────────────────
-   TICKER TAPE
-   ────────────────────────────────────────────── */
-.edu-ticker-tape {
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.22em;
-  color: rgba(10,9,8,0.45);
-  overflow: hidden;
-  white-space: nowrap;
-  display: flex;
-  margin-bottom: 2.5rem;
-  border-top: 1px solid rgba(10,9,8,0.25);
-  border-bottom: 1px solid rgba(10,9,8,0.25);
-  padding: 0.5rem 0;
-  animation: tickerScroll 14s linear infinite;
-}
-
-@keyframes tickerScroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-
-/* ──────────────────────────────────────────────
-   FILM FRAME CARDS
-   ────────────────────────────────────────────── */
-.edu-frames-column {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-/* The full film frame card — cream on black, exposed edges look */
-.edu-film-frame {
-  display: flex;
-  align-items: stretch;
-  gap: 0;
-  background-color: var(--bg-black);
-  cursor: pointer;
   position: relative;
-  /* Slightly tilted — different per card */
-  transition:
-    transform 0.5s var(--ease-cinematic),
-    box-shadow 0.4s var(--ease-cinematic);
-  box-shadow: 4px 6px 28px rgba(0,0,0,0.35);
-  /* Slight rotations like the project posters */
-  overflow: visible;
+  z-index: 2; /* Sits cleanly on top of watermarks */
 }
 
-.edu-film-frame:nth-child(2) { transform: rotate(-0.5deg); }
-.edu-film-frame:nth-child(3) { transform: rotate(0.4deg); }
+@media (max-width: 1024px) {
+  .edu-projector-layout {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
 
-.edu-film-frame:hover,
-.edu-film-frame:focus-visible {
-  transform: rotate(0deg) translateY(-4px) !important;
-  box-shadow: 6px 14px 40px rgba(0,0,0,0.5);
+  .edu-left-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* ──────────────────────────────────────────────
+   LEFT COLUMN — Selectors and Projector Setup
+   ────────────────────────────────────────────── */
+.edu-left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  width: 100%;
+}
+
+/* Tickets Selector */
+.edu-tickets-container {
+  display: flex;
+  gap: 1.2rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.edu-ticket-select {
+  position: relative;
+  background-color: var(--text-cream);
+  color: var(--bg-black);
+  border: 2px solid var(--bg-black);
+  cursor: pointer;
+  padding: 0.8rem 1.4rem;
+  display: flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  box-shadow: 4px 4px 0 var(--bg-black);
+  opacity: 0;
+  transform: translateX(-30px) rotate(-3deg);
+  transition: opacity 0.8s var(--ease-cinematic), transform 0.8s var(--ease-cinematic), box-shadow 0.2s, background-color 0.2s;
+  overflow: visible;
   outline: none;
 }
 
-/* Perforation strips — left and right edges */
-.frame-perfs {
+.education-section.revealed .edu-ticket-select {
+  opacity: 1;
+  transform: translateX(0) rotate(0);
+}
+
+.education-section.revealed .edu-ticket-select:nth-child(1) {
+  transition-delay: 0.2s, 0.2s, 0s, 0s;
+}
+
+.education-section.revealed .edu-ticket-select:nth-child(2) {
+  transition-delay: 0.4s, 0.4s, 0s, 0s;
+}
+
+.edu-ticket-select:hover {
+  transform: translateY(-2px);
+  box-shadow: 6px 6px 0 var(--bg-black);
+}
+
+.edu-ticket-select.active {
+  background-color: var(--accent-gold);
+  border-color: var(--bg-black);
+  box-shadow: 2px 2px 0 var(--bg-black);
+  transform: translateY(2px);
+}
+
+/* Vintage Ticket stub circular cutouts */
+.ticket-stub-left,
+.ticket-stub-right {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  background-color: var(--bg-terracotta);
+  border: 2px solid var(--bg-black);
+  border-radius: 50%;
+  z-index: 5;
+}
+
+.ticket-stub-left {
+  left: -8px;
+  border-left-color: transparent;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+}
+
+.ticket-stub-right {
+  right: -8px;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+}
+
+.ticket-info {
   display: flex;
   flex-direction: column;
-  gap: 0;
-  padding: 0.8rem 0.55rem;
-  background-color: #0d0604;
-  border-right: 1.5px solid rgba(244,236,200,0.06);
-  justify-content: space-around;
-  min-width: 28px;
+  align-items: center;
+  width: 100%;
 }
 
-.frame-perfs:last-child {
-  border-right: none;
-  border-left: 1.5px solid rgba(244,236,200,0.06);
+.ticket-meta {
+  font-size: 0.55rem;
+  letter-spacing: 0.08em;
+  opacity: 0.7;
+  margin-bottom: 0.25rem;
 }
 
-.perf {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background-color: var(--bg-terracotta);
-  border: 1px solid rgba(244,236,200,0.08);
+.ticket-title {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
 }
 
-/* Frame body — the actual content area */
-.frame-body {
-  flex: 1;
-  padding: 1.8rem 2rem;
+/* Projector Wrapper & SVG */
+.edu-projector-wrapper {
   position: relative;
+  width: 300px;
+  margin: 0 auto;
 }
 
-.frame-number-badge {
+.projector-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Projector Lens Flash */
+.projector-lens-flash {
+  position: absolute;
+  top: 123px;
+  left: 270px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  box-shadow: 0 0 40px 20px #ffffff, 0 0 100px 40px var(--text-cream);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Flash active trigger */
+/* Flash active trigger handled via reveal specificity */
+
+@keyframes lensFlash {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  25% {
+    opacity: 1;
+    transform: scale(2.2);
+  }
+
+  45% {
+    opacity: 0.15;
+    transform: scale(0.8);
+  }
+
+  70% {
+    opacity: 1;
+    transform: scale(2.2);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+/* Translucent Glowing Projector Beam */
+.projector-beam {
+  position: absolute;
+  top: -80px;
+  left: 275px;
+  width: 480px;
+  height: 400px;
+  /* Glowing conical gradient shape fading left-to-right */
+  background: linear-gradient(to right, rgba(244, 236, 200, 0.48) 0%, rgba(244, 236, 200, 0.03) 80%, transparent 100%);
+  clip-path: polygon(0 195px, 100% 0, 100% 395px, 0 227px);
+  transform-origin: left center;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.projector-beam.transitioning {
+  animation: none !important;
+  opacity: 0.15 !important;
+}
+
+.education-section.revealed .projector-beam.flash-active {
+  animation: projectorTurnOn 1.2s var(--ease-cinematic) forwards, beamPulse 0.12s infinite alternate 1.2s;
+}
+
+.education-section.revealed .projector-lens-flash.flash-active {
+  animation: lensFlash 0.5s ease-out;
+}
+
+@keyframes beamPulse {
+  0% {
+    opacity: 0.9;
+  }
+
+  100% {
+    opacity: 0.98;
+    filter: brightness(1.05);
+  }
+}
+
+@media (max-width: 1024px) {
+
+  /* Hide light beam on smaller stack view where screen sits below projector */
+  .projector-beam {
+    display: none;
+  }
+}
+
+/* ──────────────────────────────────────────────
+   RIGHT COLUMN — Cinema Canvas Screen
+   ────────────────────────────────────────────── */
+.edu-canvas-column {
+  width: 100%;
+}
+
+.canvas-projector-screen {
+  position: relative;
+  margin-top: 40px;
+  background-color: var(--bg-black);
+  /* Repeating radial gradients to draw vertical film sprocket holes on left & right sides */
+  background-image:
+    radial-gradient(circle, var(--bg-terracotta) 4.5px, transparent 5.5px),
+    radial-gradient(circle, var(--bg-terracotta) 4.5px, transparent 5.5px);
+  background-position:
+    14px 0,
+    calc(100% - 14px - 10px) 0;
+  background-size:
+    10px 26px,
+    10px 26px;
+  background-repeat:
+    repeat-y,
+    repeat-y;
+  border: 14px solid #140d0a;
+  outline: 3px solid var(--bg-black);
+  border-radius: 4px;
+  box-shadow:
+    inset 0 0 80px rgba(0, 0, 0, 0.95),
+    4px 12px 30px rgba(0, 0, 0, 0.55);
+  min-height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 2.5rem 3.5rem;
+}
+
+/* Film noise overlays inside screen */
+.canvas-projector-screen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* Retro projector screen border glow */
+  box-shadow: inset 0 0 50px rgba(244, 236, 200, 0.08);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Projected Slide Styles */
+.edu-projected-slide {
+  width: 100%;
+  display: none;
+  opacity: 0;
+  transform: scale(0.97);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  animation: filmFlicker 0.22s infinite;
+}
+
+.edu-projected-slide:hover {
+  animation: none;
+}
+
+.edu-projected-slide.active {
+  display: block;
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Reveal transition handled by opacity and filmFlicker */
+
+.slide-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .slide-content-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+/* Details side */
+.slide-details {
+  color: var(--text-cream);
+  text-align: left;
+}
+
+.slide-badge {
   font-family: var(--font-mono);
-  font-size: 0.58rem;
+  font-size: 0.6rem;
   letter-spacing: 0.2em;
   color: var(--accent-gold);
+  display: inline-block;
+  margin-bottom: 0.8rem;
+}
+
+.slide-inst-name {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--text-cream);
+  margin-bottom: 0.5rem;
+}
+
+.slide-degree {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: rgba(244, 236, 200, 0.7);
+  font-weight: 500;
   margin-bottom: 1.2rem;
 }
 
-/* Collapsed row — always visible */
-.frame-collapsed {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-}
-
-.frame-inst {
-  font-family: var(--font-display);
-  font-size: clamp(1.3rem, 2.2vw, 1.95rem);
-  font-weight: 600;
-  color: var(--text-cream);
-  line-height: 1.2;
-}
-
-.frame-year {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  color: rgba(244, 236, 200, 0.45);
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-/* Expanded detail panel — hidden by default */
-.frame-expanded {
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition:
-    max-height 0.55s var(--ease-cinematic),
-    opacity 0.45s var(--ease-cinematic),
-    margin-top 0.4s var(--ease-cinematic);
-  margin-top: 0;
-}
-
-/* Active / open state — driven by JS toggling .is-open */
-.edu-film-frame.is-open .frame-expanded {
-  max-height: 320px;
-  opacity: 1;
-  margin-top: 1.5rem;
-}
-
-/* Spinning reel when any frame is open */
-.edu-film-frame.is-open + .edu-film-frame .reel-svg,
-.education-section:has(.edu-film-frame.is-open) .reel-svg {
-  animation-play-state: running;
-}
-
-/* Degree line */
-.frame-degree {
-  font-size: 0.9rem;
-  color: rgba(244,236,200,0.75);
-  font-weight: 500;
-  margin-bottom: 1rem;
-  font-style: italic;
-}
-
-/* Subject tags */
-.frame-tags {
+.slide-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-bottom: 1.4rem;
+  margin-bottom: 1.5rem;
 }
 
-.frame-tag {
+.slide-tag {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.58rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
   color: var(--text-cream);
-  border: 1px solid rgba(244,236,200,0.2);
-  padding: 0.28rem 0.65rem;
-  transition: background 0.2s ease, color 0.2s ease;
+  border: 1px solid rgba(244, 236, 200, 0.2);
+  padding: 0.25rem 0.55rem;
+  letter-spacing: 0.05em;
+  transition: all 0.25s ease;
 }
 
-.frame-tag:hover {
-  background: var(--accent-gold);
+.slide-tag:hover {
+  background-color: var(--accent-gold);
   color: var(--bg-black);
   border-color: var(--accent-gold);
 }
 
-/* Spec rows inside expanded panel */
-.frame-spec-row {
+.slide-metadata {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  border-top: 1px solid rgba(244, 236, 200, 0.1);
+  padding-top: 1rem;
+}
+
+.slide-meta-row {
   display: flex;
   justify-content: space-between;
   font-family: var(--font-mono);
-  font-size: 0.66rem;
+  font-size: 0.65rem;
   letter-spacing: 0.04em;
-  color: rgba(244,236,200,0.5);
-  border-top: 1px solid rgba(244,236,200,0.06);
-  padding: 0.4rem 0;
+  color: rgba(244, 236, 200, 0.45);
 }
 
-.frame-spec-row span:last-child {
+.slide-meta-row .meta-val {
   color: var(--text-cream);
   font-weight: 700;
 }
 
-/* Click-to-open chevron indicator */
-.edu-film-frame::after {
-  content: '▾';
-  position: absolute;
-  bottom: 1.4rem;
-  right: 1.8rem;
-  font-size: 0.85rem;
-  color: rgba(244,236,200,0.25);
-  transition: transform 0.4s var(--ease-cinematic), color 0.3s;
+/* Slide Photo Frame (Film Frame look) */
+.slide-photo-frame {
+  position: relative;
+  background-color: #050302;
+  border: 3px solid #140d0a;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+  padding: 0.8rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.4s var(--ease-cinematic), box-shadow 0.4s var(--ease-cinematic);
 }
 
-.edu-film-frame.is-open::after {
-  transform: rotate(180deg);
-  color: var(--accent-gold);
+.slide-photo-frame:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.85);
 }
 
-/* Bottom mono strip */
-.edu-bottom-meta {
-  margin-top: 1rem;
+
+
+.slide-img-wrapper {
+  width: 100%;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  border-top: 2px solid #050302;
+  border-bottom: 2px solid #050302;
+}
+
+.slide-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(0.15) sepia(0.5) contrast(1.1) brightness(0.85);
+  transition: filter 0.3s;
+}
+
+.slide-photo-frame:hover .slide-photo {
+  filter: grayscale(0) sepia(0.2) contrast(1.05) brightness(0.95);
+}
+
+.film-perfs-horizontal {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  padding: 0.2rem 0;
+}
+
+.perf-dot {
+  width: 9px;
+  height: 9px;
+  background-color: var(--bg-terracotta);
+  border-radius: 2px;
+  border: 1px solid rgba(244, 236, 200, 0.05);
+}
+
+.slide-photo-caption {
   font-family: var(--font-mono);
-  font-size: 0.58rem;
-  letter-spacing: 0.22em;
-  color: rgba(10,9,8,0.35);
-  text-align: right;
+  font-size: 0.5rem;
+  letter-spacing: 0.08em;
+  color: rgba(244, 236, 200, 0.35);
+  margin-top: 0.4rem;
 }
 
-/* ── Section separator (shared class) ── */
+/* Certificate View Button inside slide photo frame */
+.edu-certificate-btn {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--accent-gold);
+  background: transparent;
+  border: 1.5px dashed var(--accent-gold);
+  padding: 0.4rem 1.2rem;
+  margin-top: 0.9rem;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  transition: all 0.3s var(--ease-cinematic);
+  outline: none;
+  width: 90%;
+}
+
+.edu-certificate-btn:hover {
+  background-color: var(--accent-gold);
+  color: var(--bg-black);
+  border-style: solid;
+}
+
+/* ──────────────────────────────────────────────
+   RETRO SCROLL MODAL OVERLAY
+   ────────────────────────────────────────────── */
+.scroll-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(11, 6, 5, 0.93);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.scroll-modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.scroll-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  max-width: 480px;
+}
+
+/* Wooden Roller Cylinders */
+.scroll-roller {
+  position: relative;
+  width: 104%;
+  height: 22px;
+  background: linear-gradient(to right, #1a0f0a 0%, #3e2115 15%, #593120 50%, #3e2115 85%, #1a0f0a 100%);
+  border: 1.5px solid #000000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  z-index: 15;
+}
+
+/* Wooden Pegs on Roller Edges */
+.roller-left-peg,
+.roller-right-peg {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  background-color: #3e2115;
+  border: 1.5px solid #000000;
+  border-radius: 50%;
+}
+
+.roller-left-peg {
+  left: -8px;
+}
+
+.roller-right-peg {
+  right: -8px;
+}
+
+/* Parchment Rollout Body */
+.scroll-parchment-body {
+  width: 100%;
+  height: 0;
+  background-color: #f5eed3;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, rgba(0, 0, 0, 0.06) 100%);
+  border-left: 6px double #3e2115;
+  border-right: 6px double #3e2115;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  box-shadow:
+    inset 0 0 35px rgba(0, 0, 0, 0.1),
+    0 10px 25px rgba(0, 0, 0, 0.45);
+  transition: height 0.8s cubic-bezier(0.19, 1, 0.22, 1), padding 0.8s ease;
+  padding: 0 1.8rem;
+}
+
+.scroll-modal-overlay.active .scroll-parchment-body {
+  height: 570px;
+  padding: 2.2rem 1.8rem;
+}
+
+/* Close Button on scroll top */
+.scroll-close-btn {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  background: transparent;
+  color: #3e2115;
+  border: 1px dashed rgba(62, 33, 21, 0.45);
+  padding: 0.3rem 0.8rem;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  align-self: flex-end;
+  transition: all 0.2s ease;
+}
+
+.scroll-close-btn:hover {
+  border-style: solid;
+  background-color: rgba(62, 33, 21, 0.08);
+}
+
+/* Certificate Image inside scroll */
+.scroll-image-container {
+  width: 100%;
+  height: 440px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(62, 33, 21, 0.1);
+  background: rgba(255, 255, 255, 0.25);
+  overflow: hidden;
+}
+
+.scroll-cert-img {
+  max-width: 94%;
+  max-height: 94%;
+  object-fit: contain;
+  filter: sepia(0.2) contrast(1.04) brightness(0.98);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* ──────────────────────────────────────────────
+   ANIMATION KEYFRAMES
+   ────────────────────────────────────────────── */
+
+/* Old Film Flicker & Jitter Animation */
+@keyframes filmFlicker {
+  0% {
+    opacity: 0.99;
+    transform: translateY(0) scale(1);
+  }
+
+  25% {
+    opacity: 0.98;
+    transform: translateY(-0.15px) scale(0.9995);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateY(0.15px) scale(1);
+  }
+
+  75% {
+    opacity: 0.985;
+    transform: translateY(-0.1px) scale(0.9998);
+  }
+
+  100% {
+    opacity: 0.99;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Projector Bulb Flicker On Boot-up (Single quick pulse) */
+@keyframes projectorTurnOn {
+  0% {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+
+  30% {
+    opacity: 0.1;
+    transform: scaleX(0.3);
+  }
+
+  40% {
+    opacity: 0.95;
+    transform: scaleX(1);
+  }
+
+  50% {
+    opacity: 0.4;
+  }
+
+  100% {
+    opacity: 0.95;
+    transform: scaleX(1);
+  }
+}
+
+/* ──────────────────────────────────────────────
+   SCRAPBOOK / STICKER ELEMENTS
+   ────────────────────────────────────────────── */
+.education-section {
+  position: relative;
+}
+
+.edu-bottom-panel {
+  position: relative;
+  overflow: visible;
+}
+
+/* Sticker 1: Taped Academic Barcode Sticker */
+.edu-scrap-tape {
+  bottom: 12%;
+  left: 8%;
+  transform: rotate(-8deg);
+  width: 120px;
+}
+
+.edu-scrap-tape .sticker-content {
+  background-color: #F0E6D2;
+  border: 1px solid #C9BEA3;
+  padding: 0.7rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.15);
+  color: var(--bg-black);
+}
+
+.edu-scrap-tape .tape-strip {
+  position: absolute;
+  top: -15px;
+  left: 25px;
+  width: 60px;
+  height: 20px;
+  background-color: rgba(224, 200, 150, 0.45);
+  backdrop-filter: blur(1px);
+  border-left: 2px dashed rgba(0, 0, 0, 0.1);
+  border-right: 2px dashed rgba(0, 0, 0, 0.1);
+  transform: rotate(3deg);
+}
+
+.edu-scrap-tape .sticker-title-small {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  margin: 0.2rem 0;
+  color: var(--bg-black);
+}
+
+.edu-scrap-tape .sticker-barcode {
+  display: flex;
+  gap: 1.5px;
+  height: 14px;
+  width: 90%;
+  margin-bottom: 0.2rem;
+}
+
+.edu-scrap-tape .sticker-barcode span {
+  background-color: var(--bg-black);
+  height: 100%;
+  width: 1px;
+}
+
+.edu-scrap-tape .sticker-barcode span:nth-child(2n) {
+  width: 3px;
+}
+
+.edu-scrap-tape .sticker-barcode span:nth-child(3n) {
+  width: 2px;
+}
+
+/* Sticker 2: Circular Stamp Badge */
+.edu-scrap-stamp {
+  top: 15%;
+  right: 4%;
+  transform: rotate(12deg);
+  width: 85px;
+  height: 85px;
+  color: var(--text-cream);
+  opacity: 0.85;
+}
+
+/* Sticker 3: Academic Honors Restricted rating block */
+.edu-scrap-rating {
+  bottom: 8%;
+  right: 5%;
+  transform: rotate(-5deg);
+  width: 140px;
+}
+
+/* Responsive constraints to hide stickers on narrow screens */
+@media (max-width: 1120px) {
+  .edu-scrap-tape,
+  .edu-scrap-stamp,
+  .edu-scrap-rating {
+    display: none;
+  }
+}
+
+/* ── Section Separator ── */
 .education-section .section-separator-black {
   display: block;
   text-align: center;
   font-family: var(--font-mono);
   font-size: 0.7rem;
   letter-spacing: 0.3em;
-  color: rgba(244,236,200,0.3);
+  color: rgba(244, 236, 200, 0.3);
   background-color: var(--bg-black);
   padding: 1.4rem 0;
 }

@@ -354,71 +354,140 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ==========================================================================
-     EDUCATION — Film Frame Expand / Reel Spin
+     EDUCATION — Retro Movie Projector & Slide Projection
      ========================================================================== */
-  const eduSection    = document.querySelector('.education-section');
-  const reelSvg       = document.querySelector('.reel-svg');
-  const filmFrames    = document.querySelectorAll('.edu-film-frame');
+  const ticketBtns   = document.querySelectorAll('.edu-ticket-select');
+  const projectSlides = document.querySelectorAll('.edu-projected-slide');
+  const lensFlash     = document.querySelector('.projector-lens-flash');
+  const projectorBeam = document.querySelector('.projector-beam');
 
-  if (filmFrames.length && reelSvg) {
-    // Helper: start reel for a moment then slow to pause
-    let reelTimer = null;
-    const spinReel = () => {
-      reelSvg.style.animationPlayState = 'running';
-      if (reelTimer) clearTimeout(reelTimer);
-      // If no frame is open, stop after 2s
-      const anyOpen = () => [...filmFrames].some(f => f.classList.contains('is-open'));
-      reelTimer = setTimeout(() => {
-        if (!anyOpen()) reelSvg.style.animationPlayState = 'paused';
-      }, 2000);
-    };
-
-    filmFrames.forEach(frame => {
-      const toggle = () => {
-        const isOpen = frame.classList.contains('is-open');
-
-        // Close all frames first
-        filmFrames.forEach(f => {
-          f.classList.remove('is-open');
-          f.setAttribute('aria-expanded', 'false');
-        });
-
-        if (!isOpen) {
-          frame.classList.add('is-open');
-          frame.setAttribute('aria-expanded', 'true');
-          // Spin reel continuously while a frame is open
-          reelSvg.style.animationPlayState = 'running';
-        } else {
-          // Was open → now closed; slow reel to pause
-          spinReel();
-        }
-      };
-
-      frame.addEventListener('click', toggle);
-      frame.addEventListener('keydown', e => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
-      });
-    });
-
-    // Brief spin when section scrolls into view
-    const reelObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          reelSvg.style.animationPlayState = 'running';
-          setTimeout(() => {
-            if (![...filmFrames].some(f => f.classList.contains('is-open'))) {
-              reelSvg.style.animationPlayState = 'paused';
-            }
-          }, 2400);
-        }
-      });
-    }, { threshold: 0.25 });
-
-    if (eduSection) reelObserver.observe(eduSection);
+  if (lensFlash) {
+    lensFlash.classList.add('flash-active');
+  }
+  if (projectorBeam) {
+    projectorBeam.classList.add('flash-active');
   }
 
-  // Add film frames to cursor hover listeners
-  document.querySelectorAll('.edu-film-frame').forEach(el => {
+  if (ticketBtns.length && projectSlides.length) {
+    ticketBtns.forEach(btn => {
+      const targetId = btn.getAttribute('data-target');
+      const targetSlide = document.getElementById(`slide-${targetId}`);
+
+      const selectTab = () => {
+        // 1. If ticket is already active, do nothing
+        if (btn.classList.contains('active')) return;
+
+        // 2. Flash the lens and dim/pulse the beam during transition
+        if (lensFlash) {
+          lensFlash.classList.remove('flash-active');
+          void lensFlash.offsetWidth; // Trigger reflow to restart animation
+          lensFlash.classList.add('flash-active');
+        }
+
+        if (projectorBeam) {
+          projectorBeam.classList.remove('flash-active');
+          projectorBeam.classList.add('transitioning');
+        }
+
+        // 3. Wait for transition duration (~700ms) before swapping slides
+        setTimeout(() => {
+          // Deactivate all tickets and slides
+          ticketBtns.forEach(t => t.classList.remove('active'));
+          projectSlides.forEach(s => s.classList.remove('active'));
+
+          // Activate selected ticket and slide
+          btn.classList.add('active');
+          if (targetSlide) {
+            targetSlide.classList.add('active');
+          }
+
+          // Update scrapbook sticker values dynamically based on target
+          const eduStickerTitle = document.getElementById('eduStickerTitle');
+          const eduStickerSerial = document.getElementById('eduStickerSerial');
+          if (eduStickerTitle && eduStickerSerial) {
+            if (targetId === 'nitc') {
+              eduStickerTitle.textContent = 'CLASS OF 2027';
+              eduStickerSerial.textContent = 'RM-ED-2027';
+            } else if (targetId === 'st_josephs') {
+              eduStickerTitle.textContent = 'CLASS OF 2023';
+              eduStickerSerial.textContent = 'RM-ED-2023';
+            }
+          }
+
+          // Restore normal projector beam state
+          if (projectorBeam) {
+            projectorBeam.classList.remove('transitioning');
+            void projectorBeam.offsetWidth; // Trigger reflow to restart animation
+            projectorBeam.classList.add('flash-active');
+          }
+        }, 700);
+      };
+
+      btn.addEventListener('click', selectTab);
+      btn.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          selectTab();
+        }
+      });
+    });
+  }
+
+  // Bind new ticket buttons to custom cursor scaling
+  document.querySelectorAll('.edu-ticket-select').forEach(el => {
+    if (customCursor && !el.dataset.cursorBound) {
+      el.dataset.cursorBound = 'true';
+      el.addEventListener('mouseenter', () => customCursor.classList.add('cursor-expand'));
+      el.addEventListener('mouseleave', () => customCursor.classList.remove('cursor-expand'));
+    }
+  });
+
+  /* ==========================================================================
+     EDUCATION — Retro Scroll Modal Rollout
+     ========================================================================== */
+  const certBtns     = document.querySelectorAll('.edu-certificate-btn');
+  const scrollModal  = document.getElementById('scrollModal');
+  const scrollImage  = document.getElementById('scrollImage');
+  const closeScroll  = document.getElementById('closeScrollBtn');
+
+  if (certBtns.length && scrollModal && scrollImage) {
+    const openParchment = (certName) => {
+      scrollImage.src = `assets/${certName}.png`;
+      scrollModal.classList.add('active');
+      scrollModal.setAttribute('aria-hidden', 'false');
+    };
+
+    const closeParchment = () => {
+      scrollModal.classList.remove('active');
+      scrollModal.setAttribute('aria-hidden', 'true');
+    };
+
+    certBtns.forEach(btn => {
+      const certName = btn.getAttribute('data-cert');
+      btn.addEventListener('click', () => openParchment(certName));
+    });
+
+    if (closeScroll) {
+      closeScroll.addEventListener('click', closeParchment);
+    }
+
+    // Close on backdrop overlay click
+    scrollModal.addEventListener('click', (e) => {
+      if (e.target === scrollModal) {
+        closeParchment();
+      }
+    });
+
+    // Keyboard Accessibility
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && scrollModal.classList.contains('active')) {
+        closeParchment();
+      }
+    });
+  }
+
+  // Bind custom cursor to certificate buttons and close button
+  document.querySelectorAll('.edu-certificate-btn, .scroll-close-btn').forEach(el => {
     if (customCursor && !el.dataset.cursorBound) {
       el.dataset.cursorBound = 'true';
       el.addEventListener('mouseenter', () => customCursor.classList.add('cursor-expand'));
