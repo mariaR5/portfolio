@@ -496,57 +496,25 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ==========================================================================
-     HOBBIES — Tactile Analog Mixing Console & Deck Faders
+     HOBBIES — Tactile Scrapbook Layout
      ========================================================================== */
-  const mixerFaders = document.querySelectorAll('.mixer-fader-item');
-  const hobbyDecks = document.querySelectorAll('.hobby-deck');
+  // Initialize playlist status to READY on load
+  setTimeout(() => {
+    const statusEl = document.getElementById('playlistStatus');
+    if (statusEl) {
+      statusEl.textContent = "READY";
+    }
+  }, 400);
 
-  // 1. Channel Selector switching
-  mixerFaders.forEach(fader => {
-    fader.addEventListener('click', () => {
-      if (fader.classList.contains('active')) return;
-
-      // Play channel click sound
-      playTypewriterClick();
-
-      // Deactivate all faders and decks
-      mixerFaders.forEach(f => {
-        f.classList.remove('active');
-        f.setAttribute('aria-selected', 'false');
-      });
-      hobbyDecks.forEach(d => {
-        d.classList.remove('active');
-        d.style.display = 'none';
-      });
-
-      // Activate clicked fader and deck
-      fader.classList.add('active');
-      fader.setAttribute('aria-selected', 'true');
-      const targetHobby = fader.getAttribute('data-hobby');
-      const targetDeck = document.getElementById(`deck-${targetHobby}`);
-      if (targetDeck) {
-        targetDeck.style.display = 'block';
-        void targetDeck.offsetWidth; // trigger reflow
-        targetDeck.classList.add('active');
-      }
-
-      // Special action: initialize map/odometer coordinates if Bike Rides is selected
-      if (targetHobby === 'bike') {
-        const activePin = document.querySelector('.map-pin-btn.active');
-        if (activePin) {
-          setTimeout(() => updateRoute(activePin), 250);
-        }
-      }
-    });
-  });
-
-  // 2. Web Audio Synthesizer low-latency guitar strings
+  // 2. Web Audio Synthesizer low-latency sound engine
   let audioCtx = null;
   let masterGainNode = null;
   let filterNode = null;
+  let analyserNode = null;
   let masterVolumeValue = 0.5;
   let toneCutoffValue = 2000;
-
+  let guitarTone = 'acoustic';
+ 
   const initAudio = () => {
     if (audioCtx) return;
     const AudioContextClass = window.AudioContext || window.webkitAudioContext;
@@ -555,14 +523,29 @@ document.addEventListener('DOMContentLoaded', () => {
     audioCtx = new AudioContextClass();
     masterGainNode = audioCtx.createGain();
     filterNode = audioCtx.createBiquadFilter();
+    analyserNode = audioCtx.createAnalyser();
 
     filterNode.type = 'lowpass';
     filterNode.frequency.value = toneCutoffValue;
 
     masterGainNode.gain.value = masterVolumeValue;
+    analyserNode.fftSize = 32;
 
-    filterNode.connect(masterGainNode);
+    filterNode.connect(analyserNode);
+    analyserNode.connect(masterGainNode);
     masterGainNode.connect(audioCtx.destination);
+  };
+
+  const makeDistortionCurve = (amount) => {
+    const k = typeof amount === 'number' ? amount : 50;
+    const n_samples = 44100;
+    const curve = new Float32Array(n_samples);
+    const deg = Math.PI / 180;
+    for (let i = 0 ; i < n_samples; ++i) {
+      const x = (i * 2) / n_samples - 1;
+      curve[i] = ((3 + k) * x * 20 * deg) / (Math.PI + k * Math.abs(x));
+    }
+    return curve;
   };
 
   const playStringTone = (frequency) => {
@@ -572,23 +555,115 @@ document.addEventListener('DOMContentLoaded', () => {
       audioCtx.resume();
     }
 
-    const osc = audioCtx.createOscillator();
-    const stringGain = audioCtx.createGain();
+    if (guitarTone === 'nylon') {
+      // Nylon (Classical): Mellow fundamental, warm, fast decay
+      const osc = audioCtx.createOscillator();
+      const stringGain = audioCtx.createGain();
+      const synthFilter = audioCtx.createBiquadFilter();
 
-    osc.type = 'triangle'; // Warm wood tone
-    osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
 
-    stringGain.gain.setValueAtTime(0.4, audioCtx.currentTime);
-    stringGain.gain.exponentialRampToValueAtTime(0.005, audioCtx.currentTime + 1.2);
+      stringGain.gain.setValueAtTime(0.45, audioCtx.currentTime);
+      stringGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.75);
 
-    osc.connect(stringGain);
-    stringGain.connect(filterNode);
-    osc.start();
-    osc.stop(audioCtx.currentTime + 1.25);
+      synthFilter.type = 'lowpass';
+      synthFilter.frequency.setValueAtTime(900, audioCtx.currentTime);
+
+      osc.connect(synthFilter);
+      synthFilter.connect(stringGain);
+      stringGain.connect(filterNode);
+
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.8);
+    } else if (guitarTone === 'electric') {
+      // Electric: Overdriven, sustained, bright
+      const osc = audioCtx.createOscillator();
+      const stringGain = audioCtx.createGain();
+      const synthFilter = audioCtx.createBiquadFilter();
+      const dist = audioCtx.createWaveShaper();
+
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+
+      dist.curve = makeDistortionCurve(35);
+      dist.oversample = '4x';
+
+      stringGain.gain.setValueAtTime(0.18, audioCtx.currentTime);
+      stringGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.6);
+
+      synthFilter.type = 'bandpass';
+      synthFilter.frequency.setValueAtTime(950, audioCtx.currentTime);
+      synthFilter.Q.value = 1.2;
+
+      osc.connect(dist);
+      dist.connect(synthFilter);
+      synthFilter.connect(stringGain);
+      stringGain.connect(filterNode);
+
+      osc.start();
+      osc.stop(audioCtx.currentTime + 1.65);
+    } else if (guitarTone === 'jazz') {
+      // Jazz: Hollow-body electric, warm, clean, bassy
+      const osc = audioCtx.createOscillator();
+      const stringGain = audioCtx.createGain();
+      const synthFilter = audioCtx.createBiquadFilter();
+
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+
+      stringGain.gain.setValueAtTime(0.32, audioCtx.currentTime);
+      stringGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.4);
+
+      synthFilter.type = 'lowpass';
+      synthFilter.frequency.setValueAtTime(500, audioCtx.currentTime);
+
+      osc.connect(synthFilter);
+      synthFilter.connect(stringGain);
+      stringGain.connect(filterNode);
+
+      osc.start();
+      osc.stop(audioCtx.currentTime + 1.45);
+    } else {
+      // Acoustic (Steel String): Bright fundamental + short detuned pluck harmonic
+      const osc1 = audioCtx.createOscillator();
+      const osc2 = audioCtx.createOscillator();
+      const gain1 = audioCtx.createGain();
+      const gain2 = audioCtx.createGain();
+      const synthFilter = audioCtx.createBiquadFilter();
+
+      osc1.type = 'triangle';
+      osc1.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+
+      osc2.type = 'sine';
+      osc2.frequency.setValueAtTime(frequency * 2, audioCtx.currentTime);
+
+      gain1.gain.setValueAtTime(0.35, audioCtx.currentTime);
+      gain1.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.3);
+
+      gain2.gain.setValueAtTime(0.12, audioCtx.currentTime);
+      gain2.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+
+      synthFilter.type = 'lowpass';
+      synthFilter.frequency.setValueAtTime(2800, audioCtx.currentTime);
+      synthFilter.frequency.exponentialRampToValueAtTime(750, audioCtx.currentTime + 1.0);
+
+      osc1.connect(gain1);
+      osc2.connect(gain2);
+
+      gain1.connect(synthFilter);
+      gain2.connect(synthFilter);
+      synthFilter.connect(filterNode);
+
+      osc1.start();
+      osc2.start();
+      osc1.stop(audioCtx.currentTime + 1.35);
+      osc2.stop(audioCtx.currentTime + 0.15);
+    }
   };
 
-  // Guitar strings E3, A3, D3, G3
-  const stringNotes = [164.81, 220.00, 293.66, 392.00];
+  // Guitar strings 6 strings standard tuning (E2, A2, D3, G3, B3, E4)
+  const stringNotes = [82.41, 110.00, 146.83, 196.00, 246.94, 329.63];
   const guitarStrings = document.querySelectorAll('.guitar-string-wrapper');
   
   guitarStrings.forEach(str => {
@@ -617,16 +692,21 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const knobTone = document.getElementById('knobTone');
+  const guitarToneLabel = document.getElementById('guitarToneLabel');
+  const toneModes = ['acoustic', 'nylon', 'electric', 'jazz'];
+
   if (knobTone) {
-    let tone = 7;
+    let toneIdx = 0;
     knobTone.addEventListener('click', () => {
-      tone = (tone % 10) + 1;
-      toneCutoffValue = 200 + (tone / 10) * 3600;
-      if (filterNode) {
-        filterNode.frequency.setValueAtTime(toneCutoffValue, audioCtx.currentTime);
+      toneIdx = (toneIdx + 1) % toneModes.length;
+      guitarTone = toneModes[toneIdx];
+      
+      if (guitarToneLabel) {
+        guitarToneLabel.textContent = guitarTone.toUpperCase();
       }
-      knobTone.style.transform = `rotate(${ (tone - 1) * 30 }deg)`;
-      knobTone.setAttribute('aria-valuenow', tone);
+      
+      knobTone.style.transform = `rotate(${ toneIdx * 90 }deg)`;
+      knobTone.setAttribute('aria-valuenow', toneIdx + 1);
       playTypewriterClick();
     });
   }
@@ -691,71 +771,270 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 4. Speedometer odometer trails map navigation
-  const mapPins = document.querySelectorAll('.map-pin-btn');
-  const routePreviewImg = document.getElementById('routePreviewImg');
-  const routePreviewCaption = document.getElementById('routePreviewCaption');
-  const mapPhotoPreview = document.getElementById('mapPhotoPreview');
-  const speedoNeedle = document.getElementById('speedoNeedle');
-
-  // Initialize odometer digit mechanical scroll containers
-  document.querySelectorAll('.odometer-digit').forEach(digitEl => {
-    digitEl.innerHTML = '<span>0<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9</span>';
-  });
-
-  const updateRoute = (pin) => {
-    mapPins.forEach(p => p.classList.remove('active'));
-    pin.classList.add('active');
-
-    const route = pin.getAttribute('data-route');
-    const km = parseInt(pin.getAttribute('data-km'));
-    const speed = parseInt(pin.getAttribute('data-speed'));
-
-    // Animate needle
-    if (speedoNeedle) {
-      const deg = (speed / 100) * 240 - 120;
-      speedoNeedle.style.transform = `rotate(${deg}deg)`;
+  // 4. Playlist and Cassette Deck Simulation (Music Listening)
+  const songsData = [
+    {
+      name: "Lost in Retrograde",
+      bpm: 110,
+      scale: [130.81, 146.83, 155.56, 174.61, 196.00, 220.00, 233.08, 261.63], // C3 minor scale
+      pattern: [0, 2, 4, 6, 7, 6, 4, 2],
+      type: "sawtooth",
+      decay: 0.25
+    },
+    {
+      name: "Starlight Arpeggio",
+      bpm: 135,
+      scale: [523.25, 587.33, 659.25, 698.46, 783.99, 880.00, 987.77, 1046.50], // C5 major scale
+      pattern: [0, 2, 4, 7, 0, 4, 7, 4],
+      type: "square",
+      decay: 0.12
+    },
+    {
+      name: "Calicut Rain",
+      bpm: 70,
+      scale: [261.63, 293.66, 329.63, 392.00, 440.00, 523.25], // Pentatonic C
+      pattern: [0, 2, 4, 1, 3, 5, 2, 4],
+      type: "sine",
+      decay: 0.8
+    },
+    {
+      name: "Cozy Fireplace",
+      bpm: 55,
+      scale: [130.81, 164.81, 196.00, 246.94], // Cmaj7 chord
+      pattern: [0, 1, 2, 3, 2, 1, 0, 1],
+      type: "triangle",
+      decay: 1.5
     }
+  ];
 
-    // Roll mechanical odometer
-    const kmString = String(km).padStart(4, '0');
-    for (let i = 0; i < 4; i++) {
-      const digitSpan = document.querySelector(`#odoDigit${i} span`);
-      if (digitSpan) {
-        const val = parseInt(kmString[i]);
-        digitSpan.style.transform = `translateY(-${val * 24}px)`;
-      }
-    }
+  let currentSongIdx = -1;
+  let isPlaying = false;
+  let playbackIntervalId = null;
+  let vuAnimationId = null;
+  let noteStep = 0;
 
-    // Set route preview text and image
-    if (routePreviewCaption && routePreviewImg && mapPhotoPreview) {
-      mapPhotoPreview.classList.remove('show');
-      
-      setTimeout(() => {
-        if (route === 'coast') {
-          routePreviewImg.src = 'assets/nitc_retro_print.png';
-          routePreviewCaption.textContent = 'CALICUT BEACH ROAD TRAIL';
-        } else if (route === 'hills') {
-          routePreviewImg.src = 'assets/st_josephs_retro_print.png';
-          routePreviewCaption.textContent = 'WAYANAD FOOTHILLS TRAIL';
-        } else if (route === 'lake') {
-          routePreviewImg.src = 'assets/st_josephs_retro_print.png';
-          routePreviewCaption.textContent = 'MAVOOR WETLANDS TRAIL';
-        }
-        mapPhotoPreview.classList.add('show');
-      }, 200);
-    }
+  const playSongStep = () => {
+    if (!audioCtx || !isPlaying) return;
+    const song = songsData[currentSongIdx];
+    const noteIdx = song.pattern[noteStep % song.pattern.length];
+    const frequency = song.scale[noteIdx];
+    
+    const osc = audioCtx.createOscillator();
+    const noteGain = audioCtx.createGain();
+    
+    osc.type = song.type;
+    osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+    
+    noteGain.gain.setValueAtTime(0.12 * (song.type === "square" ? 0.4 : 1.0), audioCtx.currentTime);
+    noteGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + song.decay);
+    
+    osc.connect(noteGain);
+    noteGain.connect(filterNode);
+    
+    osc.start();
+    osc.stop(audioCtx.currentTime + song.decay + 0.05);
+    
+    noteStep++;
   };
 
-  mapPins.forEach(pin => {
-    pin.addEventListener('click', () => {
-      playTypewriterClick();
-      updateRoute(pin);
+  const updateVUMeter = () => {
+    if (!isPlaying || !analyserNode) {
+      document.querySelectorAll('.vu-bar').forEach(bar => {
+        bar.style.height = '15%';
+      });
+      return;
+    }
+    
+    const bufferLength = analyserNode.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+    analyserNode.getByteFrequencyData(dataArray);
+    
+    const vuBars = document.querySelectorAll('.vu-bar');
+    vuBars.forEach((bar, idx) => {
+      const val = dataArray[idx] || 0;
+      const heightPercent = 15 + (val / 255) * 85;
+      bar.style.height = `${Math.min(heightPercent, 100)}%`;
+    });
+    
+    vuAnimationId = requestAnimationFrame(updateVUMeter);
+  };
+
+  const songItems = document.querySelectorAll('.playlist-song-item');
+  const playlistStatus = document.getElementById('playlistStatus');
+  const tapeReelLeft = document.getElementById('tapeReelLeft');
+  const tapeReelRight = document.getElementById('tapeReelRight');
+  const btnPlayPause = document.getElementById('btnDeckPlayPause');
+
+  const startPlayback = (songIdx) => {
+    initAudio();
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+    
+    stopPlayback();
+    
+    currentSongIdx = songIdx;
+    isPlaying = true;
+    noteStep = 0;
+    
+    songItems.forEach((item, idx) => {
+      if (idx === songIdx) {
+        item.classList.add('active');
+      } else {
+        item.classList.remove('active');
+      }
+    });
+    
+    if (playlistStatus) {
+      playlistStatus.textContent = songsData[songIdx].name.toUpperCase();
+    }
+    
+    if (tapeReelLeft) tapeReelLeft.classList.add('spinning');
+    if (tapeReelRight) tapeReelRight.classList.add('spinning');
+    
+    const intervalMs = (60 / songsData[songIdx].bpm) * 1000 / 2;
+    playbackIntervalId = setInterval(playSongStep, intervalMs);
+    
+    updateVUMeter();
+    updatePlayPauseButton();
+  };
+
+  const stopPlayback = () => {
+    isPlaying = false;
+    if (playbackIntervalId) {
+      clearInterval(playbackIntervalId);
+      playbackIntervalId = null;
+    }
+    if (vuAnimationId) {
+      cancelAnimationFrame(vuAnimationId);
+      vuAnimationId = null;
+    }
+    
+    if (tapeReelLeft) tapeReelLeft.classList.remove('spinning');
+    if (tapeReelRight) tapeReelRight.classList.remove('spinning');
+    
+    if (playlistStatus) {
+      playlistStatus.textContent = "PAUSED";
+    }
+    
+    document.querySelectorAll('.vu-bar').forEach(bar => {
+      bar.style.height = '15%';
+    });
+    updatePlayPauseButton();
+  };
+
+  songItems.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.getAttribute('data-song-idx'));
+      if (!isNaN(idx)) {
+        startPlayback(idx);
+      }
     });
   });
 
-  // Bind custom cursor highlights to mixer knobs, pins, faders, typewriter
-  document.querySelectorAll('.mixer-fader-item, .knob-dial, .map-pin-btn, .typewriter-input').forEach(el => {
+  const updatePlayPauseButton = () => {
+    if (!btnPlayPause) return;
+    const playIcon = btnPlayPause.querySelector('.play-icon');
+    const pauseIcon = btnPlayPause.querySelector('.pause-icon');
+    if (isPlaying) {
+      if (playIcon) playIcon.style.display = 'none';
+      if (pauseIcon) pauseIcon.style.display = 'block';
+    } else {
+      if (playIcon) playIcon.style.display = 'block';
+      if (pauseIcon) pauseIcon.style.display = 'none';
+    }
+  };
+
+  if (btnPlayPause) {
+    btnPlayPause.addEventListener('click', () => {
+      if (isPlaying) {
+        stopPlayback();
+      } else {
+        if (currentSongIdx === -1) {
+          startPlayback(0);
+        } else {
+          startPlayback(currentSongIdx);
+        }
+      }
+    });
+  }
+
+  // 5. Film Strip Slider Carousel Navigation
+  const hobbiesRangeSlider = document.getElementById('hobbiesRangeSlider');
+  const hobbiesSlidesTrack = document.getElementById('hobbiesSlidesTrack');
+  const filmDotBtns = document.querySelectorAll('.film-dot-btn');
+
+  const updateHobbiesSlide = (slideVal) => {
+    // 1. Move slide track
+    if (hobbiesSlidesTrack) {
+      hobbiesSlidesTrack.style.transform = `translateX(-${slideVal * 100}%)`;
+    }
+
+    // 2. Toggle active dots
+    filmDotBtns.forEach((btn, idx) => {
+      if (idx === slideVal) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    // 3. Pause music if switching away from slide 3 (Music Listening)
+    if (slideVal !== 2 && isPlaying) {
+      stopPlayback();
+    }
+  };
+
+  if (hobbiesRangeSlider) {
+    hobbiesRangeSlider.addEventListener('input', () => {
+      const val = parseInt(hobbiesRangeSlider.value);
+      updateHobbiesSlide(val);
+      playTypewriterClick(); // play acoustic feedback on slide change
+    });
+  }
+
+  filmDotBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const val = parseInt(btn.getAttribute('data-slide-val'));
+      if (hobbiesRangeSlider) {
+        hobbiesRangeSlider.value = val;
+      }
+      updateHobbiesSlide(val);
+      playTypewriterClick();
+    });
+  });
+
+  // 6. Navigation Arrows Click Listeners
+  const btnHobbiesPrev = document.getElementById('btnHobbiesPrev');
+  const btnHobbiesNext = document.getElementById('btnHobbiesNext');
+
+  const handlePrevSlide = () => {
+    if (!hobbiesRangeSlider) return;
+    let val = parseInt(hobbiesRangeSlider.value) - 1;
+    if (val < 0) val = 2; // wrap around
+    hobbiesRangeSlider.value = val;
+    updateHobbiesSlide(val);
+    playTypewriterClick();
+  };
+
+  const handleNextSlide = () => {
+    if (!hobbiesRangeSlider) return;
+    let val = parseInt(hobbiesRangeSlider.value) + 1;
+    if (val > 2) val = 0; // wrap around
+    hobbiesRangeSlider.value = val;
+    updateHobbiesSlide(val);
+    playTypewriterClick();
+  };
+
+  if (btnHobbiesPrev) {
+    btnHobbiesPrev.addEventListener('click', handlePrevSlide);
+  }
+  if (btnHobbiesNext) {
+    btnHobbiesNext.addEventListener('click', handleNextSlide);
+  }
+
+  // Bind custom cursor highlights to playlist controls, song items, typewriter, dots, range slider, and navigation arrows
+  document.querySelectorAll('.knob-dial, .playlist-song-item, .deck-control-btn, .typewriter-input, .film-dot-btn, .hobbies-range-slider, .hobbies-arrow-btn').forEach(el => {
     if (customCursor && !el.dataset.cursorBound) {
       el.dataset.cursorBound = 'true';
       el.addEventListener('mouseenter', () => customCursor.classList.add('cursor-expand'));
