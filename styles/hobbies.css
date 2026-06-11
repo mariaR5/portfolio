@@ -1,60 +1,852 @@
 /* ==========================================================================
-   HOBBIES SECTION (Infinite Ticker Strip)
+   HOBBIES SECTION — Interactive Analog Studio Console Drawer
    ========================================================================== */
 .hobbies-section {
-  padding: 6rem 0;
-  width: 100vw;
-  position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-  background-color: var(--bg-terracotta);
-  overflow: hidden;
-}
-
-.marquee-outer {
   width: 100%;
   overflow: hidden;
   display: flex;
+  flex-direction: column;
 }
 
-.marquee-track {
-  display: flex;
-  gap: 3rem;
-  padding: 1rem 0;
-  white-space: nowrap;
-  animation: marqueeLoop 26s linear infinite;
-  will-change: transform;
-}
-
-.marquee-outer:hover .marquee-track {
-  animation-play-state: paused;
-}
-
-.hobby-card {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
+/* ──────────────────────────────────────────────
+   TOP PANEL — Heading Scheme (Black)
+   ────────────────────────────────────────────── */
+.hobbies-top-panel {
   background-color: var(--bg-black);
-  padding: 1.8rem 3rem;
-  width: 320px;
+  padding: 5rem 2.5rem 4.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+  width: 100%;
+}
+
+.hobbies-label-code {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  color: rgba(244, 236, 200, 0.6);
+  text-transform: uppercase;
+}
+
+.hobbies-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(5rem, 11vw, 10rem);
+  font-weight: 700;
+  text-transform: lowercase;
+  letter-spacing: 0.15em;
+  opacity: 0;
+  line-height: 0.85;
+  color: var(--text-cream);
+  transition: opacity 1.4s var(--ease-cinematic) 0.1s, letter-spacing 1.4s var(--ease-cinematic) 0.1s;
+}
+
+.hobbies-section.revealed .hobbies-headline {
+  opacity: 1;
+  letter-spacing: -0.04em;
+}
+
+/* ──────────────────────────────────────────────
+   BOTTOM PANEL — Terracotta Red with Console Bezel
+   ────────────────────────────────────────────── */
+.hobbies-bottom-panel {
+  background-color: var(--bg-terracotta);
+  /* Retro drafting grid to match Education background */
+  background-image: 
+    linear-gradient(rgba(11, 6, 5, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11, 6, 5, 0.05) 1px, transparent 1px);
+  background-size: 30px 30px;
+  background-position: center;
+  padding: 5rem 2.5rem 7rem;
+  position: relative;
+  overflow: visible;
+  display: flex;
   justify-content: center;
-  transition: transform 0.4s var(--ease-cinematic);
+  align-items: center;
 }
 
-.hobby-icon {
-  font-size: 2.2rem;
-}
-
-.hobby-label {
+/* Hobbies background decorations */
+.hobbies-bg-watermark {
+  position: absolute;
   font-family: var(--font-mono);
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: clamp(2rem, 5vw, 4rem);
+  color: var(--bg-black);
+  opacity: 0.04;
+  top: 10%;
+  right: 8%;
+  transform: rotate(3deg);
+  pointer-events: none;
+  user-select: none;
+}
+
+.hobbies-corner-mark {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--bg-black);
+  opacity: 0.22;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ──────────────────────────────────────────────
+   STUDIO CONSOLE CABINET WRAPPER
+   ────────────────────────────────────────────── */
+.console-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  background-color: #140d0a; /* Outer dark chassis */
+  /* Wooden console bezel frame */
+  border: 15px solid #2e160a;
+  outline: 4px solid var(--bg-black);
+  border-radius: 4px;
+  box-shadow: 
+    0 25px 55px rgba(0, 0, 0, 0.65), 
+    inset 0 0 40px rgba(0, 0, 0, 0.85);
+  overflow: hidden;
+  z-index: 2;
+}
+
+.console-wood-bezel {
+  position: absolute;
+  inset: 0;
+  border: 2px solid #593120;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Mixer Grid Layout */
+.hobbies-console-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  min-height: 480px;
+  background-color: #1a1a1a;
+}
+
+@media (max-width: 950px) {
+  .hobbies-console-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .console-mixer-panel {
+    border-right: none !important;
+    border-bottom: 3px double rgba(244, 236, 200, 0.15);
+  }
+}
+
+/* ──────────────────────────────────────────────
+   LEFT MIXER PANEL (Channels Faders)
+   ────────────────────────────────────────────── */
+.console-mixer-panel {
+  background-color: #1f2022; /* Steel fader console */
+  border-right: 3px double rgba(244, 236, 200, 0.15);
+  padding: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.mixer-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-family: var(--font-mono);
+  border-bottom: 2px dashed rgba(244, 236, 200, 0.1);
+  padding-bottom: 1rem;
+}
+
+.mixer-logo {
+  font-size: 0.65rem;
+  color: var(--accent-gold);
+  font-weight: 700;
   letter-spacing: 0.08em;
+}
+
+.mixer-status {
+  font-size: 0.55rem;
+  color: rgba(244, 236, 200, 0.45);
+}
+
+.mixer-faders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+/* Mixer Channel Buttons */
+.mixer-fader-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: #151617;
+  border: 1px solid rgba(244, 236, 200, 0.08);
+  padding: 1rem 1.2rem;
+  cursor: pointer;
+  outline: none;
+  width: 100%;
+  text-align: left;
+  position: relative;
+  transition: all 0.3s var(--ease-cinematic);
+}
+
+.mixer-fader-item:hover {
+  background-color: #242628;
+  border-color: rgba(244, 236, 200, 0.25);
+}
+
+.mixer-fader-item.active {
+  background-color: var(--bg-black);
+  border-color: var(--accent-gold);
+  box-shadow: inset 0 0 10px rgba(208, 161, 100, 0.15);
+}
+
+.fader-channel {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  color: var(--accent-gold);
+  font-weight: 700;
+}
+
+/* Fader track visual */
+.fader-track-visual {
+  position: relative;
+  width: 16px;
+  height: 48px;
+  background-color: #0c0d0e;
+  border-radius: 8px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border: 1px solid rgba(244, 236, 200, 0.05);
+}
+
+.fader-groove {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  background-color: #222;
+}
+
+.fader-handle {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 10px;
+  background: linear-gradient(to bottom, #d0a164 0%, #aa7e44 100%);
+  border-radius: 2px;
+  border: 1.5px solid #0B0605;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  transition: top 0.4s var(--ease-cinematic);
+}
+
+.mixer-fader-item.active .fader-handle {
+  top: 15% !important; /* Move active fader handle up */
+  background: linear-gradient(to bottom, #FF451D 0%, #a8240a 100%); /* Red/orange glowing handle when active */
+  box-shadow: 0 0 6px var(--glow-orange);
+}
+
+.fader-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.fader-cat {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.85rem;
   color: var(--text-cream);
 }
 
-.hobby-card:hover {
-  transform: scale(1.04);
+.fader-title {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  color: rgba(244, 236, 200, 0.4);
+  letter-spacing: 0.05em;
+}
+
+/* ──────────────────────────────────────────────
+   RIGHT DECK PANEL (Interactive Displays)
+   ────────────────────────────────────────────── */
+.console-deck-panel {
+  background-color: #121314; /* Deck screen display background */
+  padding: 2.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.hobby-deck {
+  width: 100%;
+  opacity: 0;
+  transform: scale(0.98);
+  display: none;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.hobby-deck.active {
+  display: block;
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ── TRACK 01: GUITAR AMP ── */
+.guitar-amp-frame {
+  background-color: #2b2b2b;
+  border: 5px solid #141414;
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.8), 0 8px 20px rgba(0,0,0,0.5);
+  border-radius: 6px;
+  padding: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.amp-speaker-grill {
+  background-color: #18191a;
+  background-image: 
+    radial-gradient(#111 20%, transparent 20%),
+    radial-gradient(#111 20%, transparent 20%);
+  background-size: 8px 8px;
+  background-position: 0 0, 4px 4px;
+  border: 8px solid #0f0f10;
+  box-shadow: inset 0 0 25px rgba(0,0,0,0.95);
+  border-radius: 4px;
+  height: 200px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.amp-logo {
+  position: absolute;
+  top: 15px;
+  left: 20px;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-cream);
+  opacity: 0.8;
+  letter-spacing: 0.02em;
+  text-shadow: 1px 1px 2px #000;
+}
+
+.guitar-strings-board {
+  display: flex;
+  justify-content: space-around;
+  width: 80%;
+  height: 110px;
+  position: relative;
+}
+
+.guitar-string-wrapper {
+  position: relative;
+  width: 24px;
+  height: 100%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+}
+
+.guitar-string {
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(to right, #ccc 0%, #fff 50%, #999 100%);
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.4);
+  transition: transform 0.1s ease;
+}
+
+/* Strum String Animation */
+.guitar-string-wrapper:hover .guitar-string {
+  animation: stringStrum 0.3s ease-out;
+}
+
+@keyframes stringStrum {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-4px) rotate(-1deg); }
+  40% { transform: translateX(4px) rotate(1deg); }
+  60% { transform: translateX(-2px) rotate(-0.5deg); }
+  80% { transform: translateX(2px) rotate(0.5deg); }
+  100% { transform: translateX(0); }
+}
+
+.string-note-label {
+  position: absolute;
+  bottom: -20px;
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  color: rgba(244, 236, 200, 0.5);
+  text-align: center;
+}
+
+/* Control Knobs */
+.amp-controls-bar {
+  background-color: #0b0c0d;
+  border: 1px solid rgba(244, 236, 200, 0.05);
+  border-radius: 4px;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.control-knob-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.knob-dial {
+  width: 38px;
+  height: 38px;
+  background: radial-gradient(circle, #2a2a2a 0%, #151515 100%);
+  border: 2px solid #000;
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  cursor: ns-resize; /* drag vertically to adjust */
+  outline: none;
+}
+
+.knob-dial:focus {
+  border-color: var(--accent-gold);
+}
+
+.knob-pointer {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2.5px;
+  height: 12px;
+  background-color: var(--accent-gold);
+  border-radius: 1px;
+}
+
+.knob-label {
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  color: rgba(244, 236, 200, 0.4);
+  letter-spacing: 0.05em;
+}
+
+.amp-jacks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.input-jack {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #050505;
+  border: 3px solid #666;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);
+}
+
+.input-jack.active {
+  border-color: var(--accent-gold);
+}
+
+.jack-label {
+  font-family: var(--font-mono);
+  font-size: 0.48rem;
+  color: rgba(244, 236, 200, 0.4);
+}
+
+/* ── TRACK 02: DIARY NOTEBOOK ── */
+.notebook-frame {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-color: #f7f1db; /* Aged paper texture */
+  background-image: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(0,0,0,0.03) 100%);
+  border: 8px solid #2b1810; /* Book spine borders */
+  border-radius: 6px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.65);
+  min-height: 380px;
+  color: #2b201a;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .notebook-frame {
+    grid-template-columns: 1fr;
+  }
+}
+
+.notebook-left-page,
+.notebook-right-page {
+  padding: 1.8rem 2.2rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.notebook-left-page {
+  border-right: 1px dashed rgba(43, 32, 26, 0.18); /* Book binding page divider */
+}
+
+.notebook-header-meta {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  opacity: 0.65;
+  margin-bottom: 0.6rem;
+}
+
+.notebook-h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.35rem;
+  margin-bottom: 0.8rem;
+  color: #140d0a;
+}
+
+.notebook-entry-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  opacity: 0.88;
+  margin-bottom: 1.5rem;
+}
+
+.notebook-photo-frame {
+  margin-top: auto;
+  align-self: center;
+  background-color: #fff;
+  padding: 0.5rem 0.5rem 1.2rem;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 2px 4px 10px rgba(0,0,0,0.15);
+  transform: rotate(2deg);
+  width: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.notebook-photo-img-wrapper {
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background-color: #050505;
+}
+
+.notebook-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(0.2) sepia(0.6) brightness(0.9);
+}
+
+.notebook-photo-caption {
+  font-family: var(--font-mono);
+  font-size: 0.45rem;
+  letter-spacing: 0.02em;
+  color: #666;
+  margin-top: 0.35rem;
+  text-align: center;
+}
+
+.typewriter-carriage-roller {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 14px;
+  background: linear-gradient(to bottom, #111 0%, #333 50%, #111 100%);
+  border-bottom: 1.5px solid #000;
+  z-index: 5;
+}
+
+.typewriter-paper-sheet {
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.05), 0 3px 6px rgba(0,0,0,0.08);
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-top: 5px;
+}
+
+.typewriter-label {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  color: var(--bg-terracotta);
+  font-weight: 700;
+}
+
+.typewriter-input {
+  border: none;
+  background: none;
+  outline: none;
+  resize: none;
+  flex: 1;
+  width: 100%;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: 1.8;
+  color: #333;
+  padding: 0;
+  background-image: linear-gradient(transparent, transparent 27px, #e5e5e5 27px); /* ruled paper lines */
+  background-size: 100% 28px;
+}
+
+.typewriter-char-counter {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  align-self: flex-end;
+  opacity: 0.5;
+}
+
+/* ── TRACK 03: BIKE DASHBOARD ── */
+.bike-dashboard {
+  display: grid;
+  grid-template-columns: 1.1fr 1.3fr;
+  gap: 2rem;
+  width: 100%;
+  max-width: 660px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .bike-dashboard {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+
+.bike-stats-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.8rem;
+  justify-content: center;
+}
+
+.speedometer-bezel {
+  width: 150px;
+  height: 150px;
+  background-color: #1c1d1e;
+  border: 6px solid #2e160a; /* wooden/plastic compass bezel ring */
+  outline: 3px solid #000;
+  border-radius: 50%;
+  box-shadow: inset 0 0 15px rgba(0,0,0,0.95), 0 5px 15px rgba(0,0,0,0.5);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.speedometer-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.speedo-tick {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: rgba(244, 236, 200, 0.45);
+  text-anchor: middle;
+  font-weight: 700;
+}
+
+.speedometer-unit {
+  position: absolute;
+  bottom: 25px;
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  color: var(--accent-gold);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+/* Mechanical Odometer Rollers */
+.odometer-box {
+  display: flex;
+  background-color: #0c0d0e;
+  border: 2px solid #333;
+  padding: 0.3rem 0.6rem;
+  border-radius: 3px;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.85);
+  position: relative;
+}
+
+.odometer-digit {
+  width: 15px;
+  height: 24px;
+  background-color: #111;
+  color: var(--text-cream);
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-align: center;
+  line-height: 24px;
+  border-right: 1px solid #222;
+  overflow: hidden;
+  position: relative;
+}
+
+.odometer-digit span {
+  display: block;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.odometer-digit:last-child {
+  border-right: none;
+  background-color: #aa7e44; /* last digit runs mechanical fractions */
+  color: #000;
+}
+
+.odometer-unit-label {
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 0.48rem;
+  color: rgba(244, 236, 200, 0.35);
+  letter-spacing: 0.05em;
+}
+
+/* Vintage Roadmap Trails Panel */
+.bike-map-panel {
+  width: 100%;
+}
+
+.map-inner-frame {
+  position: relative;
+  background-color: #dfd7be; /* Vintage map paper color */
+  border: 4px solid #140d0a;
+  border-radius: 4px;
+  aspect-ratio: 1.1;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.15), 0 5px 15px rgba(0,0,0,0.4);
+  overflow: hidden;
+}
+
+.map-grid-lines {
+  position: absolute;
+  inset: 0;
+  /* Topographic grid overlay */
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.map-trail-line {
+  position: absolute;
+  top: 25%;
+  left: 30%;
+  width: 50%;
+  height: 50%;
+  border-top: 2px dashed rgba(200, 50, 40, 0.5);
+  border-left: 2px dashed rgba(200, 50, 40, 0.5);
+  border-bottom: 2px dashed rgba(200, 50, 40, 0.5);
+  border-radius: 30% 10% 40% 10%;
+  pointer-events: none;
+}
+
+.map-pin-btn {
+  position: absolute;
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  z-index: 5;
+}
+
+.pin-marker {
+  width: 10px;
+  height: 10px;
+  background-color: var(--bg-terracotta);
+  border: 1.5px solid #000;
+  border-radius: 50%;
+  transition: transform 0.3s var(--ease-cinematic), background-color 0.3s;
+}
+
+.map-pin-btn:hover .pin-marker,
+.map-pin-btn.active .pin-marker {
+  transform: scale(1.4);
+  background-color: var(--accent-gold);
+}
+
+.pin-coord {
+  font-family: var(--font-mono);
+  font-size: 0.42rem;
+  color: #333;
+  font-weight: 700;
+  background-color: rgba(255,255,255,0.7);
+  border: 1px solid rgba(0,0,0,0.1);
+  padding: 0.05rem 0.2rem;
+  border-radius: 2px;
+}
+
+/* Polaroid image popup in map */
+.map-photo-preview {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background-color: #fff;
+  padding: 0.4rem 0.4rem 0.8rem;
+  border: 1px solid rgba(0,0,0,0.1);
+  box-shadow: 2px 4px 10px rgba(0,0,0,0.2);
+  width: 110px;
+  transform: rotate(-3deg);
+  z-index: 6;
+  opacity: 0;
+  transform: translateY(10px) rotate(-3deg);
+  transition: opacity 0.4s var(--ease-cinematic), transform 0.4s var(--ease-cinematic);
+  pointer-events: none;
+}
+
+.map-photo-preview.show {
+  opacity: 1;
+  transform: translateY(0) rotate(-3deg);
+}
+
+.photo-preview-img-wrapper {
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background-color: #111;
+}
+
+.photo-preview-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(0.2) sepia(0.5);
+}
+
+.photo-preview-caption {
+  font-family: var(--font-mono);
+  font-size: 0.4rem;
+  font-weight: 700;
+  color: #444;
+  margin-top: 0.25rem;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
 }

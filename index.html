@@ -1049,63 +1049,242 @@
       <div class="section-separator-black">· · · · ·</div>
     </section>
 
-    <!-- Section 6: HOBBIES -->
-
-    <section id="hobbies" class="hobbies-section">
-      <div class="marquee-outer">
-        <div class="marquee-track" id="marqueeTrack">
-          <div class="hobby-card">
-            <span class="hobby-icon">🎸</span>
-            <span class="hobby-label">GUITAR</span>
-          </div>
-          <div class="hobby-card">
-            <span class="hobby-icon">🎧</span>
-            <span class="hobby-label">LISTENING</span>
-          </div>
-          <div class="hobby-card">
-            <span class="hobby-icon">✂️</span>
-            <span class="hobby-label">SCRAPBOOK</span>
-          </div>
-          <div class="hobby-card">
-            <span class="hobby-icon">✏️</span>
-            <span class="hobby-label">DRAWING</span>
-          </div>
-          <div class="hobby-card">
-            <span class="hobby-icon">🧥</span>
-            <span class="hobby-label">FASHION</span>
-          </div>
-          <div class="hobby-card">
-            <span class="hobby-icon">💻</span>
-            <span class="hobby-label">DEV LOG</span>
-          </div>
-          <!-- Loop duplicates -->
-          <div class="hobby-card">
-            <span class="hobby-icon">🎸</span>
-            <span class="hobby-label">GUITAR</span>
-          </div>
-          <div class="hobby-card">
-            <span class="hobby-icon">🎧</span>
-            <span class="hobby-label">LISTENING</span>
-          </div>
-          <div class="hobby-card">
-            <span class="hobby-icon">✂️</span>
-            <span class="hobby-label">SCRAPBOOK</span>
-          </div>
-          <div class="hobby-card">
-            <span class="hobby-icon">✏️</span>
-            <span class="hobby-label">DRAWING</span>
-          </div>
-          <div class="hobby-card">
-            <span class="hobby-icon">🧥</span>
-            <span class="hobby-label">FASHION</span>
-          </div>
-          <div class="hobby-card">
-            <span class="hobby-icon">💻</span>
-            <span class="hobby-label">DEV LOG</span>
-          </div>
-        </div>
+    <!-- Section 6: HOBBIES (Tactile Analog Console Drawer) -->
+    <section id="hobbies" class="hobbies-section reveal-on-scroll">
+      
+      <!-- Top 1/4 black panel — heading -->
+      <div class="hobbies-top-panel">
+        <span class="hobbies-label-code">[ 05 // ANALOG ARCHIVES ]</span>
+        <h2 class="hobbies-headline">hobbies</h2>
       </div>
-    </section>
+
+      <!-- Bottom 3/4 terracotta red panel with tactile console wrapper -->
+      <div class="hobbies-bottom-panel">
+        
+        <!-- Subtle drafting elements similar to Education section to link themes -->
+        <div class="hobbies-bg-watermark">TRACKS // FREQUENCIES</div>
+        <div class="hobbies-corner-mark mark-top-left">+</div>
+        <div class="hobbies-corner-mark mark-top-right">+</div>
+        <div class="hobbies-corner-mark mark-bottom-left">+</div>
+        <div class="hobbies-corner-mark mark-bottom-right">+</div>
+
+        <div class="console-wrapper">
+          <div class="console-wood-bezel"></div>
+          
+          <div class="hobbies-console-grid">
+            
+            <!-- Left Panel: Vintage Mixer Strip Console -->
+            <div class="console-mixer-panel">
+              <div class="mixer-header">
+                <span class="mixer-logo">MARIAR5 // AUDIO</span>
+                <span class="mixer-status">STATUS: STANDBY</span>
+              </div>
+              
+              <div class="mixer-faders-list" role="tablist" aria-label="Hobby Selector Channels">
+                
+                <!-- Tab 1: Guitar -->
+                <button class="mixer-fader-item active" data-hobby="guitar" role="tab" aria-selected="true" aria-controls="deck-guitar">
+                  <div class="fader-channel">CH_01</div>
+                  <div class="fader-track-visual">
+                    <div class="fader-groove"></div>
+                    <div class="fader-handle" style="top: 20%;"></div>
+                  </div>
+                  <div class="fader-info">
+                    <span class="fader-cat">GUITAR</span>
+                    <span class="fader-title">STRUM &amp; SYNTH</span>
+                  </div>
+                </button>
+
+                <!-- Tab 2: Journaling -->
+                <button class="mixer-fader-item" data-hobby="journal" role="tab" aria-selected="false" aria-controls="deck-journal">
+                  <div class="fader-channel">CH_02</div>
+                  <div class="fader-track-visual">
+                    <div class="fader-groove"></div>
+                    <div class="fader-handle" style="top: 50%;"></div>
+                  </div>
+                  <div class="fader-info">
+                    <span class="fader-cat">JOURNALING</span>
+                    <span class="fader-title">INK &amp; TYPE</span>
+                  </div>
+                </button>
+
+                <!-- Tab 3: Bike Rides -->
+                <button class="mixer-fader-item" data-hobby="bike" role="tab" aria-selected="false" aria-controls="deck-bike">
+                  <div class="fader-channel">CH_03</div>
+                  <div class="fader-track-visual">
+                    <div class="fader-groove"></div>
+                    <div class="fader-handle" style="top: 80%;"></div>
+                  </div>
+                  <div class="fader-info">
+                    <span class="fader-cat">BIKE RIDES</span>
+                    <span class="fader-title">OPEN TRAILS</span>
+                  </div>
+                </button>
+
+              </div>
+            </div><!-- /console-mixer-panel -->
+
+            <!-- Right Panel: Deck Display Screen -->
+            <div class="console-deck-panel">
+              
+              <!-- Deck 1: Guitar -->
+              <div class="hobby-deck active" id="deck-guitar" role="tabpanel" aria-label="Guitar Interface">
+                <div class="guitar-amp-frame">
+                  <div class="amp-speaker-grill">
+                    <div class="amp-logo">NITC-AMPS</div>
+                    
+                    <!-- Guitar Strings Strum Board -->
+                    <div class="guitar-strings-board">
+                      <div class="guitar-string-wrapper" data-string="0">
+                        <div class="guitar-string"></div>
+                        <span class="string-note-label">E (Low)</span>
+                      </div>
+                      <div class="guitar-string-wrapper" data-string="1">
+                        <div class="guitar-string"></div>
+                        <span class="string-note-label">A</span>
+                      </div>
+                      <div class="guitar-string-wrapper" data-string="2">
+                        <div class="guitar-string"></div>
+                        <span class="string-note-label">D</span>
+                      </div>
+                      <div class="guitar-string-wrapper" data-string="3">
+                        <div class="guitar-string"></div>
+                        <span class="string-note-label">G</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Amp Control Knobs Panel -->
+                  <div class="amp-controls-bar">
+                    <div class="control-knob-wrapper">
+                      <div class="knob-dial" id="knobVolume" style="transform: rotate(0deg);" tabindex="0" role="slider" aria-valuenow="5" aria-valuemin="1" aria-valuemax="10" aria-label="Synth Volume">
+                        <div class="knob-pointer"></div>
+                      </div>
+                      <span class="knob-label">VOLUME</span>
+                    </div>
+
+                    <div class="control-knob-wrapper">
+                      <div class="knob-dial" id="knobTone" style="transform: rotate(45deg);" tabindex="0" role="slider" aria-valuenow="7" aria-valuemin="1" aria-valuemax="10" aria-label="Synth Tone">
+                        <div class="knob-pointer"></div>
+                      </div>
+                      <span class="knob-label">TONE</span>
+                    </div>
+                    
+                    <div class="amp-jacks">
+                      <div class="input-jack active"></div>
+                      <span class="jack-label">INPUT</span>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- /deck-guitar -->
+
+              <!-- Deck 2: Journaling -->
+              <div class="hobby-deck" id="deck-journal" role="tabpanel" aria-label="Journal Interface" style="display: none;">
+                <div class="notebook-frame">
+                  <div class="notebook-left-page">
+                    <div class="notebook-header-meta">DATE: 11-06-2026 // TIME: 16:09</div>
+                    <h4 class="notebook-h4">the quill &amp; ink</h4>
+                    <p class="notebook-entry-text">
+                      Journaling is where system noise settles into structured prose. I collect retro stamps, record vinyl notes, and keep typewriter drafts of equations and design scripts. Writing by hand bridges the gap between hardware execution and human expression.
+                    </p>
+                    
+                    <div class="notebook-photo-frame">
+                      <div class="notebook-photo-img-wrapper">
+                        <img src="assets/nitc_retro_print.png" alt="Analog setup print" class="notebook-photo">
+                      </div>
+                      <span class="notebook-photo-caption">STUDIO DESK PRINT</span>
+                    </div>
+                  </div>
+
+                  <div class="notebook-right-page">
+                    <div class="typewriter-carriage-roller"></div>
+                    <div class="typewriter-paper-sheet">
+                      <span class="typewriter-label">TYPE TO CONSOLE //</span>
+                      <textarea class="typewriter-input" id="typewriterTextArea" placeholder="Start typing on your keyboard to test mechanical keystrokes..." maxlength="300" aria-label="Typewriter simulator input"></textarea>
+                      <div class="typewriter-char-counter"><span id="charCount">0</span> / 300 CHARS</div>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- /deck-journal -->
+
+              <!-- Deck 3: Bike Rides -->
+              <div class="hobby-deck" id="deck-bike" role="tabpanel" aria-label="Bike Rides Interface" style="display: none;">
+                <div class="bike-dashboard">
+                  
+                  <!-- Left side: Speedometer and Odometer -->
+                  <div class="bike-stats-panel">
+                    <div class="speedometer-bezel">
+                      <svg class="speedometer-svg" viewBox="0 0 160 160">
+                        <circle cx="80" cy="80" r="70" fill="none" stroke="#0B0605" stroke-width="6" />
+                        <path d="M 30 130 A 70 70 0 1 1 130 130" fill="none" stroke="var(--text-cream)" stroke-width="2" stroke-dasharray="2 4" />
+                        <!-- Speedometer ticks -->
+                        <text x="25" y="115" class="speedo-tick">0</text>
+                        <text x="25" y="70" class="speedo-tick">20</text>
+                        <text x="50" y="35" class="speedo-tick">40</text>
+                        <text x="110" y="35" class="speedo-tick">60</text>
+                        <text x="135" y="70" class="speedo-tick">80</text>
+                        <text x="130" y="115" class="speedo-tick">100</text>
+                        
+                        <!-- Rotating indicator needle -->
+                        <line x1="80" y1="80" x2="80" y2="25" stroke="var(--bg-terracotta)" stroke-width="3" id="speedoNeedle" style="transform-origin: 80px 80px; transform: rotate(-120deg); transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);" />
+                        <circle cx="80" cy="80" r="8" fill="#0B0605" />
+                        <circle cx="80" cy="80" r="3" fill="var(--accent-gold)" />
+                      </svg>
+                      <span class="speedometer-unit">KM/H</span>
+                    </div>
+
+                    <!-- Mechanical style odometer roll-up -->
+                    <div class="odometer-box">
+                      <div class="odometer-digit" id="odoDigit0"><span>0</span></div>
+                      <div class="odometer-digit" id="odoDigit1"><span>2</span></div>
+                      <div class="odometer-digit" id="odoDigit2"><span>4</span></div>
+                      <div class="odometer-digit" id="odoDigit3"><span>8</span></div>
+                      <span class="odometer-unit-label">TOTAL KM</span>
+                    </div>
+                  </div>
+
+                  <!-- Right side: Vintage roadmap trails -->
+                  <div class="bike-map-panel">
+                    <div class="map-inner-frame">
+                      <div class="map-grid-lines"></div>
+                      <div class="map-trail-line"></div>
+                      
+                      <!-- Clickable coordinates pins -->
+                      <button class="map-pin-btn active" data-route="coast" data-km="12" data-speed="22" style="top: 25%; left: 30%;" aria-label="Calicut Beach Trail Pin">
+                        <span class="pin-marker"></span>
+                        <span class="pin-coord">[ CH // BC ]</span>
+                      </button>
+
+                      <button class="map-pin-btn" data-route="hills" data-km="45" data-speed="15" style="top: 45%; left: 75%;" aria-label="Wayanad Foothills Trail Pin">
+                        <span class="pin-marker"></span>
+                        <span class="pin-coord">[ GH // WY ]</span>
+                      </button>
+
+                      <button class="map-pin-btn" data-route="lake" data-km="24" data-speed="18" style="top: 75%; left: 45%;" aria-label="Mavoor Wetlands Trail Pin">
+                        <span class="pin-marker"></span>
+                        <span class="pin-coord">[ MV // WL ]</span>
+                      </button>
+
+                      <!-- Polaroid Photo preview showing current route snap -->
+                      <div class="map-photo-preview" id="mapPhotoPreview">
+                        <div class="photo-preview-img-wrapper">
+                          <img src="assets/st_josephs_retro_print.png" alt="Route preview print" id="routePreviewImg">
+                        </div>
+                        <div class="photo-preview-caption" id="routePreviewCaption">CALICUT BEACH ROAD TRAIL</div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div><!-- /deck-bike -->
+
+            </div><!-- /console-deck-panel -->
+            
+          </div><!-- /hobbies-console-grid -->
+          
+        </div><!-- /console-wrapper -->
+
+      </div><!-- /hobbies-bottom-panel -->
 
     <!-- Section 7: CONTACT (Solid Terracotta Red Panel with Film Credits Billing Layout) -->
     <section id="contact" class="contact-section panel-split bg-red reveal-on-scroll">

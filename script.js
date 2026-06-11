@@ -494,4 +494,273 @@ document.addEventListener('DOMContentLoaded', () => {
       el.addEventListener('mouseleave', () => customCursor.classList.remove('cursor-expand'));
     }
   });
+
+  /* ==========================================================================
+     HOBBIES — Tactile Analog Mixing Console & Deck Faders
+     ========================================================================== */
+  const mixerFaders = document.querySelectorAll('.mixer-fader-item');
+  const hobbyDecks = document.querySelectorAll('.hobby-deck');
+
+  // 1. Channel Selector switching
+  mixerFaders.forEach(fader => {
+    fader.addEventListener('click', () => {
+      if (fader.classList.contains('active')) return;
+
+      // Play channel click sound
+      playTypewriterClick();
+
+      // Deactivate all faders and decks
+      mixerFaders.forEach(f => {
+        f.classList.remove('active');
+        f.setAttribute('aria-selected', 'false');
+      });
+      hobbyDecks.forEach(d => {
+        d.classList.remove('active');
+        d.style.display = 'none';
+      });
+
+      // Activate clicked fader and deck
+      fader.classList.add('active');
+      fader.setAttribute('aria-selected', 'true');
+      const targetHobby = fader.getAttribute('data-hobby');
+      const targetDeck = document.getElementById(`deck-${targetHobby}`);
+      if (targetDeck) {
+        targetDeck.style.display = 'block';
+        void targetDeck.offsetWidth; // trigger reflow
+        targetDeck.classList.add('active');
+      }
+
+      // Special action: initialize map/odometer coordinates if Bike Rides is selected
+      if (targetHobby === 'bike') {
+        const activePin = document.querySelector('.map-pin-btn.active');
+        if (activePin) {
+          setTimeout(() => updateRoute(activePin), 250);
+        }
+      }
+    });
+  });
+
+  // 2. Web Audio Synthesizer low-latency guitar strings
+  let audioCtx = null;
+  let masterGainNode = null;
+  let filterNode = null;
+  let masterVolumeValue = 0.5;
+  let toneCutoffValue = 2000;
+
+  const initAudio = () => {
+    if (audioCtx) return;
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return;
+    
+    audioCtx = new AudioContextClass();
+    masterGainNode = audioCtx.createGain();
+    filterNode = audioCtx.createBiquadFilter();
+
+    filterNode.type = 'lowpass';
+    filterNode.frequency.value = toneCutoffValue;
+
+    masterGainNode.gain.value = masterVolumeValue;
+
+    filterNode.connect(masterGainNode);
+    masterGainNode.connect(audioCtx.destination);
+  };
+
+  const playStringTone = (frequency) => {
+    initAudio();
+    if (!audioCtx) return;
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+
+    const osc = audioCtx.createOscillator();
+    const stringGain = audioCtx.createGain();
+
+    osc.type = 'triangle'; // Warm wood tone
+    osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+
+    stringGain.gain.setValueAtTime(0.4, audioCtx.currentTime);
+    stringGain.gain.exponentialRampToValueAtTime(0.005, audioCtx.currentTime + 1.2);
+
+    osc.connect(stringGain);
+    stringGain.connect(filterNode);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 1.25);
+  };
+
+  // Guitar strings E3, A3, D3, G3
+  const stringNotes = [164.81, 220.00, 293.66, 392.00];
+  const guitarStrings = document.querySelectorAll('.guitar-string-wrapper');
+  
+  guitarStrings.forEach(str => {
+    str.addEventListener('mouseenter', () => {
+      const idx = parseInt(str.getAttribute('data-string'));
+      if (!isNaN(idx) && stringNotes[idx]) {
+        playStringTone(stringNotes[idx]);
+      }
+    });
+  });
+
+  // Rotatable controls knobs
+  const knobVolume = document.getElementById('knobVolume');
+  if (knobVolume) {
+    let vol = 5;
+    knobVolume.addEventListener('click', () => {
+      vol = (vol % 10) + 1;
+      masterVolumeValue = vol / 10;
+      if (masterGainNode) {
+        masterGainNode.gain.setValueAtTime(masterVolumeValue, audioCtx.currentTime);
+      }
+      knobVolume.style.transform = `rotate(${ (vol - 1) * 30 }deg)`;
+      knobVolume.setAttribute('aria-valuenow', vol);
+      playTypewriterClick();
+    });
+  }
+
+  const knobTone = document.getElementById('knobTone');
+  if (knobTone) {
+    let tone = 7;
+    knobTone.addEventListener('click', () => {
+      tone = (tone % 10) + 1;
+      toneCutoffValue = 200 + (tone / 10) * 3600;
+      if (filterNode) {
+        filterNode.frequency.setValueAtTime(toneCutoffValue, audioCtx.currentTime);
+      }
+      knobTone.style.transform = `rotate(${ (tone - 1) * 30 }deg)`;
+      knobTone.setAttribute('aria-valuenow', tone);
+      playTypewriterClick();
+    });
+  }
+
+  // 3. Typewriter mechanical keyboard typing
+  const typewriterInput = document.getElementById('typewriterTextArea');
+  const charCount = document.getElementById('charCount');
+  
+  const playTypewriterClick = () => {
+    initAudio();
+    if (!audioCtx || audioCtx.state === 'suspended') return;
+
+    const osc = audioCtx.createOscillator();
+    const clickGain = audioCtx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(600 + Math.random() * 500, audioCtx.currentTime);
+
+    clickGain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+    clickGain.gain.exponentialRampToValueAtTime(0.005, audioCtx.currentTime + 0.04);
+
+    osc.connect(clickGain);
+    clickGain.connect(masterGainNode);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.05);
+  };
+
+  const playTypewriterBell = () => {
+    initAudio();
+    if (!audioCtx || audioCtx.state === 'suspended') return;
+
+    const osc = audioCtx.createOscillator();
+    const bellGain = audioCtx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(1500, audioCtx.currentTime);
+
+    bellGain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+    bellGain.gain.exponentialRampToValueAtTime(0.005, audioCtx.currentTime + 0.6);
+
+    osc.connect(bellGain);
+    bellGain.connect(masterGainNode);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.65);
+  };
+
+  if (typewriterInput) {
+    let prevLength = 0;
+    typewriterInput.addEventListener('input', (e) => {
+      const len = typewriterInput.value.length;
+      if (charCount) charCount.textContent = len;
+
+      if (len > prevLength) {
+        playTypewriterClick();
+        // Ring bell on enter key or every 50 characters typed
+        const lastChar = typewriterInput.value.slice(-1);
+        if (lastChar === '\n' || (len > 0 && len % 50 === 0)) {
+          playTypewriterBell();
+        }
+      }
+      prevLength = len;
+    });
+  }
+
+  // 4. Speedometer odometer trails map navigation
+  const mapPins = document.querySelectorAll('.map-pin-btn');
+  const routePreviewImg = document.getElementById('routePreviewImg');
+  const routePreviewCaption = document.getElementById('routePreviewCaption');
+  const mapPhotoPreview = document.getElementById('mapPhotoPreview');
+  const speedoNeedle = document.getElementById('speedoNeedle');
+
+  // Initialize odometer digit mechanical scroll containers
+  document.querySelectorAll('.odometer-digit').forEach(digitEl => {
+    digitEl.innerHTML = '<span>0<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9</span>';
+  });
+
+  const updateRoute = (pin) => {
+    mapPins.forEach(p => p.classList.remove('active'));
+    pin.classList.add('active');
+
+    const route = pin.getAttribute('data-route');
+    const km = parseInt(pin.getAttribute('data-km'));
+    const speed = parseInt(pin.getAttribute('data-speed'));
+
+    // Animate needle
+    if (speedoNeedle) {
+      const deg = (speed / 100) * 240 - 120;
+      speedoNeedle.style.transform = `rotate(${deg}deg)`;
+    }
+
+    // Roll mechanical odometer
+    const kmString = String(km).padStart(4, '0');
+    for (let i = 0; i < 4; i++) {
+      const digitSpan = document.querySelector(`#odoDigit${i} span`);
+      if (digitSpan) {
+        const val = parseInt(kmString[i]);
+        digitSpan.style.transform = `translateY(-${val * 24}px)`;
+      }
+    }
+
+    // Set route preview text and image
+    if (routePreviewCaption && routePreviewImg && mapPhotoPreview) {
+      mapPhotoPreview.classList.remove('show');
+      
+      setTimeout(() => {
+        if (route === 'coast') {
+          routePreviewImg.src = 'assets/nitc_retro_print.png';
+          routePreviewCaption.textContent = 'CALICUT BEACH ROAD TRAIL';
+        } else if (route === 'hills') {
+          routePreviewImg.src = 'assets/st_josephs_retro_print.png';
+          routePreviewCaption.textContent = 'WAYANAD FOOTHILLS TRAIL';
+        } else if (route === 'lake') {
+          routePreviewImg.src = 'assets/st_josephs_retro_print.png';
+          routePreviewCaption.textContent = 'MAVOOR WETLANDS TRAIL';
+        }
+        mapPhotoPreview.classList.add('show');
+      }, 200);
+    }
+  };
+
+  mapPins.forEach(pin => {
+    pin.addEventListener('click', () => {
+      playTypewriterClick();
+      updateRoute(pin);
+    });
+  });
+
+  // Bind custom cursor highlights to mixer knobs, pins, faders, typewriter
+  document.querySelectorAll('.mixer-fader-item, .knob-dial, .map-pin-btn, .typewriter-input').forEach(el => {
+    if (customCursor && !el.dataset.cursorBound) {
+      el.dataset.cursorBound = 'true';
+      el.addEventListener('mouseenter', () => customCursor.classList.add('cursor-expand'));
+      el.addEventListener('mouseleave', () => customCursor.classList.remove('cursor-expand'));
+    }
+  });
 });
+
