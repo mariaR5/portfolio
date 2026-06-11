@@ -57,7 +57,7 @@
     linear-gradient(90deg, rgba(11, 6, 5, 0.05) 1px, transparent 1px);
   background-size: 30px 30px;
   background-position: center;
-  padding: 5rem 2.5rem 7rem;
+  padding: 5rem 2.5rem 4rem;
   flex: 1;
   position: relative;
   overflow: visible; /* Keeps absolute positioned stickers visible */
@@ -902,7 +902,6 @@
   }
 }
 
-/* ── Section Separator ── */
 .education-section .section-separator-black {
   display: block;
   text-align: center;
@@ -912,4 +911,5 @@
   color: rgba(244, 236, 200, 0.3);
   background-color: var(--bg-black);
   padding: 1.4rem 0;
+  margin-top: 0 !important;
 }

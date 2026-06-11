@@ -107,7 +107,8 @@
   position: absolute;
   top: 2.2rem;
   left: 50%;
-  transform: translateX(-50%) rotate(-1.5deg);
+  transform: translateX(-50%) translateY(-20px) rotate(5deg);
+  opacity: 0;
   background-color: var(--bg-black);
   color: var(--text-cream);
   padding: 0.6rem 1.1rem 0.8rem;
@@ -118,6 +119,13 @@
   z-index: 4;
   min-width: 180px;
   box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+  transition: opacity 1s var(--ease-cinematic), transform 1s var(--ease-cinematic);
+}
+
+.hobbies-section.revealed .hobbies-scrap-sticker {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0) rotate(-1.5deg);
+  transition-delay: 0.1s;
 }
 
 .hobbies-sticker-tape {
@@ -169,8 +177,17 @@
   height: 80px;
   border: 3px solid rgba(11, 6, 5, 0.15);
   border-radius: 50%;
-  opacity: 0.18;
+  opacity: 0;
+  transform: scale(3.5) rotate(-35deg);
   pointer-events: none;
+  transition: opacity 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+              transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.hobbies-section.revealed .hobbies-ink-stamp {
+  opacity: 0.18;
+  transform: scale(1.0) rotate(12deg);
+  transition-delay: 1.1s;
 }
 
 .hobbies-ink-stamp::after {
@@ -187,129 +204,162 @@
 }
 
 /* ─────────────────────────────────────────────────────────────
-   SLIDES — VIEWPORT & TRACK
+   SCRAPBOOK CANVAS & COLUMNS
    ───────────────────────────────────────────────────────────── */
-.hobbies-slides-viewport {
-  width: 100%;
-  overflow: hidden;
-  position: relative;
-  flex: 1;
-  min-height: 560px;
-}
-
-.hobbies-slides-track {
-  display: flex;
-  flex-wrap: nowrap;      /* keep all slides in one row */
-  width: 100%;
-  height: 100%;
-  min-height: 560px;
-  transition: transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  will-change: transform;
-}
-
-/* ─────────────────────────────────────────────────────────────
-   INDIVIDUAL HOBBY SLIDE
-   ───────────────────────────────────────────────────────────── */
-.hobby-slide {
-  min-width: 100%;        /* each slide is full viewport width */
-  flex-shrink: 0;
-  box-sizing: border-box;
-  position: relative;     /* contain the absolute title overlay */
-  padding: 7rem 0 2.5rem;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-}
-
-/* ─────────────────────────────────────────────────────────────
-   HOBBY INNER LAYOUT — Full-width, two areas: PHOTO + WIDGET
-   ───────────────────────────────────────────────────────────── */
-.hobby-stage {
+.hobbies-scrapbook-canvas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem;
   width: 100%;
   max-width: 1360px;
   margin: 0 auto;
-  padding: 0 5rem;
-  display: grid;
-  /* photo takes flexible space, widget has a max of 400px */
-  grid-template-columns: 1fr minmax(340px, 420px);
-  gap: 4rem;
-  align-items: center;
+  padding: 6.5rem 3rem 6rem; /* space at top for the floating sticker */
   box-sizing: border-box;
-  height: 100%;    /* fill available slide height */
 }
 
-/* Journaling slide reverses the order */
-.hobby-stage.stage-reverse {
-  grid-template-columns: minmax(340px, 420px) 1fr;
+.scrapbook-column {
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+  align-items: center;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 1.2s var(--ease-cinematic), transform 1.2s var(--ease-cinematic);
 }
 
-.hobby-stage.stage-reverse .hobby-photo-col {
-  order: 2;
+.hobbies-section.revealed .scrapbook-column {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.hobby-stage.stage-reverse .hobby-widget-col {
-  order: 1;
+.hobbies-section.revealed .column-guitar {
+  transition-delay: 0.2s;
 }
 
-@media (max-width: 1100px) {
-  .hobby-stage,
-  .hobby-stage.stage-reverse {
-    grid-template-columns: 1fr;
-    padding: 0 2.5rem;
-    gap: 2.5rem;
-    max-width: 680px;
-  }
-
-  .hobby-stage.stage-reverse .hobby-photo-col,
-  .hobby-stage.stage-reverse .hobby-widget-col {
-    order: unset;
-  }
+.hobbies-section.revealed .column-journal {
+  transition-delay: 0.4s;
 }
 
-/* ─────────────────────────────────────────────────────────────
-   HOBBY TITLE & META  (floated top-left of each slide)
-   ───────────────────────────────────────────────────────────── */
-.hobby-slide-title-wrap {
-  position: absolute;
-  top: 2rem;
-  left: 0;
-  right: 0;
+.hobbies-section.revealed .column-music {
+  transition-delay: 0.6s;
+}
+
+/* Scrapbook Column Group Headers */
+.scrapbook-group-header {
+  align-self: flex-start;
   display: flex;
   align-items: baseline;
-  gap: 1.4rem;
-  padding: 0 5rem;       /* matches hobby-stage padding */
+  gap: 0.8rem;
+  margin-bottom: 0.4rem;
   pointer-events: none;
-  z-index: 3;
+  border-bottom: 1px dashed rgba(11, 6, 5, 0.15);
+  width: 100%;
+  padding-bottom: 0.4rem;
 }
 
-.hobby-slide-num {
+.group-num {
   font-family: var(--font-mono);
-  font-size: 0.65rem;
-  color: rgba(244, 236, 200, 0.45);
-  letter-spacing: 0.14em;
+  font-size: 0.6rem;
+  color: rgba(11, 6, 5, 0.45);
+  letter-spacing: 0.12em;
 }
 
-.hobby-slide-name {
+.group-name {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2rem, 4.5vw, 3.8rem);
+  font-size: 1.8rem;
   font-weight: 700;
   color: var(--bg-black);
-  line-height: 1;
-  letter-spacing: 0.04em;
-  text-shadow: none;
-  opacity: 0.75;
   text-transform: lowercase;
+  letter-spacing: 0.02em;
+  line-height: 1;
 }
 
-/* ─────────────────────────────────────────────────────────────
-   PHOTO COLUMN — Polaroid print, dominant
-   ───────────────────────────────────────────────────────────── */
-.hobby-photo-col {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* Individual Polaroid and Widget Overrides for Scattered Vibe */
+.polaroid-guitar {
+  transform: rotate(-2.5deg);
 }
 
+.polaroid-journal {
+  transform: rotate(2deg);
+}
+
+.polaroid-music {
+  transform: rotate(-1.5deg);
+}
+
+/* Widgets inside columns tilts for realism */
+.guitar-widget-frame {
+  transform: rotate(1.5deg);
+}
+
+.typewriter-paper-sheet {
+  transform: rotate(-1.8deg);
+}
+
+.cassette-deck-frame {
+  transform: rotate(1.2deg);
+}
+
+/* Hover lift and reset for tactile interaction */
+.hobby-polaroid-frame,
+.guitar-widget-frame,
+.typewriter-paper-sheet,
+.cassette-deck-frame {
+  transition: transform 0.45s var(--ease-cinematic),
+              box-shadow 0.45s var(--ease-cinematic);
+}
+
+.hobby-polaroid-frame:hover {
+  transform: rotate(0deg) scale(1.03) translateY(-4px) !important;
+  z-index: 20;
+  box-shadow:
+    0 25px 70px rgba(0, 0, 0, 0.55),
+    0 8px 25px rgba(0, 0, 0, 0.28);
+}
+
+.guitar-widget-frame:hover,
+.typewriter-paper-sheet:hover,
+.cassette-deck-frame:hover {
+  transform: rotate(0deg) scale(1.025) translateY(-4px) !important;
+  z-index: 20;
+  box-shadow:
+    inset 0 0 25px rgba(0,0,0,0.85),
+    0 18px 45px rgba(0,0,0,0.7);
+}
+
+/* Tape strips on Polaroid frames for a manual scrap look */
+.hobby-polaroid-frame {
+  position: relative;
+}
+
+.hobby-polaroid-frame::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  width: 70px;
+  height: 20px;
+  background-color: rgba(244, 236, 200, 0.25);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  z-index: 5;
+}
+
+.polaroid-guitar::before {
+  left: 20px;
+  transform: rotate(-6deg);
+}
+
+.polaroid-journal::before {
+  right: 20px;
+  transform: rotate(5deg);
+}
+
+.polaroid-music::before {
+  left: 50%;
+  transform: translateX(-50%) rotate(2deg);
+}
+
+/* Shared polaroid structures */
 .hobby-polaroid-frame {
   background-color: #faf8f3;
   padding: 1rem 1rem 2.8rem;
@@ -318,23 +368,11 @@
     0 20px 60px rgba(0, 0, 0, 0.45),
     0 6px 20px rgba(0, 0, 0, 0.22),
     inset 0 1px 0 rgba(255,255,255,0.8);
-  transition: transform 0.45s var(--ease-cinematic),
-              box-shadow 0.45s var(--ease-cinematic);
   width: 100%;
-  max-width: 520px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.polaroid-tilt-left  { transform: rotate(-2deg); }
-.polaroid-tilt-right { transform: rotate(2.5deg); }
-
-.hobby-polaroid-frame:hover {
-  transform: rotate(0deg) scale(1.025) translateY(-6px);
-  box-shadow:
-    0 28px 80px rgba(0, 0, 0, 0.55),
-    0 10px 30px rgba(0, 0, 0, 0.28);
 }
 
 .polaroid-image-wrapper {
@@ -370,24 +408,24 @@
   text-transform: uppercase;
 }
 
-/* ─────────────────────────────────────────────────────────────
-   WIDGET COLUMN — side panel for interactive elements
-   ───────────────────────────────────────────────────────────── */
-.hobby-widget-col {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 1.2rem;
-}
-
-/* Widget header label */
-.widget-header-label {
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
-  letter-spacing: 0.14em;
-  color: rgba(11, 6, 5, 0.45);
-  margin-bottom: 0.4rem;
-  text-transform: uppercase;
+/* Responsive grid for scrapbook */
+@media (max-width: 1100px) {
+  .hobbies-scrapbook-canvas {
+    grid-template-columns: 1fr;
+    gap: 4.5rem;
+    padding: 7rem 2.5rem 5rem;
+    max-width: 480px;
+  }
+  
+  .polaroid-guitar,
+  .polaroid-journal,
+  .polaroid-music,
+  .guitar-widget-frame,
+  .typewriter-paper-sheet,
+  .cassette-deck-frame {
+    transform: none !important;
+    margin: 0 !important;
+  }
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -647,67 +685,206 @@
 }
 
 /* ─────────────────────────────────────────────────────────────
-   TYPEWRITER PAPER WIDGET (JOURNALING)
+   TACTILE INK-STAMP notebook (JOURNALING)
    ───────────────────────────────────────────────────────────── */
-.typewriter-paper-sheet {
-  background-color: #fefdf8;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow:
-    inset 0 0 12px rgba(0,0,0,0.04),
-    0 5px 18px rgba(0,0,0,0.12);
-  padding: 2rem 1.6rem 1.4rem;
+.journal-notebook-page-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
-  position: relative;
-  overflow: hidden;
-  min-height: 280px;
-  border-radius: 3px;
+  gap: 1rem;
   width: 100%;
+  max-width: 420px;
+  transform: rotate(-1.5deg);
+  margin-left: -5px;
 }
 
-.typewriter-carriage-roller {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 12px;
-  background: linear-gradient(to bottom, #111 0%, #2e2e2e 55%, #111 100%);
-  border-bottom: 1.5px solid #000;
-  z-index: 5;
+/* Stamp & Color Controls Rack */
+.stamp-selection-dock {
+  background-color: #1a1a1a;
+  border: 2px solid #0d0d0d;
+  border-radius: 6px;
+  padding: 0.6rem 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
 }
 
-.typewriter-label {
-  font-family: var(--font-mono);
-  font-size: 0.56rem;
-  color: var(--bg-terracotta);
-  font-weight: 700;
-  letter-spacing: 0.08em;
+.rack-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.typewriter-input {
-  border: none;
-  background: none;
-  outline: none;
-  resize: none;
-  flex: 1;
-  width: 100%;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  line-height: 1.85;
-  color: #2a2a2a;
-  padding: 0;
-  /* Ruled paper lines */
-  background-image: linear-gradient(transparent, transparent 29px, #ddd 29px);
-  background-size: 100% 30px;
-}
-
-.typewriter-char-counter {
+.dock-label {
   font-family: var(--font-mono);
   font-size: 0.52rem;
-  align-self: flex-end;
-  opacity: 0.45;
+  color: rgba(244, 236, 200, 0.45);
+  letter-spacing: 0.06em;
+  min-width: 50px;
 }
+
+.stamp-btn {
+  background-color: #111;
+  border: 1px solid #333;
+  color: var(--text-cream);
+  font-family: var(--font-mono);
+  font-size: 0.48rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+  outline: none;
+}
+
+.stamp-btn:hover {
+  background-color: #222;
+  border-color: rgba(244, 236, 200, 0.4);
+}
+
+.stamp-btn.active {
+  background-color: var(--bg-black);
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+}
+
+/* Ink Color Wells */
+.color-well {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #000;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s;
+  outline: none;
+  padding: 0;
+}
+
+.color-well:hover {
+  transform: scale(1.15);
+}
+
+.color-well.active {
+  border-color: var(--accent-gold);
+  transform: scale(1.15);
+}
+
+.color-butter { background-color: #f5e6a5; }
+.color-blue { background-color: #9bb7d4; }
+.color-brown { background-color: #cfab89; }
+
+/* Notebook Canvas */
+.journal-notebook-page {
+  background-color: #fcfbf6;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 4px;
+  height: 290px;
+  position: relative;
+  overflow: hidden;
+  cursor: crosshair;
+  box-shadow:
+    inset 0 0 10px rgba(0,0,0,0.03),
+    0 6px 20px rgba(0,0,0,0.15);
+}
+
+/* Technical drafting grid sheet */
+.notebook-grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(11, 6, 5, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11, 6, 5, 0.04) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+}
+
+.notebook-hint {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.48rem;
+  color: rgba(0, 0, 0, 0.25);
+  letter-spacing: 0.06em;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* Clear button */
+.journal-clear-btn {
+  background: none;
+  border: none;
+  color: rgba(11, 6, 5, 0.45);
+  font-family: var(--font-mono);
+  font-size: 0.54rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  align-self: flex-end;
+  transition: color 0.2s;
+  outline: none;
+  padding: 0.2rem 0.5rem;
+}
+
+.journal-clear-btn:hover {
+  color: var(--bg-black);
+}
+
+/* Placed Stamp styling */
+.placed-stamp {
+  position: absolute;
+  pointer-events: none;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  text-transform: uppercase;
+  white-space: nowrap;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  opacity: 0.76;
+  filter: contrast(1.15) blur(0.2px); /* give a slightly printed ink bleed */
+}
+
+/* Stamp Designs */
+.stamp-memories {
+  font-size: 0.72rem;
+  letter-spacing: 0.1rem;
+  padding: 0.35rem 0.7rem;
+  border: 3px double currentColor;
+  border-radius: 4px;
+}
+
+.stamp-wanderlust {
+  font-size: 0.56rem;
+  letter-spacing: 0.08em;
+  width: 76px;
+  height: 76px;
+  border: 2px dashed currentColor;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.stamp-creative {
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  padding: 0.25rem 0.65rem;
+  border: 2px solid currentColor;
+  border-radius: 50% 0 50% 0;
+}
+
+.stamp-approved {
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  padding: 0.2rem 0.8rem;
+  border: 3px solid currentColor;
+  transform-origin: center;
+}
+
+/* Colors mapping for ink stamps */
+.placed-stamp.color-butter { color: #cca625; }
+.placed-stamp.color-blue { color: #4b6d90; }
+.placed-stamp.color-brown { color: #7a5230; }
 
 /* ─────────────────────────────────────────────────────────────
    CASSETTE DECK / PLAYLIST WIDGET (MUSIC LISTENING)
@@ -831,12 +1008,41 @@
   border-radius: 3px;
   height: 100px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  padding: 0 0.8rem;
+  gap: 0.8rem;
+}
+
+/* Album Cover Art Display Box */
+.album-cover-display {
+  width: 55px;
+  height: 55px;
+  border: 3.5px solid #0d0d0d;
+  border-radius: 3px;
+  background-color: #121212;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+  box-shadow:
+    inset 0 0 10px rgba(0,0,0,0.8),
+    0 2px 5px rgba(0,0,0,0.4);
+}
+
+.album-cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.35s ease, transform 0.5s ease;
+}
+
+.album-cover-display:hover .album-cover-img {
+  transform: scale(1.08);
 }
 
 .cassette-body {
-  width: 72%;
+  flex: 1;
   height: 68px;
   background-color: #1e1e1e;
   border: 2px solid #0d0d0d;
@@ -950,195 +1156,4 @@
 
 .vu-bar:nth-child(5) { background-color: #ff453a; }
 
-/* ─────────────────────────────────────────────────────────────
-   NAVIGATION ARROWS (left / right edges of bottom panel)
-   ───────────────────────────────────────────────────────────── */
-.hobbies-arrow-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: var(--bg-black);
-  border: 2px solid rgba(244, 236, 200, 0.14);
-  color: var(--text-cream);
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 10;
-  transition:
-    background-color 0.25s,
-    border-color 0.25s,
-    color 0.25s,
-    transform 0.2s,
-    box-shadow 0.25s;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.35);
-  padding: 0;
-  outline: none;
-}
 
-.hobbies-arrow-btn:hover {
-  background-color: #181818;
-  border-color: var(--accent-gold);
-  color: var(--accent-gold);
-  transform: translateY(-50%) scale(1.1);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
-}
-
-.hobbies-arrow-btn:active {
-  transform: translateY(-50%) scale(0.95);
-}
-
-.arrow-left  { left: 1.2rem; }
-.arrow-right { right: 1.2rem; }
-
-@media (max-width: 768px) {
-  .hobbies-arrow-btn { width: 38px; height: 38px; }
-  .arrow-left  { left: 0.5rem; }
-  .arrow-right { right: 0.5rem; }
-}
-
-/* ─────────────────────────────────────────────────────────────
-   FILM STRIP SLIDER NAVIGATION (bottom bar)
-   ───────────────────────────────────────────────────────────── */
-.hobbies-film-strip-nav {
-  width: 100%;
-  background-color: var(--bg-black);
-  box-shadow: 0 -6px 30px rgba(0, 0, 0, 0.4);
-  position: relative;
-  overflow: hidden;
-  padding: 0.5rem 0;
-  display: flex;
-  flex-direction: column;
-  z-index: 5;
-  flex-shrink: 0;
-}
-
-.film-sprocket-holes-top,
-.film-sprocket-holes-bottom {
-  height: 9px;
-  width: 100%;
-  background-image: radial-gradient(circle 3.5px at 9px 4.5px, transparent 3.5px, #0b0605 3.5px);
-  background-color: var(--bg-black);
-  background-size: 18px 9px;
-  opacity: 0.3;
-}
-
-.film-sprocket-holes-top    { margin-bottom: 0.35rem; }
-.film-sprocket-holes-bottom { margin-top:    0.35rem; }
-
-.film-strip-inner {
-  height: 56px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-top:    1px dashed rgba(244, 236, 200, 0.12);
-  border-bottom: 1px dashed rgba(244, 236, 200, 0.12);
-  background-color: #101011;
-}
-
-/* Hobby labels inside the film strip */
-.film-strip-inner::before {
-  content: 'GUITAR';
-  position: absolute;
-  left: calc(50% - 160px);
-  font-family: var(--font-mono);
-  font-size: 0.48rem;
-  letter-spacing: 0.18em;
-  color: rgba(244, 236, 200, 0.18);
-  transform: translateX(-50%);
-  pointer-events: none;
-}
-
-.film-strip-inner::after {
-  content: 'JOURNALING';
-  position: absolute;
-  right: calc(50% - 160px);
-  font-family: var(--font-mono);
-  font-size: 0.48rem;
-  letter-spacing: 0.18em;
-  color: rgba(244, 236, 200, 0.18);
-  transform: translateX(50%);
-  pointer-events: none;
-}
-
-.film-dots-container {
-  display: flex;
-  gap: 2.4rem;
-  align-items: center;
-  z-index: 6;
-  position: relative;
-  pointer-events: none;
-}
-
-.film-dot-btn {
-  width: 13px;
-  height: 13px;
-  border-radius: 50%;
-  background-color: rgba(244, 236, 200, 0.18);
-  border: 2px solid rgba(244, 236, 200, 0.12);
-  cursor: pointer;
-  pointer-events: auto;
-  z-index: 6;
-  padding: 0;
-  transition:
-    background-color 0.3s,
-    border-color 0.3s,
-    box-shadow 0.3s,
-    transform 0.2s;
-}
-
-.film-dot-btn:hover {
-  background-color: rgba(244, 236, 200, 0.45);
-  border-color: rgba(244, 236, 200, 0.6);
-  transform: scale(1.25);
-}
-
-.film-dot-btn.active {
-  background-color: var(--accent-gold);
-  border-color: var(--accent-gold);
-  box-shadow: 0 0 10px rgba(212, 175, 55, 0.7);
-  transform: scale(1.25);
-}
-
-.hobbies-range-slider {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  opacity: 0;
-  cursor: ew-resize;
-  z-index: 5;
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-.hobbies-range-slider:focus { outline: none; }
-
-/* ─────────────────────────────────────────────────────────────
-   RESPONSIVE — stack widgets below photo on small screens
-   ───────────────────────────────────────────────────────────── */
-@media (max-width: 600px) {
-  .hobby-slide {
-    padding: 6rem 0 1.5rem;
-  }
-
-  .hobby-slide-title-wrap {
-    padding: 0 1.5rem;
-    gap: 0.8rem;
-  }
-
-  .hobby-stage,
-  .hobby-stage.stage-reverse {
-    padding: 0 1.2rem;
-    gap: 2rem;
-  }
-
-  .hobby-polaroid-frame {
-    max-width: 100%;
-  }
-}

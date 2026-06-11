@@ -356,9 +356,9 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ==========================================================================
      EDUCATION — Retro Movie Projector & Slide Projection
      ========================================================================== */
-  const ticketBtns   = document.querySelectorAll('.edu-ticket-select');
+  const ticketBtns = document.querySelectorAll('.edu-ticket-select');
   const projectSlides = document.querySelectorAll('.edu-projected-slide');
-  const lensFlash     = document.querySelector('.projector-lens-flash');
+  const lensFlash = document.querySelector('.projector-lens-flash');
   const projectorBeam = document.querySelector('.projector-beam');
 
   if (lensFlash) {
@@ -445,10 +445,10 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ==========================================================================
      EDUCATION — Retro Scroll Modal Rollout
      ========================================================================== */
-  const certBtns     = document.querySelectorAll('.edu-certificate-btn');
-  const scrollModal  = document.getElementById('scrollModal');
-  const scrollImage  = document.getElementById('scrollImage');
-  const closeScroll  = document.getElementById('closeScrollBtn');
+  const certBtns = document.querySelectorAll('.edu-certificate-btn');
+  const scrollModal = document.getElementById('scrollModal');
+  const scrollImage = document.getElementById('scrollImage');
+  const closeScroll = document.getElementById('closeScrollBtn');
 
   if (certBtns.length && scrollModal && scrollImage) {
     const openParchment = (certName) => {
@@ -514,12 +514,17 @@ document.addEventListener('DOMContentLoaded', () => {
   let masterVolumeValue = 0.5;
   let toneCutoffValue = 2000;
   let guitarTone = 'acoustic';
- 
+
+  // Single global audio element for cassette player integration
+  const audioPlayer = new Audio();
+  audioPlayer.crossOrigin = "anonymous";
+  let audioSourceNode = null;
+
   const initAudio = () => {
     if (audioCtx) return;
     const AudioContextClass = window.AudioContext || window.webkitAudioContext;
     if (!AudioContextClass) return;
-    
+
     audioCtx = new AudioContextClass();
     masterGainNode = audioCtx.createGain();
     filterNode = audioCtx.createBiquadFilter();
@@ -531,6 +536,13 @@ document.addEventListener('DOMContentLoaded', () => {
     masterGainNode.gain.value = masterVolumeValue;
     analyserNode.fftSize = 32;
 
+    try {
+      audioSourceNode = audioCtx.createMediaElementSource(audioPlayer);
+      audioSourceNode.connect(filterNode);
+    } catch (e) {
+      console.error("Failed to connect MediaElementSourceNode:", e);
+    }
+
     filterNode.connect(analyserNode);
     analyserNode.connect(masterGainNode);
     masterGainNode.connect(audioCtx.destination);
@@ -541,7 +553,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const n_samples = 44100;
     const curve = new Float32Array(n_samples);
     const deg = Math.PI / 180;
-    for (let i = 0 ; i < n_samples; ++i) {
+    for (let i = 0; i < n_samples; ++i) {
       const x = (i * 2) / n_samples - 1;
       curve[i] = ((3 + k) * x * 20 * deg) / (Math.PI + k * Math.abs(x));
     }
@@ -665,7 +677,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Guitar strings 6 strings standard tuning (E2, A2, D3, G3, B3, E4)
   const stringNotes = [82.41, 110.00, 146.83, 196.00, 246.94, 329.63];
   const guitarStrings = document.querySelectorAll('.guitar-string-wrapper');
-  
+
   guitarStrings.forEach(str => {
     str.addEventListener('mouseenter', () => {
       const idx = parseInt(str.getAttribute('data-string'));
@@ -685,7 +697,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (masterGainNode) {
         masterGainNode.gain.setValueAtTime(masterVolumeValue, audioCtx.currentTime);
       }
-      knobVolume.style.transform = `rotate(${ (vol - 1) * 30 }deg)`;
+      knobVolume.style.transform = `rotate(${(vol - 1) * 30}deg)`;
       knobVolume.setAttribute('aria-valuenow', vol);
       playTypewriterClick();
     });
@@ -700,142 +712,182 @@ document.addEventListener('DOMContentLoaded', () => {
     knobTone.addEventListener('click', () => {
       toneIdx = (toneIdx + 1) % toneModes.length;
       guitarTone = toneModes[toneIdx];
-      
+
       if (guitarToneLabel) {
         guitarToneLabel.textContent = guitarTone.toUpperCase();
       }
-      
-      knobTone.style.transform = `rotate(${ toneIdx * 90 }deg)`;
+
+      knobTone.style.transform = `rotate(${toneIdx * 90}deg)`;
       knobTone.setAttribute('aria-valuenow', toneIdx + 1);
       playTypewriterClick();
     });
   }
 
-  // 3. Typewriter mechanical keyboard typing
-  const typewriterInput = document.getElementById('typewriterTextArea');
-  const charCount = document.getElementById('charCount');
-  
-  const playTypewriterClick = () => {
+  // 3. Tactile Scrapbook Ink-Stamps (Journaling)
+  let activeStampType = 'memories';
+  let activeStampColor = 'butter';
+
+  const playStampSound = () => {
     initAudio();
     if (!audioCtx || audioCtx.state === 'suspended') return;
 
+    // A low thud sound
     const osc = audioCtx.createOscillator();
-    const clickGain = audioCtx.createGain();
+    const gain = audioCtx.createGain();
+    const filter = audioCtx.createBiquadFilter();
 
     osc.type = 'sine';
-    osc.frequency.setValueAtTime(600 + Math.random() * 500, audioCtx.currentTime);
+    osc.frequency.setValueAtTime(120, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(30, audioCtx.currentTime + 0.12);
 
-    clickGain.gain.setValueAtTime(0.12, audioCtx.currentTime);
-    clickGain.gain.exponentialRampToValueAtTime(0.005, audioCtx.currentTime + 0.04);
+    gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
 
-    osc.connect(clickGain);
-    clickGain.connect(masterGainNode);
+    // Friction noise burst
+    const bufferSize = audioCtx.sampleRate * 0.05;
+    const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      data[i] = Math.random() * 2 - 1;
+    }
+    const noise = audioCtx.createBufferSource();
+    noise.buffer = buffer;
+
+    const noiseFilter = audioCtx.createBiquadFilter();
+    noiseFilter.type = 'bandpass';
+    noiseFilter.frequency.value = 400;
+    noiseFilter.Q.value = 2;
+
+    const noiseGain = audioCtx.createGain();
+    noiseGain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+    noiseGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04);
+
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(masterGainNode);
+
+    noise.connect(noiseFilter);
+    noiseFilter.connect(noiseGain);
+    noiseGain.connect(masterGainNode);
+
     osc.start();
-    osc.stop(audioCtx.currentTime + 0.05);
+    noise.start();
+    osc.stop(audioCtx.currentTime + 0.15);
+    noise.stop(audioCtx.currentTime + 0.15);
   };
 
-  const playTypewriterBell = () => {
-    initAudio();
-    if (!audioCtx || audioCtx.state === 'suspended') return;
+  // Stamp buttons selection
+  const stampBtns = document.querySelectorAll('.stamp-btn');
+  stampBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      stampBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeStampType = btn.getAttribute('data-stamp');
+      playTypewriterClick(); // Play tiny feedback sound
+    });
+  });
 
-    const osc = audioCtx.createOscillator();
-    const bellGain = audioCtx.createGain();
+  // Color wells selection
+  const colorWells = document.querySelectorAll('.color-well');
+  colorWells.forEach(well => {
+    well.addEventListener('click', () => {
+      colorWells.forEach(w => w.classList.remove('active'));
+      well.classList.add('active');
+      activeStampColor = well.getAttribute('data-color');
+      playTypewriterClick();
+    });
+  });
 
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(1500, audioCtx.currentTime);
+  // Notebook Page Clicking
+  const journalPage = document.getElementById('journalNotebookPage');
+  if (journalPage) {
+    journalPage.addEventListener('click', (e) => {
+      // Get click position relative to page
+      const rect = journalPage.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
 
-    bellGain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-    bellGain.gain.exponentialRampToValueAtTime(0.005, audioCtx.currentTime + 0.6);
+      // Create stamp element
+      const stampEl = document.createElement('div');
+      stampEl.className = `placed-stamp stamp-${activeStampType} color-${activeStampColor}`;
+      stampEl.style.left = `${x}px`;
+      stampEl.style.top = `${y}px`;
 
-    osc.connect(bellGain);
-    bellGain.connect(masterGainNode);
-    osc.start();
-    osc.stop(audioCtx.currentTime + 0.65);
-  };
+      // Apply random rotation for manual tactile print feel (-15 to +15 deg)
+      const rot = Math.random() * 30 - 15;
+      stampEl.style.transform = `translate(-50%, -50%) rotate(${rot}deg)`;
 
-  if (typewriterInput) {
-    let prevLength = 0;
-    typewriterInput.addEventListener('input', (e) => {
-      const len = typewriterInput.value.length;
-      if (charCount) charCount.textContent = len;
-
-      if (len > prevLength) {
-        playTypewriterClick();
-        // Ring bell on enter key or every 50 characters typed
-        const lastChar = typewriterInput.value.slice(-1);
-        if (lastChar === '\n' || (len > 0 && len % 50 === 0)) {
-          playTypewriterBell();
-        }
+      // Set stamp content
+      if (activeStampType === 'memories') {
+        stampEl.textContent = 'MEMORIES';
+      } else if (activeStampType === 'wanderlust') {
+        stampEl.innerHTML = 'WANDER<br>LUST';
+      } else if (activeStampType === 'creative') {
+        stampEl.textContent = 'CREATIVE';
+      } else if (activeStampType === 'approved') {
+        stampEl.textContent = 'APPROVED';
       }
-      prevLength = len;
+
+      // Add to DOM
+      journalPage.appendChild(stampEl);
+      playStampSound();
+    });
+  }
+
+  // Clear button
+  const btnJournalClear = document.getElementById('btnJournalClear');
+  if (btnJournalClear && journalPage) {
+    btnJournalClear.addEventListener('click', () => {
+      // Remove all placed stamps
+      const stamps = journalPage.querySelectorAll('.placed-stamp');
+      stamps.forEach(s => s.remove());
+      playTypewriterClick();
     });
   }
 
   // 4. Playlist and Cassette Deck Simulation (Music Listening)
   const songsData = [
     {
-      name: "Lost in Retrograde",
-      bpm: 110,
-      scale: [130.81, 146.83, 155.56, 174.61, 196.00, 220.00, 233.08, 261.63], // C3 minor scale
-      pattern: [0, 2, 4, 6, 7, 6, 4, 2],
-      type: "sawtooth",
-      decay: 0.25
+      name: "Fake Plastic Trees",
+      artist: "Radiohead",
+      genre: "Alternative",
+      duration: "4:50",
+      url: "assets/songs/Radiohead - Fake Plastic Trees [HQ].mp3",
+      cover: "assets/album/fpt.jpeg",
+      startOffset: 145
     },
     {
-      name: "Starlight Arpeggio",
-      bpm: 135,
-      scale: [523.25, 587.33, 659.25, 698.46, 783.99, 880.00, 987.77, 1046.50], // C5 major scale
-      pattern: [0, 2, 4, 7, 0, 4, 7, 4],
-      type: "square",
-      decay: 0.12
+      name: "Scott Street",
+      artist: "Phoebe Bridgers",
+      genre: "Indie Folk",
+      duration: "5:05",
+      url: "assets/songs/Scott Street.mp3",
+      cover: "assets/scott_street.jpeg",
+      startOffset: 250
     },
     {
-      name: "Calicut Rain",
-      bpm: 70,
-      scale: [261.63, 293.66, 329.63, 392.00, 440.00, 523.25], // Pentatonic C
-      pattern: [0, 2, 4, 1, 3, 5, 2, 4],
-      type: "sine",
-      decay: 0.8
+      name: "The Search (Edit)",
+      artist: "NF",
+      genre: "Hip Hop",
+      duration: "3:30",
+      url: "assets/songs/The Search (Edit).mp3",
+      cover: "assets/album/the_search.jpg",
+      startOffset: 78
     },
     {
-      name: "Cozy Fireplace",
-      bpm: 55,
-      scale: [130.81, 164.81, 196.00, 246.94], // Cmaj7 chord
-      pattern: [0, 1, 2, 3, 2, 1, 0, 1],
-      type: "triangle",
-      decay: 1.5
+      name: "Umi e (海へ)",
+      artist: "syh",
+      genre: "J-Pop",
+      duration: "4:40",
+      url: "assets/songs/syh - Umi e (海へ) (To The Sea) (KanRomEng) Lyrics歌詞.mp3",
+      cover: "assets/album/umi_e.png",
+      startOffset: 172
     }
   ];
 
   let currentSongIdx = -1;
   let isPlaying = false;
-  let playbackIntervalId = null;
   let vuAnimationId = null;
-  let noteStep = 0;
-
-  const playSongStep = () => {
-    if (!audioCtx || !isPlaying) return;
-    const song = songsData[currentSongIdx];
-    const noteIdx = song.pattern[noteStep % song.pattern.length];
-    const frequency = song.scale[noteIdx];
-    
-    const osc = audioCtx.createOscillator();
-    const noteGain = audioCtx.createGain();
-    
-    osc.type = song.type;
-    osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
-    
-    noteGain.gain.setValueAtTime(0.12 * (song.type === "square" ? 0.4 : 1.0), audioCtx.currentTime);
-    noteGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + song.decay);
-    
-    osc.connect(noteGain);
-    noteGain.connect(filterNode);
-    
-    osc.start();
-    osc.stop(audioCtx.currentTime + song.decay + 0.05);
-    
-    noteStep++;
-  };
 
   const updateVUMeter = () => {
     if (!isPlaying || !analyserNode) {
@@ -844,18 +896,18 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       return;
     }
-    
+
     const bufferLength = analyserNode.frequencyBinCount;
     const dataArray = new Uint8Array(bufferLength);
     analyserNode.getByteFrequencyData(dataArray);
-    
+
     const vuBars = document.querySelectorAll('.vu-bar');
     vuBars.forEach((bar, idx) => {
       const val = dataArray[idx] || 0;
       const heightPercent = 15 + (val / 255) * 85;
       bar.style.height = `${Math.min(heightPercent, 100)}%`;
     });
-    
+
     vuAnimationId = requestAnimationFrame(updateVUMeter);
   };
 
@@ -865,18 +917,28 @@ document.addEventListener('DOMContentLoaded', () => {
   const tapeReelRight = document.getElementById('tapeReelRight');
   const btnPlayPause = document.getElementById('btnDeckPlayPause');
 
+  const updateAlbumCover = (songIdx) => {
+    const albumCoverDisplay = document.getElementById('albumCoverDisplay');
+    if (albumCoverDisplay) {
+      if (songIdx >= 0 && songIdx < songsData.length) {
+        albumCoverDisplay.src = songsData[songIdx].cover;
+      } else {
+        albumCoverDisplay.src = "assets/hobby_music.png";
+      }
+    }
+  };
+
   const startPlayback = (songIdx) => {
     initAudio();
-    if (audioCtx.state === 'suspended') {
+    if (audioCtx && audioCtx.state === 'suspended') {
       audioCtx.resume();
     }
-    
-    stopPlayback();
-    
+
+    const isNewSong = (currentSongIdx !== songIdx) || !audioPlayer.src;
+
     currentSongIdx = songIdx;
     isPlaying = true;
-    noteStep = 0;
-    
+
     songItems.forEach((item, idx) => {
       if (idx === songIdx) {
         item.classList.add('active');
@@ -884,43 +946,58 @@ document.addEventListener('DOMContentLoaded', () => {
         item.classList.remove('active');
       }
     });
-    
+
     if (playlistStatus) {
       playlistStatus.textContent = songsData[songIdx].name.toUpperCase();
     }
-    
+
     if (tapeReelLeft) tapeReelLeft.classList.add('spinning');
     if (tapeReelRight) tapeReelRight.classList.add('spinning');
-    
-    const intervalMs = (60 / songsData[songIdx].bpm) * 1000 / 2;
-    playbackIntervalId = setInterval(playSongStep, intervalMs);
-    
-    updateVUMeter();
+
+    if (isNewSong) {
+      audioPlayer.src = songsData[songIdx].url;
+      audioPlayer.load();
+      audioPlayer.currentTime = songsData[songIdx].startOffset || 0;
+    }
+
+    audioPlayer.play().catch(err => {
+      console.warn("Audio playback failed or was interrupted:", err);
+    });
+
+    if (!vuAnimationId) {
+      updateVUMeter();
+    }
     updatePlayPauseButton();
+    updateAlbumCover(songIdx);
   };
 
-  const stopPlayback = () => {
+  const stopPlayback = (isEnded = false) => {
     isPlaying = false;
-    if (playbackIntervalId) {
-      clearInterval(playbackIntervalId);
-      playbackIntervalId = null;
+    audioPlayer.pause();
+
+    if (tapeReelLeft) tapeReelLeft.classList.remove('spinning');
+    if (tapeReelRight) tapeReelRight.classList.remove('spinning');
+
+    if (playlistStatus) {
+      playlistStatus.textContent = isEnded ? "READY" : "PAUSED";
     }
+
+    document.querySelectorAll('.vu-bar').forEach(bar => {
+      bar.style.height = '15%';
+    });
+
     if (vuAnimationId) {
       cancelAnimationFrame(vuAnimationId);
       vuAnimationId = null;
     }
-    
-    if (tapeReelLeft) tapeReelLeft.classList.remove('spinning');
-    if (tapeReelRight) tapeReelRight.classList.remove('spinning');
-    
-    if (playlistStatus) {
-      playlistStatus.textContent = "PAUSED";
-    }
-    
-    document.querySelectorAll('.vu-bar').forEach(bar => {
-      bar.style.height = '15%';
-    });
+
     updatePlayPauseButton();
+
+    if (isEnded) {
+      songItems.forEach(item => item.classList.remove('active'));
+      currentSongIdx = -1;
+      updateAlbumCover(-1);
+    }
   };
 
   songItems.forEach(btn => {
@@ -959,82 +1036,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 5. Film Strip Slider Carousel Navigation
-  const hobbiesRangeSlider = document.getElementById('hobbiesRangeSlider');
-  const hobbiesSlidesTrack = document.getElementById('hobbiesSlidesTrack');
-  const filmDotBtns = document.querySelectorAll('.film-dot-btn');
-
-  const updateHobbiesSlide = (slideVal) => {
-    // 1. Move slide track
-    if (hobbiesSlidesTrack) {
-      hobbiesSlidesTrack.style.transform = `translateX(-${slideVal * 100}%)`;
-    }
-
-    // 2. Toggle active dots
-    filmDotBtns.forEach((btn, idx) => {
-      if (idx === slideVal) {
-        btn.classList.add('active');
-      } else {
-        btn.classList.remove('active');
-      }
-    });
-
-    // 3. Pause music if switching away from slide 3 (Music Listening)
-    if (slideVal !== 2 && isPlaying) {
-      stopPlayback();
-    }
-  };
-
-  if (hobbiesRangeSlider) {
-    hobbiesRangeSlider.addEventListener('input', () => {
-      const val = parseInt(hobbiesRangeSlider.value);
-      updateHobbiesSlide(val);
-      playTypewriterClick(); // play acoustic feedback on slide change
-    });
-  }
-
-  filmDotBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const val = parseInt(btn.getAttribute('data-slide-val'));
-      if (hobbiesRangeSlider) {
-        hobbiesRangeSlider.value = val;
-      }
-      updateHobbiesSlide(val);
-      playTypewriterClick();
-    });
+  // Handle track ending to reset player controls
+  audioPlayer.addEventListener('ended', () => {
+    stopPlayback(true);
   });
 
-  // 6. Navigation Arrows Click Listeners
-  const btnHobbiesPrev = document.getElementById('btnHobbiesPrev');
-  const btnHobbiesNext = document.getElementById('btnHobbiesNext');
-
-  const handlePrevSlide = () => {
-    if (!hobbiesRangeSlider) return;
-    let val = parseInt(hobbiesRangeSlider.value) - 1;
-    if (val < 0) val = 2; // wrap around
-    hobbiesRangeSlider.value = val;
-    updateHobbiesSlide(val);
-    playTypewriterClick();
-  };
-
-  const handleNextSlide = () => {
-    if (!hobbiesRangeSlider) return;
-    let val = parseInt(hobbiesRangeSlider.value) + 1;
-    if (val > 2) val = 0; // wrap around
-    hobbiesRangeSlider.value = val;
-    updateHobbiesSlide(val);
-    playTypewriterClick();
-  };
-
-  if (btnHobbiesPrev) {
-    btnHobbiesPrev.addEventListener('click', handlePrevSlide);
-  }
-  if (btnHobbiesNext) {
-    btnHobbiesNext.addEventListener('click', handleNextSlide);
-  }
-
-  // Bind custom cursor highlights to playlist controls, song items, typewriter, dots, range slider, and navigation arrows
-  document.querySelectorAll('.knob-dial, .playlist-song-item, .deck-control-btn, .typewriter-input, .film-dot-btn, .hobbies-range-slider, .hobbies-arrow-btn').forEach(el => {
+  // Bind custom cursor highlights to playlist controls, song items, knobs, and stamp journal page elements
+  document.querySelectorAll('.knob-dial, .playlist-song-item, .deck-control-btn, .stamp-btn, .color-well, .journal-notebook-page, .journal-clear-btn').forEach(el => {
     if (customCursor && !el.dataset.cursorBound) {
       el.dataset.cursorBound = 'true';
       el.addEventListener('mouseenter', () => customCursor.classList.add('cursor-expand'));
@@ -1042,4 +1050,3 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
-
