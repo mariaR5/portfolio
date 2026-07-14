@@ -405,12 +405,15 @@ document.addEventListener('DOMContentLoaded', () => {
           const eduStickerTitle = document.getElementById('eduStickerTitle');
           const eduStickerSerial = document.getElementById('eduStickerSerial');
           if (eduStickerTitle && eduStickerSerial) {
-            if (targetId === 'nitc') {
+            if (targetId === 'cusat') {
               eduStickerTitle.textContent = 'CLASS OF 2027';
               eduStickerSerial.textContent = 'RM-ED-2027';
-            } else if (targetId === 'st_josephs') {
+            } else if (targetId === 'gvhss') {
               eduStickerTitle.textContent = 'CLASS OF 2023';
               eduStickerSerial.textContent = 'RM-ED-2023';
+            } else if (targetId === 'st_josephs') {
+              eduStickerTitle.textContent = 'CLASS OF 2021';
+              eduStickerSerial.textContent = 'RM-ED-2021';
             }
           }
 
@@ -722,6 +725,32 @@ document.addEventListener('DOMContentLoaded', () => {
       playTypewriterClick();
     });
   }
+
+  const playTypewriterClick = () => {
+    initAudio();
+    if (!audioCtx || audioCtx.state === 'suspended') return;
+
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    const filter = audioCtx.createBiquadFilter();
+
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(1800, audioCtx.currentTime + 0.02);
+
+    gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.02);
+
+    filter.type = 'highpass';
+    filter.frequency.value = 1000;
+
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(masterGainNode);
+
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.03);
+  };
 
   // 3. Tactile Scrapbook Ink-Stamps (Journaling)
   let activeStampType = 'memories';
@@ -1041,8 +1070,150 @@ document.addEventListener('DOMContentLoaded', () => {
     stopPlayback(true);
   });
 
-  // Bind custom cursor highlights to playlist controls, song items, knobs, and stamp journal page elements
-  document.querySelectorAll('.knob-dial, .playlist-song-item, .deck-control-btn, .stamp-btn, .color-well, .journal-notebook-page, .journal-clear-btn').forEach(el => {
+  // 5. Skills - Vintage Hi-Fi Turntable Console State Machine
+  const skillSvgs = {
+    python: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2zm-1 2.05c1.47-.07 2.92.51 3.9 1.62.9-.02 1.66.7 1.7 1.6v2c0 .4-.3.73-.7.73h-3.8c-.5-.03-.9.37-.9.88v1.17c0 .5.4.9.9.9h1.9c1 .03 1.8.85 1.8 1.88v2c0 .9-.7 1.67-1.6 1.7-1 .02-1.9-.74-1.9-1.74v-1.1c0-.5-.4-.9-.9-.9H9c-1-.03-1.8-.85-1.8-1.88v-2c0-.9.7-1.67 1.6-1.7 1-.02 1.9.74 1.9 1.74v1.1c0 .5.4.9.9.9h1.9c.5.03.9-.37.9-.88V9.12c0-.5-.4-.9-.9-.9H9c-1-.03-1.8-.85-1.8-1.88v-2C7.2 3.33 8.4 2.14 9.9 2.05c.37 0 .73 0 1.1 0z"/></svg>`,
+    javascript: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M12 18h2.5c.8 0 1.5-.7 1.5-1.5s-.7-1.5-1.5-1.5H12M10 11v3.5c0 .8-.7 1.5-1.5 1.5S7 15.3 7 14.5"/></svg>`,
+    sql: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="7" ry="3"/><path d="M5 5v5c0 1.66 3.13 3 7 3s7-1.34 7-3V5M5 10v5c0 1.66 3.13 3 7 3s7-1.34 7-3v-5"/></svg>`,
+    dart: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 12l10 10h5L7 12 17 2h-5z"/></svg>`,
+    cplusplus: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M14 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3M16 12h3M17.5 10.5v3"/></svg>`,
+    java: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 10h11v5c0 2.5-2 4.5-4.5 4.5S7 17.5 7 15v-5M16 12h2a2.5 2.5 0 0 0 0-5h-2M10 2c0 1-1 2-1 3M13 1c0 1.5-1 2.5-1 3.5M7 3c0 1-.5 2-.5 3"/></svg>`,
+    c: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M16 9a4 4 0 1 0 0 6"/></svg>`,
+    llms: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M9 5V3M15 5V3M9 19v2M15 19v2M5 9H3M5 15H3M19 9h2M19 15h2M9 9h6v6H9z"/></svg>`,
+    rag: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h5M16 15l3 3"/><circle cx="15" cy="14" r="2.5"/></svg>`,
+    recsys: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>`,
+    llmeval: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M12 6v14M6 10l-3 4h6l-3-4zm12 0l-3 4h6l-3-4zM12 20a4 4 0 0 0 4-4H8a4 4 0 0 0 4 4z"/></svg>`,
+    synthetic: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2h4M12 2v7M6 22h12a2 2 0 0 0 2-2.5L15 8V4h-6v4L4 19.5A2 2 0 0 0 6 22z"/></svg>`,
+    mlbasics: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18M18 9l-5 5-3-3-4 4"/><circle cx="18" cy="9" r="1.5" fill="currentColor"/><circle cx="13" cy="14" r="1.5" fill="currentColor"/><circle cx="10" cy="11" r="1.5" fill="currentColor"/></svg>`,
+    fastapi: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10"/></svg>`,
+    langchain: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>`,
+    pandas: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="7"/><circle cx="6.5" cy="7.5" r="2.5" fill="currentColor"/><circle cx="17.5" cy="7.5" r="2.5" fill="currentColor"/><circle cx="9.5" cy="12" r="1" fill="currentColor"/><circle cx="14.5" cy="12" r="1" fill="currentColor"/><path d="M10.5 15.5c1 1 2 1 3 0"/></svg>`,
+    scikitlearn: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="12" cy="18" r="3"/><line x1="7.5" y1="8.5" x2="10.5" y2="15.5"/><line x1="16.5" y1="8.5" x2="13.5" y2="15.5"/><line x1="9" y1="6" x2="15" y2="6"/></svg>`,
+    flutter: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 2l-10 10 3 3 10-10h-3zm3 7l-7 7 3 3 7-7h-3z"/></svg>`,
+    reactvue: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="12" rx="10" ry="3.5" transform="rotate(30 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="3.5" transform="rotate(150 12 12)"/><path d="M12 9l-4 7h8l-4-7z"/></svg>`,
+    node: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L3 7v10l9 5 9-5V7l-9-5zm0 2.5L18.5 8 12 11.5 5.5 8 12 4.5zM5 15.5v-6l7 3.8v6l-7-3.8z"/></svg>`,
+    postgresql: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4a8 8 0 0 0-8 8c0 3 2 5 4 6v2c0 1 2 1 3 0v-2h2c5 0 7-3 7-8a8 8 0 0 0-8-8zM8 12c-1 0-2 .5-2 1.5s1.5 2 2 1"/></svg>`,
+    mysql: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18s3-3 6-3 6 3 9 3 5-3 5-3M4 14c2-4 6-7 11-5s7 4 7 4"/></svg>`,
+    sqlite: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4S14 4 10 8 4 20 4 20s6-2 10-6 6-10 6-10z"/><line x1="8" y1="16" x2="16" y2="8"/></svg>`,
+    azure: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 19 18 19 12 5"/><polygon points="2 19 10 19 6 11"/><polygon points="10 19 22 19 16 11"/></svg>`,
+    docker: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="14" width="6" height="4"/><rect x="14" y="14" width="6" height="4"/><rect x="9" y="8" width="6" height="4"/><path d="M2 18h20"/></svg>`,
+    git: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="18" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="6" r="3"/><line x1="6" y1="9" x2="6" y2="15"/><path d="M6 15c0-4 4-6 9-6"/></svg>`,
+    openai: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5-1-2-3-1-4.5s3.5-2 5-.5l5.5 5.5M19.5 7.5c1.5 1 2 3 1 4.5s-3.5 2-5 .5L10 7M7.5 4.5c1-1.5 3-2 4.5-1s2 3.5.5 5l-5.5 5.5M16.5 19.5c-1 1.5-3 2-4.5 1s-2-3.5-.5-5l5.5-5.5"/></svg>`,
+    gemini: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c0 5 3 8 8 8-5 0-8 3-8 8 0-5-3-8-8-8 5 0 8-3 8-8z"/><path d="M7 6c0 2 1 3 3 3-2 0-3 1-3 3 0-2-1-3-3-3 2 0 3-1 3-3zM17 15c0 2 1 3 3 3-2 0-3 1-3 3 0-2-1-3-3-3 2 0 3-1 3-3z"/></svg>`,
+    spotify: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 9.5c2-1 5-1 7 0M9.5 12c1.5-.7 3.5-.7 5 0M10.2 14.5c1-.5 2.5-.5 3.5 0"/></svg>`,
+    dsa: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="6" cy="19" r="2.5"/><circle cx="12" cy="19" r="2.5"/><line x1="10.5" y1="6.8" x2="7.5" y2="10.2"/><line x1="13.5" y1="6.8" x2="16.5" y2="10.2"/><line x1="6" y1="14.5" x2="6" y2="16.5"/><line x1="16.5" y1="13.8" x2="13.5" y2="17.2"/></svg>`,
+    oop: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="8" y="14" width="8" height="7" rx="1"/><line x1="10" y1="6.5" x2="14" y2="6.5"/><line x1="7" y1="10" x2="12" y2="14"/><line x1="17" y1="10" x2="12" y2="14"/></svg>`,
+    dbms: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6c0-1.66 3.58-3 8-3s8 1.34 8 3M4 6v5c0 1.66 3.58 3 8 3s8-1.34 8-3V6M4 11v5c0 1.66 3.58 3 8 3s8-1.34 8-3v-5M4 16v3c0 1.66 3.58 3 8 3s8-1.34 8-3v-3"/></svg>`,
+    os: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 8h18M7 13l3 2-3 2M13 17h4"/></svg>`
+  };
+
+  const skillsTabBtns = document.querySelectorAll('.skills-tab-btn');
+  const vinylSleeves = document.querySelectorAll('.vinyl-sleeve-jacket');
+  const platter = document.querySelector('.turntable-platter-rim');
+  const vinylActiveIcon = document.getElementById('vinyl-active-icon');
+
+  skillsTabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // 1. Deactivate other tabs
+      skillsTabBtns.forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
+
+      // 2. Activate current tab
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+
+      const category = btn.getAttribute('data-category');
+
+      // 3. Lift Tone-arm (stop spinning/playing state temporarily)
+      if (platter) {
+        platter.classList.remove('playing');
+      }
+
+      // 4. Transition sleeves
+      vinylSleeves.forEach(sleeve => {
+        sleeve.classList.remove('active');
+      });
+
+      const targetSleeve = document.getElementById(`jacket-${category}`);
+      if (targetSleeve) {
+        targetSleeve.classList.add('active');
+
+        // Swap record center label to the first skill of the new sleeve
+        const firstTrack = targetSleeve.querySelector('.track-item');
+        if (firstTrack) {
+          const skillName = firstTrack.getAttribute('data-skill');
+          if (skillName && vinylActiveIcon) {
+            vinylActiveIcon.innerHTML = skillSvgs[skillName] || `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 12h8m-4-4v8" stroke-linecap="round"/></svg>`;
+          }
+        }
+      }
+
+      // Play click sound feedback
+      playTypewriterClick();
+
+      // 5. Drop the stylus tone-arm back onto record after 650ms delay
+      setTimeout(() => {
+        if (platter) {
+          platter.classList.add('playing');
+        }
+      }, 650);
+    });
+  });
+
+  // Track hover listeners to swap active vinyl icon
+  const trackItems = document.querySelectorAll('.track-item');
+  trackItems.forEach(item => {
+    item.addEventListener('mouseenter', () => {
+      const skillName = item.getAttribute('data-skill');
+      if (skillName && vinylActiveIcon) {
+        const svgContent = skillSvgs[skillName] || `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 12h8m-4-4v8" stroke-linecap="round"/></svg>`;
+        // Trigger micro-scale pop animation
+        vinylActiveIcon.classList.add('pop-effect');
+        setTimeout(() => {
+          vinylActiveIcon.innerHTML = svgContent;
+          vinylActiveIcon.classList.remove('pop-effect');
+        }, 80);
+      }
+    });
+  });
+
+  // Projects "Show More" toggle
+  const btnShowMore = document.getElementById('btnProjectsShowMore');
+  const projectsMoreContent = document.getElementById('projectsMoreContent');
+
+  if (btnShowMore && projectsMoreContent) {
+    btnShowMore.addEventListener('click', () => {
+      const isExpanded = btnShowMore.getAttribute('aria-expanded') === 'true';
+      
+      if (isExpanded) {
+        // Collapse
+        projectsMoreContent.classList.remove('expanded');
+        btnShowMore.setAttribute('aria-expanded', 'false');
+        btnShowMore.querySelector('span').textContent = 'TICKET // EXPAND REELS';
+        
+        // Wait for transition before setting display none
+        setTimeout(() => {
+          if (!projectsMoreContent.classList.contains('expanded')) {
+            projectsMoreContent.style.display = 'none';
+          }
+        }, 600);
+      } else {
+        // Expand
+        projectsMoreContent.style.display = 'block';
+        void projectsMoreContent.offsetHeight; // trigger reflow
+        projectsMoreContent.classList.add('expanded');
+        btnShowMore.setAttribute('aria-expanded', 'true');
+        btnShowMore.querySelector('span').textContent = 'TICKET // COLLAPSE REELS';
+      }
+      
+      playTypewriterClick();
+    });
+  }
+
+  // Bind custom cursor highlights to playlist controls, song items, knobs, stamp elements, skills tabs, and tracks
+  document.querySelectorAll('.knob-dial, .playlist-song-item, .deck-control-btn, .stamp-btn, .color-well, .journal-notebook-page, .journal-clear-btn, .skills-tab-btn, .track-item').forEach(el => {
     if (customCursor && !el.dataset.cursorBound) {
       el.dataset.cursorBound = 'true';
       el.addEventListener('mouseenter', () => customCursor.classList.add('cursor-expand'));

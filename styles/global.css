@@ -228,6 +228,31 @@ body {
   transform: translateX(-50%) scale(1);
 }
 
+@media (max-width: 768px) {
+  .nav-container {
+    padding: 1rem 1.5rem;
+    background-color: rgba(11, 6, 5, 0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(244, 236, 200, 0.06);
+  }
+  .nav-container.scrolled {
+    padding: 0.8rem 1.5rem;
+  }
+  .nav {
+    flex-direction: column;
+    gap: 0.6rem;
+    align-items: center;
+  }
+  .nav-links {
+    gap: 1.2rem;
+  }
+  .nav-link {
+    font-size: 0.72rem;
+    padding: 0.2rem 0;
+  }
+}
+
 /* ==========================================================================
    PANEL COLOR-BLOCKING SYSTEM (Alternating splits)
    ========================================================================== */

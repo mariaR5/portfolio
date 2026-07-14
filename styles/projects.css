@@ -325,3 +325,32 @@
     aspect-ratio: 2/3;
   }
 }
+
+/* ==========================================================================
+   SHOW MORE PROJECTS SECTION
+   ========================================================================== */
+.projects-more-trigger-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 4.5rem;
+  width: 100%;
+}
+
+.projects-more-trigger-container .project-ticket-btn {
+  max-width: 320px;
+}
+
+.projects-more-content {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.6s var(--ease-cinematic), max-height 0.8s var(--ease-cinematic);
+  width: 100%;
+}
+
+.projects-more-content.expanded {
+  opacity: 1;
+  max-height: 3000px;
+  margin-top: 4rem;
+}
+

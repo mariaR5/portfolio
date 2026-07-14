@@ -1,5 +1,5 @@
 /* ==========================================================================
-   CONTACT SECTION (Solid Red Panel with Billing Layout)
+   CONTACT SECTION (Premium Black Panel with Billing Layout)
    ========================================================================== */
 .contact-section {
   padding: 12rem 2.5rem;
@@ -9,6 +9,8 @@
   right: 50%;
   margin-left: -50vw;
   margin-right: -50vw;
+  background-color: var(--bg-black) !important;
+  color: var(--text-cream);
 }
 
 .contact-box-poster {
@@ -18,52 +20,71 @@
   padding: 0 2.5rem;
 }
 
-.contact-meta-header {
+/* ── Header strip: mirrors hero & about bottom credits bar ── */
+.contact-header-strip {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 2.5rem;
+  align-items: center;
+  gap: 1.8rem;
+  margin-bottom: 5rem;
+  width: 100%;
 }
 
-.meta-label-black {
+.contact-header-strip .section-title-label {
+  margin-bottom: 0;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.contact-divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, #C03A2B, transparent); /* Red accent line */
+  opacity: 0.55;
+}
+
+.contact-header-coords {
   font-family: var(--font-mono);
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: var(--bg-black);
-  letter-spacing: 0.1em;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
-.email-copy-wrapper-black {
+/* ── Interactive Email Copy Button ── */
+.email-copy-wrapper {
   position: relative;
   display: inline-block;
   margin-bottom: 6rem;
 }
 
-.email-btn-black {
+.email-btn {
   font-family: var(--font-body);
   font-size: clamp(1.4rem, 4vw, 3.2rem);
   font-weight: 700;
-  color: var(--text-cream) !important;
+  color: var(--bg-terracotta) !important; /* Interactive red email address */
   background: none;
   border: none;
   text-decoration: underline;
   text-underline-offset: 10px;
-  text-decoration-color: rgba(11, 6, 5, 0.4);
+  text-decoration-color: rgba(126, 37, 25, 0.4);
   transition: text-decoration-color 0.4s var(--ease-cinematic),
     color 0.4s var(--ease-cinematic);
+  cursor: pointer;
 }
 
-.email-btn-black:hover {
-  color: var(--bg-black) !important;
-  text-decoration-color: var(--bg-black);
+.email-btn:hover {
+  color: var(--text-cream) !important; /* Glows to beige on hover */
+  text-decoration-color: var(--text-cream);
 }
 
-.tooltip-black {
+.tooltip {
   position: absolute;
   bottom: -2.8rem;
   left: 50%;
   transform: translateX(-50%) translateY(5px);
-  background-color: var(--bg-black);
-  color: var(--text-cream);
+  background-color: var(--text-cream);
+  color: var(--bg-black);
   font-family: var(--font-mono);
   font-size: 0.8rem;
   padding: 0.5rem 1rem;
@@ -72,20 +93,23 @@
   will-change: opacity, transform;
   transition: opacity 0.3s var(--ease-cinematic),
     transform 0.3s var(--ease-cinematic);
+  z-index: 10;
+  border-radius: 2px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-.tooltip-black.show {
+.tooltip.show {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }
 
-/* Billing Poster Columns */
+/* ── Billing Poster Columns ── */
 .billing-credits-grid {
   display: grid;
   grid-template-columns: 1.2fr 1.2fr 1fr;
   gap: 4.5rem;
   text-align: left;
-  border-top: 2px solid var(--bg-black);
+  border-top: 1.5px solid rgba(244, 236, 200, 0.15); /* Vintage beige divider line */
   padding-top: 3rem;
   margin-top: 2rem;
 }
@@ -100,8 +124,7 @@
   font-family: var(--font-mono);
   font-size: 0.8rem;
   font-weight: 700;
-  color: var(--bg-black);
-  opacity: 0.6;
+  color: var(--accent-gold); /* Ochre gold column tags */
   margin-bottom: 0.5rem;
   letter-spacing: 0.08em;
 }
@@ -117,14 +140,14 @@
 }
 
 .bill-link:hover {
-  color: var(--bg-black) !important;
+  color: var(--bg-terracotta) !important; /* Hover state red highlights */
 }
 
 .bill-text {
   font-family: var(--font-mono);
   font-size: 0.85rem;
   font-weight: 700;
-  color: var(--text-cream) !important;
+  color: var(--text-muted) !important;
   text-transform: uppercase;
 }
 
@@ -134,46 +157,48 @@
   align-items: flex-start;
 }
 
-.restricted-box-black {
-  border: 2px solid var(--bg-black);
-  padding: 0.4rem 0.8rem;
-  max-width: 250px;
-  line-height: 1.1;
-  color: var(--bg-black) !important;
-}
-
-.restricted-header-black {
-  font-family: var(--font-mono);
-  font-size: 0.58rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-align: center;
-  border-bottom: 1.5px solid var(--bg-black);
-  padding-bottom: 0.2rem;
-  margin-bottom: 0.3rem;
-  text-transform: uppercase;
-}
-
-.restricted-body-black {
+/* ── Barcode Decal ── */
+.contact-barcode-row {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  justify-content: center;
+  gap: 1.2rem;
+  margin-top: 6rem;
+  border-top: 1px dashed rgba(244, 236, 200, 0.08);
+  padding-top: 3rem;
+  width: 100%;
 }
 
-.restricted-letter-black {
-  font-family: var(--font-body);
-  font-size: 1.8rem;
-  font-weight: 700;
-  line-height: 1;
+.contact-barcode {
+  height: 22px;
+  width: 180px;
+  display: flex;
+  gap: 2.5px;
 }
 
-.restricted-text-rules-black {
+.contact-barcode span {
+  background-color: var(--text-cream);
+  height: 100%;
+  display: block;
+  opacity: 0.75;
+}
+
+/* Varying width barcode blocks */
+.contact-barcode span:nth-child(even) { width: 1.5px; }
+.contact-barcode span:nth-child(odd) { width: 3.5px; }
+.contact-barcode span:nth-child(3n) { width: 6px; }
+.contact-barcode span:nth-child(4n) { width: 2px; }
+.contact-barcode span:nth-child(5n) { width: 4.5px; }
+
+.contact-barcode-id {
   font-family: var(--font-mono);
-  font-size: 0.42rem;
-  line-height: 1.3;
-  color: var(--text-muted-dark) !important;
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  white-space: nowrap;
 }
 
+/* ── Responsiveness ── */
 @media (max-width: 992px) {
   .billing-credits-grid {
     grid-template-columns: 1fr;
@@ -182,5 +207,20 @@
 
   .billing-col-center {
     justify-content: flex-start;
+  }
+
+  .contact-section {
+    padding: 8rem 2rem;
+  }
+
+  .email-copy-wrapper {
+    margin-bottom: 4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-barcode-row {
+    flex-direction: column;
+    gap: 0.8rem;
   }
 }

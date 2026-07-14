@@ -21,6 +21,25 @@
   max-width: 1400px;
   margin: 0 auto;
   width: 100%;
+  position: relative;
+}
+
+/* Monospaced spec labels */
+.exp-viewfinder-spec {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: rgba(244, 236, 200, 0.45);
+  top: -1.5rem;
+}
+
+.exp-viewfinder-spec.spec-left {
+  left: 0;
+}
+
+.exp-viewfinder-spec.spec-right {
+  right: 0;
 }
 
 /* Header strip */
@@ -75,6 +94,31 @@
   z-index: 2;
 }
 
+/* Override: film frame content lives on black bg — must be cream */
+.exp-bottom-panel .film-frame,
+.exp-bottom-panel .film-frame h1,
+.exp-bottom-panel .film-frame h2,
+.exp-bottom-panel .film-frame h3,
+.exp-bottom-panel .film-frame h4,
+.exp-bottom-panel .film-frame p,
+.exp-bottom-panel .film-frame span,
+.exp-bottom-panel .film-frame li {
+  color: #F4ECC8 !important;
+}
+
+.exp-bottom-panel .film-frame .frame-cat,
+.exp-bottom-panel .film-frame .frame-company-role {
+  color: #D0A164 !important;
+}
+
+.exp-bottom-panel .film-frame .frame-company-date {
+  color: rgba(244, 236, 200, 0.55) !important;
+}
+
+.exp-bottom-panel .film-frame .frame-action-prompt {
+  color: rgba(244, 236, 200, 0.5) !important;
+}
+
 .exp-bottom-inner {
   max-width: 1400px;
   margin: 0 auto;
@@ -112,11 +156,62 @@
   padding: 1.6rem 2rem;
   width: 100%;
   text-align: left;
-  transition: all 0.4s var(--ease-cinematic);
   outline: none;
   cursor: pointer;
   color: var(--bg-black) !important;
   position: relative;
+  overflow: visible; /* Allow notches to sit half-out */
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.8s var(--ease-cinematic),
+              transform 0.8s var(--ease-cinematic),
+              border-color 0.4s var(--ease-cinematic),
+              background-color 0.4s var(--ease-cinematic),
+              box-shadow 0.4s var(--ease-cinematic),
+              color 0.4s var(--ease-cinematic);
+}
+
+/* Scroll reveal states */
+.experience-section.revealed .exp-tab-item {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.experience-section.revealed .exp-tab-item:nth-child(1) {
+  transition-delay: 0.2s, 0.2s, 0s, 0s, 0s, 0s;
+}
+
+.experience-section.revealed .exp-tab-item:nth-child(2) {
+  transition-delay: 0.4s, 0.4s, 0s, 0s, 0s, 0s;
+}
+
+.experience-section.revealed .exp-tab-item:nth-child(3) {
+  transition-delay: 0.6s, 0.6s, 0s, 0s, 0s, 0s;
+}
+
+/* Ticket edge punched notches */
+.exp-tab-item::before,
+.exp-tab-item::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  background-color: var(--bg-terracotta);
+  border: 2px solid rgba(11, 6, 5, 0.15);
+  border-radius: 50%;
+  z-index: 3;
+  transition: border-color 0.4s var(--ease-cinematic), background-color 0.4s var(--ease-cinematic);
+}
+
+.exp-tab-item::before {
+  left: -8px;
+  transform: translateY(-50%);
+}
+
+.exp-tab-item::after {
+  right: -8px;
+  transform: translateY(-50%);
 }
 
 .exp-tab-item:hover {
@@ -124,12 +219,26 @@
   transform: translateX(-4px);
 }
 
+.exp-tab-item:hover::before,
+.exp-tab-item:hover::after {
+  border-color: var(--bg-black);
+}
+
 .exp-tab-item.active {
   background-color: var(--bg-black) !important;
   border-color: var(--bg-black);
   color: var(--text-cream) !important;
-  transform: translateX(-8px);
   box-shadow: 8px 8px 0 rgba(11, 6, 5, 0.25);
+}
+
+.experience-section.revealed .exp-tab-item.active {
+  transform: translateX(-8px);
+}
+
+.exp-tab-item.active::before,
+.exp-tab-item.active::after {
+  background-color: var(--bg-terracotta);
+  border-color: var(--bg-black);
 }
 
 /* Color overrides for active tab */
@@ -150,12 +259,36 @@
   align-items: center;
   justify-content: center;
   color: var(--bg-black);
-  transition: color 0.4s var(--ease-cinematic);
+  transition: color 0.4s var(--ease-cinematic), border-color 0.4s var(--ease-cinematic);
+  border-right: 2px dashed rgba(11, 6, 5, 0.25);
+  padding-right: 1.4rem;
+  box-sizing: content-box;
+}
+
+.exp-tab-item.active .tab-item-logo {
+  border-right-color: rgba(244, 236, 200, 0.3);
 }
 
 .logo-svg {
   width: 100%;
   height: 100%;
+}
+
+.logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 6px;
+  filter: sepia(0.35) contrast(0.9) brightness(0.9);
+  transition: filter 0.4s var(--ease-cinematic);
+}
+
+.exp-tab-item.active .logo-img {
+  filter: sepia(0.15) contrast(1.05) brightness(1.1);
+}
+
+.exp-tab-item:hover .logo-img {
+  filter: sepia(0.1) contrast(1) brightness(1.05);
 }
 
 .tab-item-content {
@@ -202,11 +335,23 @@
 .film-strip-viewer {
   position: relative;
   width: 100%;
-  min-height: 520px;
+  height: 560px; /* fixed — all experiences render at same size */
   background-color: var(--bg-black);
   border: 3px solid var(--bg-black);
-  box-shadow: 12px 12px 0 var(--bg-black);
+  box-shadow: 
+    inset 0 0 40px rgba(230, 140, 40, 0.12),
+    0 10px 30px rgba(0, 0, 0, 0.5),
+    12px 12px 0 var(--bg-black);
   overflow: hidden;
+  opacity: 0;
+  transform: translateY(30px) scale(0.99);
+  transition: opacity 1.2s var(--ease-cinematic), transform 1.2s var(--ease-cinematic);
+}
+
+.experience-section.revealed .film-strip-viewer {
+  opacity: 1;
+  transform: translateY(0) scale(1.0);
+  transition-delay: 0.3s;
 }
 
 /* Shutter Flash Screen Overlay */
@@ -232,8 +377,11 @@
   100% { opacity: 0; }
 }
 
-/* Film Strip items */
+/* Film Strip items — absolutely fill viewer so size never changes */
 .film-strip {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   display: none;
@@ -263,30 +411,34 @@
 .film-frame {
   width: 50%;
   height: 100%;
-  min-height: 520px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   background-color: var(--bg-black);
   color: var(--text-cream) !important;
   box-sizing: border-box;
   position: relative;
+  overflow: hidden;
 }
 
 /* Sprocket hole bars */
 .frame-edge-top,
 .frame-edge-bottom {
   width: 100%;
-  height: 18px;
-  background-image: repeating-linear-gradient(90deg, var(--bg-terracotta) 0px, var(--bg-terracotta) 12px, transparent 12px, transparent 28px);
+  height: 16px;
+  background-image: repeating-linear-gradient(90deg, 
+    rgba(244, 236, 200, 0.85) 0px, 
+    rgba(244, 236, 200, 0.85) 12px, 
+    transparent 12px, 
+    transparent 28px);
   opacity: 0.9;
   flex-shrink: 0;
   margin: 6px 0;
-  transition: background-image 0.4s;
+  border-top: 1px solid rgba(244, 236, 200, 0.12);
+  border-bottom: 1px solid rgba(244, 236, 200, 0.12);
 }
 
 .frame-content {
-  flex-grow: 1;
+  flex: 1;
   padding: 2.2rem 3rem;
   display: flex;
   flex-direction: column;
@@ -295,6 +447,31 @@
   border-top: 1.5px solid rgba(244, 236, 200, 0.12);
   border-bottom: 1.5px solid rgba(244, 236, 200, 0.12);
   margin: 0 1rem;
+  overflow-y: auto;
+  min-height: 0; /* allow flex child to shrink */
+
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(208, 161, 100, 0.35) transparent;
+}
+
+/* WebKit — Chrome, Safari, Edge */
+.frame-content::-webkit-scrollbar {
+  width: 3px;
+}
+
+.frame-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.frame-content::-webkit-scrollbar-thumb {
+  background: rgba(208, 161, 100, 0.3);
+  border-radius: 2px;
+  transition: background 0.3s;
+}
+
+.frame-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(208, 161, 100, 0.7);
 }
 
 /* Film mount margins label */
@@ -308,6 +485,18 @@
   color: var(--accent-gold);
   letter-spacing: 0.1em;
   opacity: 0.6;
+}
+
+.frame-content::after {
+  content: "||| | || |||| | 35MM COLOR FILM";
+  position: absolute;
+  bottom: 6px;
+  right: 3rem;
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  color: var(--accent-gold);
+  letter-spacing: 0.08em;
+  opacity: 0.55;
 }
 
 /* Content details */
@@ -330,11 +519,65 @@
   margin-bottom: 0.6rem;
 }
 
-.frame-meta-row {
+/* Big company identity banner at the top of detail frames */
+.frame-company-banner {
   display: flex;
-  gap: 0.6rem;
-  margin-bottom: 1.6rem;
+  align-items: flex-start;
+  gap: 1.4rem;
+  padding-bottom: 1.4rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(244, 236, 200, 0.18);
+}
+
+.frame-company-logo {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  border-radius: 10px;
+  flex-shrink: 0;
+  filter: sepia(0.05) contrast(1.05) brightness(1.05);
+  background: rgba(255,255,255,0.07);
+  padding: 5px;
+}
+
+.frame-company-name {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: #F4ECC8 !important; /* hardcoded cream — overrides .exp-bottom-panel color:black!important */
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  text-transform: lowercase;
+  margin: 0;
+}
+
+/* Role + date line below company banner */
+.frame-company-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 1.4rem;
+  margin-top: 0.5rem;
   flex-wrap: wrap;
+}
+
+.frame-company-role {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #D0A164 !important; /* accent gold — hardcoded to beat panel override */
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.frame-company-date {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: rgba(244, 236, 200, 0.55) !important;
+  letter-spacing: 0.04em;
+}
+
+.frame-meta-row {
+  display: none; /* chips removed */
 }
 
 .frame-meta-chip {
@@ -467,8 +710,8 @@
     height: 36px;
   }
   
-  .film-strip-viewer, .film-frame {
-    min-height: 470px;
+  .film-strip-viewer {
+    height: 480px;
   }
   
   .frame-content {

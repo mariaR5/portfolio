@@ -1,0 +1,510 @@
+/* ==========================================================================
+   SKILLS SECTION (Interactive 1970s Hi-Fi Turntable Console)
+   ========================================================================== */
+.skills-section {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top black heading panel */
+.skills-top-panel {
+  background-color: var(--bg-black);
+  color: var(--text-cream);
+  padding: 4.5rem 2.5rem 6.5rem;
+  width: 100%;
+}
+
+.skills-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+}
+
+.skills-header-strip {
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+  margin-bottom: 2rem;
+}
+
+.skills-header-strip .section-title-label {
+  margin-bottom: 0;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.skills-divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, var(--accent-gold), transparent);
+  opacity: 0.4;
+}
+
+.skills-header-code {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.skills-main-title {
+  font-family: var(--font-display);
+  font-size: clamp(5.5rem, 12vw, 11rem);
+  font-weight: 700;
+  text-transform: lowercase;
+  letter-spacing: -0.04em;
+  line-height: 0.85;
+  color: var(--text-cream);
+  margin: 0;
+}
+
+/* Bottom Terracotta Canvas */
+.skills-bottom-panel {
+  background-color: var(--bg-terracotta) !important;
+  color: var(--bg-black) !important;
+  padding: 5.5rem 2.5rem 7.5rem;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+}
+
+/* Technical drafting grid overlay */
+.skills-grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(11, 6, 5, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11, 6, 5, 0.05) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Console Divider Categories */
+.skills-category-tabs {
+  display: flex;
+  gap: 1.2rem;
+  z-index: 2;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.skills-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  background-color: transparent;
+  border: 2px solid rgba(11, 6, 5, 0.25);
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--bg-black);
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s var(--ease-cinematic);
+  position: relative;
+}
+
+/* Ticket/Console punches */
+.skills-tab-btn::before,
+.skills-tab-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  background-color: var(--bg-terracotta);
+  border: 2px solid rgba(11, 6, 5, 0.25);
+  border-radius: 50%;
+  z-index: 3;
+  transform: translateY(-50%);
+  transition: border-color 0.3s;
+}
+
+.skills-tab-btn::before { left: -5px; }
+.skills-tab-btn::after { right: -5px; }
+
+.skills-tab-btn:hover {
+  border-color: var(--bg-black);
+  background-color: rgba(11, 6, 5, 0.04);
+}
+
+.skills-tab-btn:hover::before,
+.skills-tab-btn:hover::after {
+  border-color: var(--bg-black);
+}
+
+.skills-tab-btn.active {
+  background-color: var(--bg-black);
+  color: var(--text-cream);
+  border-color: var(--bg-black);
+  box-shadow: 4px 4px 0 rgba(11, 6, 5, 0.18);
+}
+
+.skills-tab-btn.active::before,
+.skills-tab-btn.active::after {
+  background-color: var(--bg-terracotta);
+  border-color: var(--bg-black);
+}
+
+/* Turntable Console Cabinet Frame */
+.turntable-console-box {
+  width: 100%;
+  max-width: 960px;
+  background-color: #161514; /* Console dark interior */
+  border: 8px solid #282421;  /* Vintage Wood Panel outline */
+  border-radius: 8px;
+  box-shadow: 
+    0 25px 55px rgba(0, 0, 0, 0.65), 
+    inset 0 0 50px rgba(0, 0, 0, 0.9);
+  padding: 2.2rem;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 2.5rem;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* Console branding tag */
+.console-brand-plate {
+  position: absolute;
+  top: 15px;
+  left: 2.2rem;
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  color: rgba(244, 236, 200, 0.25);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Left column: Vinyl Sleeve / Tracklist */
+.vinyl-sleeve-jacket {
+  width: 100%;
+  aspect-ratio: 1.02;
+  background-color: #0d0d0d;
+  border: 3px solid #1f1d1c;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.5);
+  position: relative;
+  overflow: hidden;
+  padding: 2rem 2.2rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  opacity: 0;
+  transform: translateX(-20px);
+  display: none;
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.vinyl-sleeve-jacket.active {
+  display: flex;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Inner sleeve graphic design */
+.sleeve-graphics-bg {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 100% 100%, rgba(170, 47, 29, 0.12) 0%, transparent 60%),
+    radial-gradient(circle at 0% 0%, rgba(204, 166, 37, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.sleeve-header {
+  border-bottom: 2px dashed rgba(244, 236, 200, 0.15);
+  padding-bottom: 0.8rem;
+}
+
+.sleeve-cat-no {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  color: var(--accent-gold);
+  letter-spacing: 0.12em;
+}
+
+.sleeve-title {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 700;
+  text-transform: lowercase;
+  color: var(--text-cream);
+  line-height: 1;
+  margin-top: 0.2rem;
+}
+
+/* Tracks list styling */
+.sleeve-tracks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+  flex-grow: 1;
+}
+
+.track-item {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  cursor: pointer;
+  padding: 0.2rem 0;
+}
+
+.track-num {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--accent-gold);
+  opacity: 0.6;
+}
+
+.track-name-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.track-name {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-cream);
+  text-transform: lowercase;
+  transition: color 0.3s;
+}
+
+.track-level {
+  font-family: var(--font-mono);
+  font-size: 0.48rem;
+  color: var(--accent-gold);
+  opacity: 0.6;
+  letter-spacing: 0.05em;
+  margin-top: 0.1rem;
+}
+
+.track-item:hover .track-name {
+  color: var(--accent-gold);
+}
+
+.sleeve-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(244, 236, 200, 0.1);
+  padding-top: 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  color: rgba(244, 236, 200, 0.4);
+}
+
+/* Right column: Turntable Deck */
+.turntable-deck-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+.turntable-platter-rim {
+  width: 320px;
+  height: 320px;
+  background-color: #1a1918;
+  border: 5px solid #2d2927;
+  border-radius: 50%;
+  box-shadow: 
+    inset 0 0 20px rgba(0,0,0,0.95),
+    0 12px 28px rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Concentric vinyl disk grooves design */
+.vinyl-record-disk {
+  width: 93%;
+  height: 93%;
+  border-radius: 50%;
+  background: 
+    radial-gradient(circle, #252423 3px, transparent 4px),
+    repeating-radial-gradient(circle, #0e0e0d, #0e0e0d 2px, #1c1c1b 3px, #0e0e0d 4px);
+  position: relative;
+  box-shadow: 0 0 10px rgba(0,0,0,0.7);
+  transform: rotate(0deg);
+  transition: transform 0.1s linear;
+}
+
+/* Platter playing spins the record */
+.turntable-platter-rim.playing .vinyl-record-disk {
+  animation: spinVinylDisk 12s linear infinite;
+}
+
+@keyframes spinVinylDisk {
+  100% { transform: rotate(360deg); }
+}
+
+/* Vinyl label sticker */
+.vinyl-label-sticker {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 36%;
+  height: 36%;
+  border-radius: 50%;
+  background-color: var(--accent-gold);
+  border: 2px double #0d0d0d;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  box-shadow: inset 0 0 8px rgba(0,0,0,0.25);
+  transition: background-color 0.5s ease;
+}
+
+/* Display active vector skill icon at the center of record label */
+.vinyl-active-icon-box {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0d0d0d;
+  opacity: 0.85;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
+}
+
+.vinyl-active-icon-box.pop-effect {
+  transform: scale(0.6);
+  opacity: 0;
+}
+
+.vinyl-active-icon-box svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+/* Center spindle spindle */
+.vinyl-label-sticker::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #d1cfc9;
+  border: 1px solid #7c7b77;
+  box-shadow: inset 0 2px 2px rgba(255,255,255,0.6);
+}
+
+/* Turntable Stylus Tone-Arm */
+.turntable-tonearm-assembly {
+  position: absolute;
+  top: -12px;
+  right: -10px;
+  width: 100px;
+  height: 240px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.tonearm-pivot-base {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 42px;
+  height: 42px;
+  background-color: #2b2b2b;
+  border: 3px solid #484848;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+}
+
+.tonearm-body-svg {
+  position: absolute;
+  top: 30px;
+  right: 28px;
+  width: 90px;
+  height: 220px;
+  transform-origin: 66px 6px;
+  transform: rotate(-16deg); /* Default lifted/resting position */
+  transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/* Platter playing rotates arm onto vinyl */
+.turntable-platter-rim.playing .tonearm-body-svg {
+  transform: rotate(6deg); /* Dropped stylus point */
+}
+
+/* Scroll reveal triggers */
+.skills-tab-btn {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s var(--ease-cinematic), transform 0.8s var(--ease-cinematic), border-color 0.3s, background-color 0.3s;
+}
+
+.skills-section.revealed .skills-tab-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.skills-section.revealed .skills-tab-btn:nth-child(1) { transition-delay: 0.1s; }
+.skills-section.revealed .skills-tab-btn:nth-child(2) { transition-delay: 0.2s; }
+.skills-section.revealed .skills-tab-btn:nth-child(3) { transition-delay: 0.3s; }
+
+.turntable-console-box {
+  opacity: 0;
+  transform: translateY(40px) scale(0.98);
+  transition: opacity 1.2s var(--ease-cinematic), transform 1.2s var(--ease-cinematic);
+}
+
+.skills-section.revealed .turntable-console-box {
+  opacity: 1;
+  transform: translateY(0) scale(1.0);
+  transition-delay: 0.4s;
+}
+
+/* Responsive console adjustments */
+@media (max-width: 900px) {
+  .turntable-console-box {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    padding: 1.5rem;
+  }
+  .vinyl-sleeve-jacket {
+    aspect-ratio: auto;
+    min-height: 320px;
+  }
+}
+
+@media (max-width: 480px) {
+  .skills-top-panel {
+    padding: 3.5rem 1.5rem 2.5rem;
+  }
+  .skills-bottom-panel {
+    padding: 4rem 1.2rem 5rem;
+  }
+  .turntable-platter-rim {
+    width: 260px;
+    height: 260px;
+  }
+  .turntable-tonearm-assembly {
+    right: -25px;
+    top: -20px;
+  }
+}
